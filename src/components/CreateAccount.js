@@ -26,25 +26,37 @@ export default class CreateAccount extends React.Component{
     this.props.dispatch(userActions.setEmail(email))
   }
 
-  // setPassword(e){
-  //   let password = e.target.value;
-  //   this.props.dispatch
-  // }
+  setPassword(e){
+    let password = e.target.value
+    this.props.dispatch(userActions.setPassword(password))
+    console.log(password);
+  }
 
+  createUser(e){
+    e.preventDefault();
+    let info = {
+      firstName: this.props.user.firstName,
+      lastName: this.props.user.lastName,
+      email: this.props.user.email,
+      password: this.props.user.password
+    }
+    console.log(info);
+    this.props.dispatch(userActions.createUser(info))
+
+  }
 
   render(){
     const { user } = this.props;
     const firstName = user.firstName;
     const { lastName } = this.props.user;
     const { email } = this.props.user
-    let pass = '';
 
     return (
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-4"></div>
           <div className="col-lg-4 col-lg-pull-4">
-            <form>
+            <form onSubmit={this.createUser.bind(this)}>
 
               <div className="form-group">
                 <label for="firstName">First Name: {firstName}</label>
@@ -64,7 +76,7 @@ export default class CreateAccount extends React.Component{
 
               <div className="form-group">
                 <label for="password">Password</label>
-                <input type="password" className="form-control" id="password" placeholder="Password"></input>
+                <input onChange={this.setPassword.bind(this)} type="password" className="form-control" id="password" placeholder="Password"></input>
               </div>
 
               <button disabled={!email} type="submit" className="btn btn-primary">Create Account</button>

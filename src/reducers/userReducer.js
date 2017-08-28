@@ -3,11 +3,15 @@ const initialState = {
     id: null,
     firstName: null,
     lastName: null,
-    email: null
+    email: null,
+    password: null,
   },
   fetching: false,
   fetched: false,
   error: null,
+  creatingUser: false,
+  createdUser: false,
+
 }
 
 export default function reducer(state=initialState, action){
@@ -42,6 +46,24 @@ export default function reducer(state=initialState, action){
       let newUserObj = {...state.user}
       newUserObj.email = action.payload
       let newState = {...state, user:newUserObj}
+      return newState
+    }
+    case "SET_PASSWORD":{
+      let newUserObj = {...state.user}
+      newUserObj.password = action.payload
+      let newState = {...state, user:newUserObj}
+      return newState
+    }
+    case "CREATE_USER":{
+      return {...state, creatingUser: true}
+    }
+    case "CREATE_USER_REJECTED":{
+      return {...state, creatingUser:false, error: action.payload}
+    }
+    case "CREATE_USER_FULFILLED":{
+      let newUserObj = {...state.user}
+      newUserObj = action.payload
+      let newState = {...state, user:newUserObj, creatingUser:false, createdUser:true}
       return newState
     }
   }

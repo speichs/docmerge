@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c09bcfd20f486c4cc7c0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fe534e0b27e6d68ea765"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -12438,6 +12438,7 @@ exports.fetchUser = fetchUser;
 exports.setFirstName = setFirstName;
 exports.setLastName = setLastName;
 exports.setEmail = setEmail;
+exports.setPassword = setPassword;
 exports.createUser = createUser;
 
 var _axios = __webpack_require__(302);
@@ -12479,10 +12480,20 @@ function setEmail(email) {
   };
 }
 
+function setPassword(password) {
+  return { type: "SET_PASSWORD",
+    payload: password };
+}
+
 function createUser(userInfo) {
   return function (dispatch) {
     dispatch({ type: "CREATE_USER" });
-    _axios2.default.post("/");
+    _axios2.default.post("users", userInfo).then(function (response) {
+      console.log(response);
+      dispatch({ type: "CREATE_USER_FULFILLED", payload: response.data });
+    }).catch(function (err) {
+      dispatch({ type: "CREATE_USER_REJECTED", payload: err });
+    });
   };
 }
 ;
@@ -12499,6 +12510,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(setLastName, "setLastName", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/userActions.js");
 
   __REACT_HOT_LOADER__.register(setEmail, "setEmail", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/userActions.js");
+
+  __REACT_HOT_LOADER__.register(setPassword, "setPassword", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/userActions.js");
 
   __REACT_HOT_LOADER__.register(createUser, "createUser", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/userActions.js");
 }();
@@ -20358,13 +20371,26 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
       var email = e.target.value;
       this.props.dispatch(userActions.setEmail(email));
     }
-
-    // setPassword(e){
-    //   let password = e.target.value;
-    //   this.props.dispatch
-    // }
-
-
+  }, {
+    key: 'setPassword',
+    value: function setPassword(e) {
+      var password = e.target.value;
+      this.props.dispatch(userActions.setPassword(password));
+      console.log(password);
+    }
+  }, {
+    key: 'createUser',
+    value: function createUser(e) {
+      e.preventDefault();
+      var info = {
+        firstName: this.props.user.firstName,
+        lastName: this.props.user.lastName,
+        email: this.props.user.email,
+        password: this.props.user.password
+      };
+      console.log(info);
+      this.props.dispatch(userActions.createUser(info));
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -20374,7 +20400,6 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
       var lastName = this.props.user.lastName;
       var email = this.props.user.email;
 
-      var pass = '';
 
       return _react2.default.createElement(
         'div',
@@ -20388,7 +20413,7 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
             { className: 'col-lg-4 col-lg-pull-4' },
             _react2.default.createElement(
               'form',
-              null,
+              { onSubmit: this.createUser.bind(this) },
               _react2.default.createElement(
                 'div',
                 { className: 'form-group' },
@@ -20435,7 +20460,7 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
                   { 'for': 'password' },
                   'Password'
                 ),
-                _react2.default.createElement('input', { type: 'password', className: 'form-control', id: 'password', placeholder: 'Password' })
+                _react2.default.createElement('input', { onChange: this.setPassword.bind(this), type: 'password', className: 'form-control', id: 'password', placeholder: 'Password' })
               ),
               _react2.default.createElement(
                 'button',
@@ -20673,11 +20698,15 @@ var initialState = {
     id: null,
     firstName: null,
     lastName: null,
-    email: null
+    email: null,
+    password: null
   },
   fetching: false,
   fetched: false,
-  error: null
+  error: null,
+  creatingUser: false,
+  createdUser: false
+
 };
 
 function reducer() {
@@ -20721,6 +20750,28 @@ function reducer() {
         _newUserObj2.email = action.payload;
         var _newState2 = _extends({}, state, { user: _newUserObj2 });
         return _newState2;
+      }
+    case "SET_PASSWORD":
+      {
+        var _newUserObj3 = _extends({}, state.user);
+        _newUserObj3.password = action.payload;
+        var _newState3 = _extends({}, state, { user: _newUserObj3 });
+        return _newState3;
+      }
+    case "CREATE_USER":
+      {
+        return _extends({}, state, { creatingUser: true });
+      }
+    case "CREATE_USER_REJECTED":
+      {
+        return _extends({}, state, { creatingUser: false, error: action.payload });
+      }
+    case "CREATE_USER_FULFILLED":
+      {
+        var _newUserObj4 = _extends({}, state.user);
+        _newUserObj4 = action.payload;
+        var _newState4 = _extends({}, state, { user: _newUserObj4, creatingUser: false, createdUser: true });
+        return _newState4;
       }
   }
   return state;

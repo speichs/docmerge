@@ -9,20 +9,25 @@ const saltRounds = 10;
 const secret = process.env.SECRET;
 
 router.post('/users', (req, res, next) => {
+  console.log("You arrived at the /users route");
   const body = req.body;
   if (!body.firstName) {
+    console.log('badname');
     return res.status(400)
       .set({ 'Content-Type': 'plain/text' })
       .send('First name must not be blank');
   } else if (!body.lastName) {
+    console.log('badlastname');
     return res.status(400)
       .set({ 'Content-Type': 'plain/text' })
       .send('Last Name must not be blank');
   } else if (!body.email) {
+    console.log('bademail');
     return res.status(400)
       .set({ 'Content-Type': 'plain/text' })
       .send('Email must not be blank');
   } else if (!body.password) {
+    console.log('badpass');
     return res.status(400)
       .set({ 'Content-Type': 'plain/text' })
       .send('Password must not be blank');

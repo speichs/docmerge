@@ -33,9 +33,21 @@ export function setEmail(email){
   }
 }
 
+export function setPassword(password){
+  return {type:"SET_PASSWORD",
+  payload: password}
+}
+
 export function createUser(userInfo){
   return function(dispatch){
     dispatch({type: "CREATE_USER"})
-    axios.post("/")
+    axios.post("users",userInfo)
+    .then((response)=>{
+      console.log(response);
+      dispatch({type: "CREATE_USER_FULFILLED", payload: response.data})
+    })
+    .catch((err)=>{
+      dispatch({type:"CREATE_USER_REJECTED", payload: err})
+    })
   }
 }

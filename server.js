@@ -21,10 +21,14 @@ module.exports = {
     app.use(cookieParser())
 
     app.use(token)
+
     app.use('/public', publicPath)
 
+    app.get('/', function (_, res) { res.sendFile(indexPath) })
+
+    app.use(users)
+
     app.use((req,res,next)=>{
-      console.log(secret);
       const token = req.cookies.token;
       if(token){
         jwt.verify(token, secret, (err, decoded)=>{
@@ -42,9 +46,6 @@ module.exports = {
 
 
 
-    app.get('/', function (_, res) { res.sendFile(indexPath) })
-
-    app.use(users)
 
     return app
   }
