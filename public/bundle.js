@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "fe534e0b27e6d68ea765"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6f9f1069d5132f925288"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -12489,7 +12489,6 @@ function createUser(userInfo) {
   return function (dispatch) {
     dispatch({ type: "CREATE_USER" });
     _axios2.default.post("users", userInfo).then(function (response) {
-      console.log(response);
       dispatch({ type: "CREATE_USER_FULFILLED", payload: response.data });
     }).catch(function (err) {
       dispatch({ type: "CREATE_USER_REJECTED", payload: err });
@@ -20322,6 +20321,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(178);
 
+var _reactRouterDom = __webpack_require__(758);
+
 var _store = __webpack_require__(122);
 
 var _store2 = _interopRequireDefault(_store);
@@ -20342,7 +20343,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
   return {
-    user: store.user.user
+    user: store.user.user,
+    redirect: store.user.createdUser
   };
 }), _dec(_class = function (_React$Component) {
   _inherits(CreateAccount, _React$Component);
@@ -20376,7 +20378,6 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
     value: function setPassword(e) {
       var password = e.target.value;
       this.props.dispatch(userActions.setPassword(password));
-      console.log(password);
     }
   }, {
     key: 'createUser',
@@ -20388,7 +20389,6 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
         email: this.props.user.email,
         password: this.props.user.password
       };
-      console.log(info);
       this.props.dispatch(userActions.createUser(info));
     }
   }, {
@@ -20399,7 +20399,14 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
       var firstName = user.firstName;
       var lastName = this.props.user.lastName;
       var email = this.props.user.email;
+      var redirect = this.props.redirect;
+      var _from = { from: { pathname: '/myprojects' } },
+          from = _from.from;
 
+
+      if (redirect) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: from });
+      }
 
       return _react2.default.createElement(
         'div',
@@ -20705,8 +20712,8 @@ var initialState = {
   fetched: false,
   error: null,
   creatingUser: false,
-  createdUser: false
-
+  createdUser: false,
+  redirect: false
 };
 
 function reducer() {
@@ -20769,8 +20776,14 @@ function reducer() {
     case "CREATE_USER_FULFILLED":
       {
         var _newUserObj4 = _extends({}, state.user);
-        _newUserObj4 = action.payload;
-        var _newState4 = _extends({}, state, { user: _newUserObj4, creatingUser: false, createdUser: true });
+        _newUserObj4 = {
+          id: action.payload.id,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          email: action.payload.email,
+          password: null
+        };
+        var _newState4 = _extends({}, state, { user: _newUserObj4, creatingUser: false, createdUser: true, redirect: true });
         return _newState4;
       }
   }

@@ -11,7 +11,7 @@ const initialState = {
   error: null,
   creatingUser: false,
   createdUser: false,
-
+  redirect:false,
 }
 
 export default function reducer(state=initialState, action){
@@ -62,8 +62,14 @@ export default function reducer(state=initialState, action){
     }
     case "CREATE_USER_FULFILLED":{
       let newUserObj = {...state.user}
-      newUserObj = action.payload
-      let newState = {...state, user:newUserObj, creatingUser:false, createdUser:true}
+      newUserObj = {
+        id: action.payload.id,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        password: null,
+      }
+      let newState = {...state, user:newUserObj, creatingUser:false, createdUser:true, redirect:true}
       return newState
     }
   }

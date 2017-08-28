@@ -1,12 +1,21 @@
 import React from 'react'
 import { connect } from "react-redux"
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from 'react-router-dom'
+
 import store from '../store'
 import * as userActions from '../actions/userActions'
 
 @connect((store)=>{
   return {
-    user: store.user.user
+    user: store.user.user,
+    redirect: store.user.createdUser
   }
 })
 
@@ -29,7 +38,6 @@ export default class CreateAccount extends React.Component{
   setPassword(e){
     let password = e.target.value
     this.props.dispatch(userActions.setPassword(password))
-    console.log(password);
   }
 
   createUser(e){
@@ -40,9 +48,7 @@ export default class CreateAccount extends React.Component{
       email: this.props.user.email,
       password: this.props.user.password
     }
-    console.log(info);
     this.props.dispatch(userActions.createUser(info))
-
   }
 
   render(){
@@ -50,6 +56,15 @@ export default class CreateAccount extends React.Component{
     const firstName = user.firstName;
     const { lastName } = this.props.user;
     const { email } = this.props.user
+    const { redirect } = this.props
+
+    const { from } = { from: { pathname:'/myprojects'} }
+
+    if(redirect){
+      return (
+        <Redirect to={from}/>
+      )
+    }
 
     return (
       <div className="container-fluid">

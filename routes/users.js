@@ -51,7 +51,7 @@ router.post('/users', (req, res, next) => {
     .then((newUser) => {
       console.log('you got here')
       const token = jwt.sign(newUser[0], secret);
-      res.cookie('token', token, { httpOnly: true }).send(newUser);
+      res.cookie('token', token, { httpOnly: true }).send(newUser[0]);
     })
     .catch((error) => {
       res.status(400)

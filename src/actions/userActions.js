@@ -43,7 +43,6 @@ export function createUser(userInfo){
     dispatch({type: "CREATE_USER"})
     axios.post("users",userInfo)
     .then((response)=>{
-      console.log(response);
       dispatch({type: "CREATE_USER_FULFILLED", payload: response.data})
     })
     .catch((err)=>{
