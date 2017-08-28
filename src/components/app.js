@@ -7,6 +7,7 @@ import {
 
 import Login from './Login'
 import MyProjects from './MyProjects'
+import CreateAccount from './CreateAccount'
 
 const App = () => (
   <Router>
@@ -14,13 +15,13 @@ const App = () => (
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/myprojects">MyProjects</Link></li>
+        <li><Link to="/createaccount">CreateAccount</Link></li>
       </ul>
       <Route exact path="/" component={Login}/>
       <Route path="/myprojects" component={MyProjects}/>
+      <Route path="/createaccount" component={CreateAccount}/>
     </div>
   </Router>
 )
-
-
 
 export default App

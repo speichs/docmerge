@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import store from '../store'
 import { fetchUser } from '../actions/userActions'
 
+
 @connect((store)=>{
   return {
     user: store.user.user.firstName,
@@ -17,7 +18,7 @@ export default class Login extends React.Component{
   }
 
   render(){
-    var { user } = this.props;
+    const { user } = this.props;
     return (
 
       <h1>{user}</h1>

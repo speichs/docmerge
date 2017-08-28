@@ -26,6 +26,24 @@ export default function reducer(state=initialState, action){
         user: action.payload,
       }
     }
+    case "SET_FIRSTNAME":{
+      let newUserObj = {...state.user}
+      newUserObj.firstName = action.payload
+      let newState = {...state, user:newUserObj}
+      return newState
+    }
+    case "SET_LASTNAME":{
+      let newUserObj = {...state.user}
+      newUserObj.lastName = action.payload
+      let newState = {...state, user:newUserObj}
+      return newState
+    }
+    case "SET_EMAIL":{
+      let newUserObj = {...state.user}
+      newUserObj.email = action.payload
+      let newState = {...state, user:newUserObj}
+      return newState
+    }
   }
   return state
 }
