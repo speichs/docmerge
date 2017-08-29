@@ -15,15 +15,14 @@ module.exports = {
     const publicPath = express.static(path.join(__dirname, 'public'))
     const token = require('./middleware/authCheck')
     const users = require('./routes/users.js')
-
+    const files = require('./routes/files.js');
 
     app.use(bodyParser.json())
     app.use(cookieParser())
 
     app.use(token)
-
     app.use('/public', publicPath)
-
+    app.use(files)
     app.get('/', function (_, res) { res.sendFile(indexPath) })
 
     app.use(users)
