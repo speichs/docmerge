@@ -1,7 +1,11 @@
 import React from 'react'
 import { Panel, Col } from 'react-bootstrap'
 import { connect } from "react-redux"
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
@@ -14,13 +18,17 @@ import * as fileActions from '../actions/fileActions'
 })
 
 export default class Project extends React.Component{
-  id:this.props.id;
-  
+
   render(){
-    <Col xs={6}>
-      <Panel text className="text-center" bsStyle="success">
-        {text}
-      </Panel>
-    </Col>
+    let route = `/project/${this.props.key}`
+    return(
+      <Col xs={6}>
+        <Link to={route}>
+        <Panel className="text-center" bsStyle="success">
+          {this.props.text}
+        </Panel>
+        </Link>
+      </Col>
+    )
   }
 }

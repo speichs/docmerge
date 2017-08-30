@@ -8,6 +8,7 @@ import {
 import Login from './Login'
 import MyProjects from './MyProjects'
 import CreateAccount from './CreateAccount'
+import DisplayProject from './DisplayProject'
 
 const App = () => (
   <Router>
@@ -20,6 +21,7 @@ const App = () => (
       <Route exact path="/" component={Login}/>
       <Route path="/myprojects" component={MyProjects}/>
       <Route path="/createaccount" component={CreateAccount}/>
+      <Route path="/project/:id" component={DisplayProject}></Route>
     </div>
   </Router>
 )

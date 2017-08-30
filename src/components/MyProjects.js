@@ -71,11 +71,9 @@ export default class MyProjects extends React.Component{
         <Row>
           <Col xs={6}>
             <Row>
-              <Col xs={6}>
-                <Panel bsStyle="success">
-                  Hello World This is a Panel
-                </Panel>
-              </Col>
+              {this.props.ownedFiles.map(e => (
+                  <Project key={e.id} text={e.name}></Project>
+                ))}
               <Col xs={6}>
                 <Panel bsStyle="success">
                   Hello World This is a Panel
