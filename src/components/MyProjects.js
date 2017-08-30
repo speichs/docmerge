@@ -1,13 +1,36 @@
 import React from 'react'
-import FileDnd from './FileDnd'
+import { connect } from "react-redux"
 import { Grid, Row, Panel, Col, Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 
+import Project from './Project.js'
+import FileDnd from './FileDnd'
+import store from '../store'
+import * as fileActions from '../actions/fileActions'
+
+@connect((store)=>{
+  return {
+    user: store.user.user,
+    redirect: store.user.createdUser,
+    ownedFiles: store.file.fetchedFiles,
+    hasFetched: store.file.fetchedOwnedFiles
+  }
+})
+
 
 export default class MyProjects extends React.Component{
-
+  componentWillMount(){
+    let id = this.props.user.id;
+    this.props.dispatch(fileActions.getOwnedFiles(id))
+  }
 
   render(){
+    if(!this.props.hasFetched){
+      return(
+        <h1>loading</h1>
+      )
+    }
+
     return (
       <Grid bsClass='container-fluid'>
         <Row>
@@ -17,7 +40,9 @@ export default class MyProjects extends React.Component{
         </Row>
 
         <Row>
-          <Col xs={12}></Col>
+          <Col xs={12}>
+            Files: {this.props.ownedFiles[0].name}
+          </Col>
         </Row>
 
         <Row>

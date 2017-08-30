@@ -10,6 +10,9 @@ const initialState = {
   creatingFile:false,
   createdFile:true,
   redirect:false,
+  fetchingOwnedFiles:false,
+  fetchedOwnedFiles:false,
+  fetchedFiles:[]
 }
 
 export default function reducer(state=initialState, action){
@@ -25,6 +28,25 @@ export default function reducer(state=initialState, action){
         id: action.payload.id,
         headers: [],
         data: action.payload.data
+      }
+    }
+    case "GET_OWNED_FILES":{
+      return {...state, fetchingOwnedFiles: true}
+    }
+    case "GET_OWNED_FILES_FULFILLED":{
+      let files = action.payload
+      return{
+        ...state,
+        fetchedFiles:files,
+        fetchingOwnedFiles:false,
+        fetchedOwnedFiles: true
+      }
+    }
+    case "GET_OWNED_FILES_REJECTED":{
+      return {
+        ...state,
+        fetchingOwnedFiles:false,
+        error:action.payload
       }
     }
   }

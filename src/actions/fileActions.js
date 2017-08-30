@@ -12,3 +12,16 @@ export function createFile(f){
     })
   }
 }
+
+export function getOwnedFiles(id){
+  return function(dispatch){
+    dispatch({type:"GET_OWNED_FILES"})
+    axios.get('http://localhost:8080/files/2')
+    .then((response)=>{
+      dispatch({type:"GET_OWNED_FILES_FULFILLED", payload: response.data})
+    })
+    .catch((err)=>{
+      dispatch({type:"GET_OWNED_FILES_REJECTED", payload:err})
+    })
+  }
+}
