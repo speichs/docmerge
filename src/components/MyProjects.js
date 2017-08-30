@@ -1,111 +1,94 @@
 import React from 'react'
 import FileDnd from './FileDnd'
+import { Grid, Row, Panel, Col, Button } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
+
 
 export default class MyProjects extends React.Component{
 
-  handledrop(e){
-    console.log(e.target)
-  }
 
   render(){
     return (
-      <div className="container-fluid">
-
-        <div className="row">
-          <div id="dnd" className="col-12">
+      <Grid bsClass='container-fluid'>
+        <Row>
+          <Col xs={2}>
             <FileDnd></FileDnd>
-          </div>
-        </div>
+          </Col>
+        </Row>
 
-        <div className="row">
-          <div className="col-5">
-            <button type="button" className="btn btn-primary">
-              <i className="fa fa-plus aria-hiden="true></i>
+        <Row>
+          <Col xs={12}></Col>
+        </Row>
+
+        <Row>
+          <Col xs={5}>
+            <Button bsSize="large" bsStyle="primary">
+              <FontAwesome className="fa-plus"></FontAwesome>
               Create New Project
-            </button>
-          </div>
-        </div>
+            </Button>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs={6}>
+            <h3 className="text-center">
+              My Projects
+            </h3>
+          </Col>
+          <Col xs={6}>
+            <h3 className="text-center">
+              Shared Projects
+            </h3>
+          </Col>
+        </Row>
 
 
-        <div className="row">
-          <div id='dndbox' className="col-5 push-4">
-            <p className="text-center">Drag and Drop File</p>
-          </div>
-        </div>
+        <Row>
+          <Col xs={6}>
+            <Row>
+              <Col xs={6}>
+                <Panel bsStyle="success">
+                  Hello World This is a Panel
+                </Panel>
+              </Col>
+              <Col xs={6}>
+                <Panel bsStyle="success">
+                  Hello World This is a Panel
+                </Panel>
+              </Col>
+            </Row>
+          </Col>
 
-        <div className="row">
-          <div className="col-1"></div>
-          <div className="col-4">
-            <h3 className="text-center">Your Projects</h3>
-            <div className="row">
-              <div className="col-6">
-                <div className="card">
-                  <div className="card-block">
-                    <h4 className="card-title">Card title</h4>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="card">
-                  <div className="card-block">
-                    <h4 className="card-title">Card title</h4>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="card">
-                  <div className="card-block">
-                    <h4 className="card-title">Card title</h4>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-2"></div>
-          <div className="col-4">
-            <h3 className="text-center">Shared Projects</h3>
-            <div className="row">
-              <div className="col-6">
-                <div className="card">
-                  <div className="card-block">
-                    <h4 className="card-title">Card title</h4>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-                <div className="col-6">
-                  <div className="card">
-                    <div className="card-block">
-                      <h4 className="card-title">Card title</h4>
-                      <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" className="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div className="col-1"></div>
-        </div>
+          <Col xs={6}>
+            <Row>
+              <Col xs={6}>
+                <Panel bsStyle="success">
+                  Shared Panel
+                </Panel>
+              </Col>
+              <Col xs={6}>
+                <Panel className="text-center" bsStyle="success">
+                  Shared Panel
+                </Panel>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
 
 
 
-        <div className="row">
-          <div className="col-2 push-10">
-            <button type="button" className="btn btn-primary">
-              <i className="fa fa-envelope-o" aria-hiden="true"></i>
-               Email Project
-            </button>
-          </div>
-        </div>
 
-    </div>
+        <Row>
+          <Col xs={5}>
+            <Button bsSize="large" bsStyle="primary">
+              <FontAwesome className="fa-envelope-o"></FontAwesome>
+              Create New Project
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
+
+
     )
   }
 }

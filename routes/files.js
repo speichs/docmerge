@@ -10,6 +10,7 @@ const secret = process.env.SECRET;
 
 
 router.post('/files', (req,res,next)=>{
+  console.log(req.body);
   let body = req.body;
   knex('users')
   .select('id')
@@ -23,6 +24,10 @@ router.post('/files', (req,res,next)=>{
       'owner_id'
     ]).then(lowerResult => res.send(lowerResult))
   })
+})
+
+router.get('/files', (req,res,next)=>{
+  res.send('hello from files')
 })
 
 

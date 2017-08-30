@@ -60,12 +60,13 @@ router.post('/users', (req, res, next) => {
     });
 });
 
-router.use((req, res, next) => {
-  if (req.user) {
-    return next();
-  }
-  res.sendStatus(401);
-});
+// router.use((req, res, next) => {
+//   console.log("router.use in users.js");
+//   if (req.user) {
+//     return next();
+//   }
+//   res.sendStatus(401);
+// });
 
 router.patch('/users', (req, res, next) => {
   const id = req.user.id;

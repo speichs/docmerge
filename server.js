@@ -27,13 +27,14 @@ module.exports = {
 
     app.use(users)
 
+
     app.use((req,res,next)=>{
       const token = req.cookies.token;
       if(token){
         jwt.verify(token, secret, (err, decoded)=>{
           if(err){
             res.clearCookie('token');
-            return next(error);
+            return next(err);
           }
           req.user = decoded;
           next()
@@ -43,7 +44,10 @@ module.exports = {
       }
     })
 
-
+    app.use('*', (req,res,next)=>{
+      console.log('you hit the route')
+      res.sendFile(indexPath)
+    })
 
 
     return app
