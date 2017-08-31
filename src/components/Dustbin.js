@@ -24,17 +24,20 @@ const dustbinTarget = {
   },
 };
 
-@connect((store)=>{
-  return {
-    user: store.user.user,
-    dustbins: store.dnd.dustbins,
-    boxes: store.dnd.boxes,
-  }
-})
+// @connect((store)=>{
+//   return {
+//     user: store.user.user,
+//     dustbins: store.dnd.dustbins,
+//     boxes: store.dnd.boxes,
+//   }
+// })
 
 class Dustbin extends Component {
   render() {
     const { accepts, isOver, canDrop, connectDropTarget, lastDroppedItem } = this.props;
+
+    console.log(isOver, lastDroppedItem, accepts)
+
     const isActive = isOver && canDrop;
 
     let backgroundColor = '#222';
@@ -43,7 +46,7 @@ class Dustbin extends Component {
     } else if (canDrop) {
       backgroundColor = 'darkkhaki';
     }
-
+    console.log(lastDroppedItem)
     return connectDropTarget(
       <div style={{ ...style, backgroundColor }}>
         {isActive ?

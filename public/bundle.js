@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9da3cb63a7926de13479"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "730f2ecd16f17740309b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -32219,7 +32219,7 @@ var _store2 = _interopRequireDefault(_store);
 
 var _dndActions = __webpack_require__(179);
 
-var fileActions = _interopRequireWildcard(_dndActions);
+var dndActions = _interopRequireWildcard(_dndActions);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -32261,19 +32261,17 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
           boxes = _props.boxes,
           dustbins = _props.dustbins;
 
-
+      console.log(dustbins);
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'div',
           { style: { overflow: 'hidden', clear: 'both' } },
-          dustbins.map(function (_ref, index) {
-            var accepts = _ref.accepts,
-                lastDroppedItem = _ref.lastDroppedItem;
+          dustbins.map(function (e, index) {
             return _react2.default.createElement(_Dustbin2.default, {
-              accepts: accepts,
-              lastDroppedItem: lastDroppedItem,
+              accepts: e.accepts,
+              lastDroppedItem: e.lastDroppedItem,
               onDrop: function onDrop(item) {
                 return _this2.handleDrop(index, item);
               },
@@ -32284,9 +32282,9 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
         _react2.default.createElement(
           'div',
           { style: { overflow: 'hidden', clear: 'both' } },
-          boxes.map(function (_ref2, index) {
-            var name = _ref2.name,
-                type = _ref2.type;
+          boxes.map(function (_ref, index) {
+            var name = _ref.name,
+                type = _ref.type;
             return _react2.default.createElement(_Box2.default, {
               name: name,
               type: type,
@@ -32618,10 +32616,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
-//import PropTypes from 'prop-types';
-
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -32647,6 +32641,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import PropTypes from 'prop-types';
+
 
 var style = {
   height: '12rem',
@@ -32667,13 +32663,15 @@ var dustbinTarget = {
   }
 };
 
-var Dustbin = (_dec = (0, _reactRedux.connect)(function (store) {
-  return {
-    user: store.user.user,
-    dustbins: store.dnd.dustbins,
-    boxes: store.dnd.boxes
-  };
-}), _dec(_class = function (_Component) {
+// @connect((store)=>{
+//   return {
+//     user: store.user.user,
+//     dustbins: store.dnd.dustbins,
+//     boxes: store.dnd.boxes,
+//   }
+// })
+
+var Dustbin = function (_Component) {
   _inherits(Dustbin, _Component);
 
   function Dustbin() {
@@ -32692,6 +32690,9 @@ var Dustbin = (_dec = (0, _reactRedux.connect)(function (store) {
           connectDropTarget = _props.connectDropTarget,
           lastDroppedItem = _props.lastDroppedItem;
 
+
+      console.log(isOver, lastDroppedItem, accepts);
+
       var isActive = isOver && canDrop;
 
       var backgroundColor = '#222';
@@ -32700,7 +32701,7 @@ var Dustbin = (_dec = (0, _reactRedux.connect)(function (store) {
       } else if (canDrop) {
         backgroundColor = 'darkkhaki';
       }
-
+      console.log(lastDroppedItem);
       return connectDropTarget(_react2.default.createElement(
         'div',
         { style: _extends({}, style, { backgroundColor: backgroundColor }) },
@@ -32716,7 +32717,7 @@ var Dustbin = (_dec = (0, _reactRedux.connect)(function (store) {
   }]);
 
   return Dustbin;
-}(_react.Component)) || _class);
+}(_react.Component);
 
 var _default = (0, _reactDnd.DropTarget)(function (props) {
   return props.accepts;
@@ -33351,6 +33352,9 @@ Object.defineProperty(exports, "__esModule", {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 exports.default = reducer;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var initialState = {
   dustbins: [{ accepts: ['glass'], lastDroppedItem: null }, { accepts: ['food'], lastDroppedItem: null }, { accepts: ['paper', 'glass'], lastDroppedItem: null }, { accepts: ['paper'], lastDroppedItem: null }],
   boxes: [{ name: 'Bottle', type: 'glass' }, { name: 'Banana', type: 'food' }, { name: 'Magazine', type: 'paper' }],
@@ -33365,9 +33369,14 @@ function reducer() {
     case "DROP_ITEM":
       {
         var newState = _extends({}, state);
-        newState.dustbins[index].lastDroppedItem = item;
-        if (!newState.droppedBoxNames.includes(item.name)) {
-          newState.droppedBoxNames.push(item.name);
+        var newDustbins = [].concat(_toConsumableArray(newState.dustbins));
+
+        console.log(newDustbins);
+        newDustbins[action.payload.index].lastDroppedItem = action.payload.item;
+
+        newState.dustbins = newDustbins;
+        if (!newState.droppedBoxNames.includes(action.payload.item.name)) {
+          newState.droppedBoxNames.push(action.payload.item.name);
         }
         return newState;
       }

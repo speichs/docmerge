@@ -17,9 +17,14 @@ export default function reducer(state=initialState, action){
   switch(action.type){
     case "DROP_ITEM":{
       let newState = {...state}
-      newState.dustbins[index].lastDroppedItem = item
-      if(!newState.droppedBoxNames.includes(item.name)){
-        newState.droppedBoxNames.push(item.name)
+      let newDustbins = [...newState.dustbins]
+
+      console.log(newDustbins);
+      newDustbins[action.payload.index].lastDroppedItem = action.payload.item
+
+      newState.dustbins = newDustbins
+      if(!newState.droppedBoxNames.includes(action.payload.item.name)){
+        newState.droppedBoxNames.push(action.payload.item.name)
       }
       return newState
     }

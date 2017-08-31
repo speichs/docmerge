@@ -6,7 +6,7 @@ import Dustbin from './Dustbin';
 import Box from './Box';
 import { connect } from 'react-redux'
 import store from '../store'
-import * as fileActions from '../actions/dndActions'
+import * as dndActions from '../actions/dndActions'
 
 @connect((store)=>{
   return {
@@ -25,14 +25,14 @@ class Container extends Component {
 
   render() {
     const { boxes, dustbins } = this.props;
-
+    console.log(dustbins);
     return (
       <div>
         <div style={{ overflow: 'hidden', clear: 'both' }}>
-          {dustbins.map(({ accepts, lastDroppedItem }, index) =>
+          {dustbins.map((e, index) =>
             <Dustbin
-              accepts={accepts}
-              lastDroppedItem={lastDroppedItem}
+              accepts={e.accepts}
+              lastDroppedItem={e.lastDroppedItem}
               onDrop={item => this.handleDrop(index, item)}
               key={index}
             />,
