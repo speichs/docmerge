@@ -11,7 +11,7 @@ const secret = process.env.SECRET;
 
 router.post('/files', (req,res,next)=>{
   console.log(req.body);
-  let body = req.body;
+  const body = req.body;
   knex('users')
   .select('id')
   .where('email', body.email)

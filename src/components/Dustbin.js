@@ -10,12 +10,13 @@ const style = {
   width: '12rem',
   marginRight: '1.5rem',
   marginBottom: '1.5rem',
-  color: 'white',
+  color: 'black',
   padding: '1rem',
   textAlign: 'center',
   fontSize: '1rem',
   lineHeight: 'normal',
   float: 'left',
+  border: '1px dashed black'
 };
 
 const dustbinTarget = {
@@ -24,13 +25,6 @@ const dustbinTarget = {
   },
 };
 
-// @connect((store)=>{
-//   return {
-//     user: store.user.user,
-//     dustbins: store.dnd.dustbins,
-//     boxes: store.dnd.boxes,
-//   }
-// })
 
 class Dustbin extends Component {
   render() {
@@ -40,7 +34,7 @@ class Dustbin extends Component {
 
     const isActive = isOver && canDrop;
 
-    let backgroundColor = '#222';
+    let backgroundColor = '#ffffff';
     if (isActive) {
       backgroundColor = 'darkgreen';
     } else if (canDrop) {

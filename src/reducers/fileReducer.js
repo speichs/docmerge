@@ -12,7 +12,12 @@ const initialState = {
   redirect:false,
   fetchingOwnedFiles:false,
   fetchedOwnedFiles:false,
-  fetchedFiles:[]
+  fetchedFiles:[],
+  filesExist:false,
+  sharedFiles:[],
+  fetchingSharedFiles: false,
+  fetchedSharedFiles: false,
+  sharesExist:false,
 }
 
 export default function reducer(state=initialState, action){
@@ -31,7 +36,7 @@ export default function reducer(state=initialState, action){
       }
     }
     case "GET_OWNED_FILES":{
-      return {...state, fetchingOwnedFiles: true}
+      return {...state, fetchingOwnedFiles:true}
     }
     case "GET_OWNED_FILES_FULFILLED":{
       let files = action.payload
@@ -39,7 +44,8 @@ export default function reducer(state=initialState, action){
         ...state,
         fetchedFiles:files,
         fetchingOwnedFiles:false,
-        fetchedOwnedFiles: true
+        fetchedOwnedFiles:true,
+        filesExist:true
       }
     }
     case "GET_OWNED_FILES_REJECTED":{
@@ -48,6 +54,16 @@ export default function reducer(state=initialState, action){
         fetchingOwnedFiles:false,
         error:action.payload
       }
+    }
+    case "GET_SHARED_FILES":{
+      return{...state, fetchingSharedFiles:true}
+    }
+    case "GET_SHARED_FILES_FULFILLED":{
+      let files = action.payload;
+      return{...state, sharedFiles: files, fetchingSharedFiles:false, fetchedSharedFiles:true, sharesExist:true}
+    }
+    case "GET_SHARED_FILES_REJECTED":{
+      return{...state, fetchingSharedFiles:false, error: action.payload}
     }
   }
   return state

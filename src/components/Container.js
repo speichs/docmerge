@@ -8,6 +8,8 @@ import { connect } from 'react-redux'
 import store from '../store'
 import * as dndActions from '../actions/dndActions'
 
+import { Row, Grid, Col } from 'react-bootstrap'
+
 @connect((store)=>{
   return {
     user: store.user.user,
@@ -27,29 +29,38 @@ class Container extends Component {
     const { boxes, dustbins } = this.props;
     console.log(dustbins);
     return (
-      <div>
-        <div style={{ overflow: 'hidden', clear: 'both' }}>
-          {dustbins.map((e, index) =>
-            <Dustbin
-              accepts={e.accepts}
-              lastDroppedItem={e.lastDroppedItem}
-              onDrop={item => this.handleDrop(index, item)}
-              key={index}
-            />,
-          )}
-        </div>
-
-        <div style={{ overflow: 'hidden', clear: 'both' }}>
-          {boxes.map(({ name, type }, index) =>
-            <Box
-              name={name}
-              type={type}
-              isDropped={this.isDropped(name)}
-              key={index}
-            />,
-          )}
-        </div>
-      </div>
+      <Grid bsClass='container-fluid'>
+        <Row>
+          <Col className='text-center' xs={12}>
+            <h1>Drag</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="text-center" xs={12}>
+            <div style={{ overflow: 'hidden', clear: 'both' }}>
+              {boxes.map((e, index) =>
+                <Box
+                  name={e.name}
+                  type={e.type}
+                  isDropped={this.isDropped(name)}
+                  key={index}
+                />,
+              )}
+            </div>
+            <h1>Drop</h1>
+            <div style={{ overflow: 'hidden', clear: 'both' }}>
+              {dustbins.map((e, index) =>
+                <Dustbin
+                  accepts={e.accepts}
+                  lastDroppedItem={e.lastDroppedItem}
+                  onDrop={item => this.handleDrop(index, item)}
+                  key={index}
+                />,
+              )}
+            </div>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 

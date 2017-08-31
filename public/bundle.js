@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "730f2ecd16f17740309b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7f964495bbe83f30f979"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -11175,6 +11175,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createFile = createFile;
 exports.getOwnedFiles = getOwnedFiles;
+exports.getSharedFiles = getSharedFiles;
 
 var _axios = __webpack_require__(284);
 
@@ -11203,6 +11204,19 @@ function getOwnedFiles(id) {
     });
   };
 }
+
+//insert a shareFile function
+
+function getSharedFiles(id) {
+  return function (dispatch) {
+    dispatch({ type: "GET_SHARED_FILES" });
+    _axios2.default.get("http://localhost:8080/share/" + id).then(function (response) {
+      dispatch({ type: "GET_SHARED_FILES_FULFILLED", payload: response.data });
+    }).catch(function (err) {
+      dispatch({ type: "GET_SHARED_FILES_REJECTED", payload: err });
+    });
+  };
+}
 ;
 
 var _temp = function () {
@@ -11213,6 +11227,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(createFile, "createFile", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 
   __REACT_HOT_LOADER__.register(getOwnedFiles, "getOwnedFiles", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
+
+  __REACT_HOT_LOADER__.register(getSharedFiles, "getSharedFiles", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 }();
 
 ;
@@ -32057,10 +32073,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
-//import PropTypes from 'prop-types';
-
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -32086,9 +32098,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import PropTypes from 'prop-types';
+
 
 var style = {
-  border: '1px dashed gray',
+  border: '1px solid blue',
   backgroundColor: 'white',
   padding: '0.5rem 1rem',
   marginRight: '1.5rem',
@@ -32105,13 +32119,15 @@ var boxSource = {
   }
 };
 
-var Box = (_dec = (0, _reactRedux.connect)(function (store) {
-  return {
-    user: store.user.user,
-    dustbins: store.dnd.dustbins,
-    boxes: store.dnd.boxes
-  };
-}), _dec(_class = function (_Component) {
+// @connect((store)=>{
+//   return {
+//     user: store.user.user,
+//     dustbins: store.dnd.dustbins,
+//     boxes: store.dnd.boxes,
+//   }
+// })
+
+var Box = function (_Component) {
   _inherits(Box, _Component);
 
   function Box() {
@@ -32144,7 +32160,7 @@ var Box = (_dec = (0, _reactRedux.connect)(function (store) {
   }]);
 
   return Box;
-}(_react.Component)) || _class);
+}(_react.Component);
 
 var _default = (0, _reactDnd.DragSource)(function (props) {
   return props.type;
@@ -32221,6 +32237,8 @@ var _dndActions = __webpack_require__(179);
 
 var dndActions = _interopRequireWildcard(_dndActions);
 
+var _reactBootstrap = __webpack_require__(404);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -32263,35 +32281,59 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
 
       console.log(dustbins);
       return _react2.default.createElement(
-        'div',
-        null,
+        _reactBootstrap.Grid,
+        { bsClass: 'container-fluid' },
         _react2.default.createElement(
-          'div',
-          { style: { overflow: 'hidden', clear: 'both' } },
-          dustbins.map(function (e, index) {
-            return _react2.default.createElement(_Dustbin2.default, {
-              accepts: e.accepts,
-              lastDroppedItem: e.lastDroppedItem,
-              onDrop: function onDrop(item) {
-                return _this2.handleDrop(index, item);
-              },
-              key: index
-            });
-          })
+          _reactBootstrap.Row,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { className: 'text-center', xs: 12 },
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Drag'
+            )
+          )
         ),
         _react2.default.createElement(
-          'div',
-          { style: { overflow: 'hidden', clear: 'both' } },
-          boxes.map(function (_ref, index) {
-            var name = _ref.name,
-                type = _ref.type;
-            return _react2.default.createElement(_Box2.default, {
-              name: name,
-              type: type,
-              isDropped: _this2.isDropped(name),
-              key: index
-            });
-          })
+          _reactBootstrap.Row,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { className: 'text-center', xs: 12 },
+            _react2.default.createElement(
+              'div',
+              { style: { overflow: 'hidden', clear: 'both' } },
+              boxes.map(function (e, index) {
+                return _react2.default.createElement(_Box2.default, {
+                  name: e.name,
+                  type: e.type,
+                  isDropped: _this2.isDropped(name),
+                  key: index
+                });
+              })
+            ),
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Drop'
+            ),
+            _react2.default.createElement(
+              'div',
+              { style: { overflow: 'hidden', clear: 'both' } },
+              dustbins.map(function (e, index) {
+                return _react2.default.createElement(_Dustbin2.default, {
+                  accepts: e.accepts,
+                  lastDroppedItem: e.lastDroppedItem,
+                  onDrop: function onDrop(item) {
+                    return _this2.handleDrop(index, item);
+                  },
+                  key: index
+                });
+              })
+            )
+          )
         )
       );
     }
@@ -32649,12 +32691,13 @@ var style = {
   width: '12rem',
   marginRight: '1.5rem',
   marginBottom: '1.5rem',
-  color: 'white',
+  color: 'black',
   padding: '1rem',
   textAlign: 'center',
   fontSize: '1rem',
   lineHeight: 'normal',
-  float: 'left'
+  float: 'left',
+  border: '1px dashed black'
 };
 
 var dustbinTarget = {
@@ -32662,14 +32705,6 @@ var dustbinTarget = {
     props.onDrop(monitor.getItem());
   }
 };
-
-// @connect((store)=>{
-//   return {
-//     user: store.user.user,
-//     dustbins: store.dnd.dustbins,
-//     boxes: store.dnd.boxes,
-//   }
-// })
 
 var Dustbin = function (_Component) {
   _inherits(Dustbin, _Component);
@@ -32695,7 +32730,7 @@ var Dustbin = function (_Component) {
 
       var isActive = isOver && canDrop;
 
-      var backgroundColor = '#222';
+      var backgroundColor = '#ffffff';
       if (isActive) {
         backgroundColor = 'darkgreen';
       } else if (canDrop) {
@@ -32938,7 +32973,13 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
     user: store.user.user,
     redirect: store.user.createdUser,
     ownedFiles: store.file.fetchedFiles,
-    hasFetched: store.file.fetchedOwnedFiles
+    hasFetchedOwned: store.file.fetchedOwnedFiles,
+    hasFetchedShared: store.file.fetchedSharedFiles,
+    sharedFiles: store.file.sharedFiles,
+    sharesExist: store.file.sharesExist,
+    filesExist: store.file.filesExist,
+    isFetchingOwned: store.file.fetchingOwnedFiles,
+    isFetchingShared: store.file.fetchingSharedFiles
   };
 }), _dec(_class = function (_React$Component) {
   _inherits(MyProjects, _React$Component);
@@ -32954,15 +32995,16 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
     value: function componentWillMount() {
       var id = this.props.user.id;
       this.props.dispatch(fileActions.getOwnedFiles(id));
+      this.props.dispatch(fileActions.getSharedFiles(id));
     }
   }, {
     key: 'render',
     value: function render() {
-      if (!this.props.hasFetched) {
+      if (this.props.isFetchingOwned || this.props.isFechingShared) {
         return _react2.default.createElement(
           'h1',
           null,
-          'loading'
+          'loading...'
         );
       }
 
@@ -32981,12 +33023,7 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
         _react2.default.createElement(
           _reactBootstrap.Row,
           null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 12 },
-            'Files: ',
-            this.props.ownedFiles[0].name
-          )
+          _react2.default.createElement(_reactBootstrap.Col, { xs: 12 })
         ),
         _react2.default.createElement(
           _reactBootstrap.Row,
@@ -33033,18 +33070,12 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
             _react2.default.createElement(
               _reactBootstrap.Row,
               null,
-              this.props.ownedFiles.map(function (e) {
-                return _react2.default.createElement(_Project2.default, { key: e.id, text: e.name });
-              }),
-              _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 6 },
-                _react2.default.createElement(
-                  _reactBootstrap.Panel,
-                  { bsStyle: 'success' },
-                  'Hello World This is a Panel'
-                )
-              )
+              this.props.hasFetchedOwned ? this.props.ownedFiles.map(function (e) {
+                return _react2.default.createElement(_Project2.default, {
+                  key: e.id,
+                  text: e.name,
+                  id: e.id });
+              }) : _react2.default.createElement('p', null)
             )
           ),
           _react2.default.createElement(
@@ -33053,24 +33084,12 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
             _react2.default.createElement(
               _reactBootstrap.Row,
               null,
-              _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 6 },
-                _react2.default.createElement(
-                  _reactBootstrap.Panel,
-                  { bsStyle: 'success' },
-                  'Shared Panel'
-                )
-              ),
-              _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 6 },
-                _react2.default.createElement(
-                  _reactBootstrap.Panel,
-                  { className: 'text-center', bsStyle: 'success' },
-                  'Shared Panel'
-                )
-              )
+              this.props.hasFetchedShared ? this.props.sharedFiles.map(function (e) {
+                return _react2.default.createElement(_Project2.default, {
+                  key: e.id,
+                  text: e.name,
+                  id: e.id });
+              }) : _react2.default.createElement('h1', null)
             )
           )
         ),
@@ -33178,7 +33197,8 @@ var Project = (_dec = (0, _reactRedux.connect)(function (store) {
           _react2.default.createElement(
             _reactBootstrap.Panel,
             { className: 'text-center', bsStyle: 'success' },
-            this.props.text
+            this.props.text,
+            this.props.id
           )
         )
       );
@@ -33425,7 +33445,12 @@ var initialState = {
   redirect: false,
   fetchingOwnedFiles: false,
   fetchedOwnedFiles: false,
-  fetchedFiles: []
+  fetchedFiles: [],
+  filesExist: false,
+  sharedFiles: [],
+  fetchingSharedFiles: false,
+  fetchedSharedFiles: false,
+  sharesExist: false
 };
 
 function reducer() {
@@ -33459,7 +33484,8 @@ function reducer() {
         return _extends({}, state, {
           fetchedFiles: files,
           fetchingOwnedFiles: false,
-          fetchedOwnedFiles: true
+          fetchedOwnedFiles: true,
+          filesExist: true
         });
       }
     case "GET_OWNED_FILES_REJECTED":
@@ -33468,6 +33494,19 @@ function reducer() {
           fetchingOwnedFiles: false,
           error: action.payload
         });
+      }
+    case "GET_SHARED_FILES":
+      {
+        return _extends({}, state, { fetchingSharedFiles: true });
+      }
+    case "GET_SHARED_FILES_FULFILLED":
+      {
+        var _files = action.payload;
+        return _extends({}, state, { sharedFiles: _files, fetchingSharedFiles: false, fetchedSharedFiles: true, sharesExist: true });
+      }
+    case "GET_SHARED_FILES_REJECTED":
+      {
+        return _extends({}, state, { fetchingSharedFiles: false, error: action.payload });
       }
   }
   return state;

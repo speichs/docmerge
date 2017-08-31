@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 //import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
+import { DragSource } from 'react-dnd'
 import { connect } from 'react-redux'
 import store from '../store'
 import * as fileActions from '../actions/dndActions'
 
+
 const style = {
-  border: '1px dashed gray',
+  border: '1px solid blue',
   backgroundColor: 'white',
   padding: '0.5rem 1rem',
   marginRight: '1.5rem',
@@ -23,14 +24,13 @@ const boxSource = {
   },
 };
 
-
-@connect((store)=>{
-  return {
-    user: store.user.user,
-    dustbins: store.dnd.dustbins,
-    boxes: store.dnd.boxes,
-  }
-})
+// @connect((store)=>{
+//   return {
+//     user: store.user.user,
+//     dustbins: store.dnd.dustbins,
+//     boxes: store.dnd.boxes,
+//   }
+// })
 class Box extends Component {
 
   render() {
@@ -47,6 +47,7 @@ class Box extends Component {
     );
   }
 }
+
 export default DragSource(props => props.type, boxSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),

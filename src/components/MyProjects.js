@@ -13,21 +13,25 @@ import * as fileActions from '../actions/fileActions'
     user: store.user.user,
     redirect: store.user.createdUser,
     ownedFiles: store.file.fetchedFiles,
-    hasFetched: store.file.fetchedOwnedFiles
+    hasFetchedOwned: store.file.fetchedOwnedFiles,
+    hasFetchedShared: store.file.fetchedSharedFiles,
+    sharedFiles: store.file.sharedFiles,
+    sharesExist: store.file.sharesExist,
+    filesExist: store.file.filesExist,
+    isFetchingOwned: store.file.fetchingOwnedFiles,
+    isFetchingShared: store.file.fetchingSharedFiles,
   }
 })
-
-
 export default class MyProjects extends React.Component{
   componentWillMount(){
     let id = this.props.user.id;
     this.props.dispatch(fileActions.getOwnedFiles(id))
+    this.props.dispatch(fileActions.getSharedFiles(id))
   }
-
   render(){
-    if(!this.props.hasFetched){
+    if(this.props.isFetchingOwned || this.props.isFechingShared){
       return(
-        <h1>loading</h1>
+        <h1>loading...</h1>
       )
     }
 
@@ -41,7 +45,7 @@ export default class MyProjects extends React.Component{
 
         <Row>
           <Col xs={12}>
-            Files: {this.props.ownedFiles[0].name}
+            {}
           </Col>
         </Row>
 
@@ -71,29 +75,29 @@ export default class MyProjects extends React.Component{
         <Row>
           <Col xs={6}>
             <Row>
-              {this.props.ownedFiles.map(e => (
-                  <Project key={e.id} text={e.name}></Project>
-                ))}
-              <Col xs={6}>
-                <Panel bsStyle="success">
-                  Hello World This is a Panel
-                </Panel>
-              </Col>
+              {
+                this.props.hasFetchedOwned ?
+                this.props.ownedFiles.map(e => (
+                  <Project
+                    key={e.id}
+                    text={e.name}
+                    id={e.id}>
+                  </Project>)) : <p></p>
+              }
             </Row>
           </Col>
 
           <Col xs={6}>
             <Row>
-              <Col xs={6}>
-                <Panel bsStyle="success">
-                  Shared Panel
-                </Panel>
-              </Col>
-              <Col xs={6}>
-                <Panel className="text-center" bsStyle="success">
-                  Shared Panel
-                </Panel>
-              </Col>
+              {
+                this.props.hasFetchedShared?
+                this.props.sharedFiles.map(e=>(
+                  <Project
+                    key={e.id}
+                    text={e.name}
+                    id = {e.id}>
+                  </Project>)): <h1></h1>
+              }
             </Row>
           </Col>
         </Row>

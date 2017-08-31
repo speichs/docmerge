@@ -25,3 +25,18 @@ export function getOwnedFiles(id){
     })
   }
 }
+
+//insert a shareFile function
+
+export function getSharedFiles(id){
+  return function(dispatch){
+    dispatch({type:"GET_SHARED_FILES"})
+    axios.get(`http://localhost:8080/share/${id}`)
+    .then((response)=>{
+      dispatch({type:"GET_SHARED_FILES_FULFILLED", payload: response.data})
+    })
+    .catch((err)=>{
+      dispatch({type:"GET_SHARED_FILES_REJECTED", payload:err})
+    })
+  }
+}
