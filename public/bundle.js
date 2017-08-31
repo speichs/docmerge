@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8964ee470e5bf3cf1e2c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e961b2d2ad67e698cd1f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -32188,8 +32188,6 @@ Object.defineProperty(exports, "__esModule", {
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _class;
-//import ItemTypes from './ItemTypes';
-
 
 var _react = __webpack_require__(0);
 
@@ -32303,14 +32301,6 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
     key: 'handleDrop',
     value: function handleDrop(index, item) {
       this.props.dispatch(dndActions.itemDrop(index, item));
-      // const { name } = item;
-      // let newState = {...this.state}
-      // console.log(newState);
-      // newState.dustbins[index].lastDroppedItem = item;
-      // if(!newState.droppedBoxNames.includes(name)){
-      //   newState.droppedBoxNames.push(name)
-      // }
-      // this.setState(newState)
     }
   }]);
 

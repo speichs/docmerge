@@ -4,10 +4,10 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import Dustbin from './Dustbin';
 import Box from './Box';
-//import ItemTypes from './ItemTypes';
 import { connect } from 'react-redux'
 import store from '../store'
 import * as fileActions from '../actions/dndActions'
+import 
 
 @connect((store)=>{
   return {
@@ -56,14 +56,6 @@ class Container extends Component {
 
   handleDrop(index, item) {
     this.props.dispatch(dndActions.itemDrop(index,item))
-    // const { name } = item;
-    // let newState = {...this.state}
-    // console.log(newState);
-    // newState.dustbins[index].lastDroppedItem = item;
-    // if(!newState.droppedBoxNames.includes(name)){
-    //   newState.droppedBoxNames.push(name)
-    // }
-    // this.setState(newState)
   }
 }
 
