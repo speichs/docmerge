@@ -7,7 +7,6 @@ import Box from './Box';
 import { connect } from 'react-redux'
 import store from '../store'
 import * as fileActions from '../actions/dndActions'
-import 
 
 @connect((store)=>{
   return {
