@@ -40,3 +40,16 @@ export function getSharedFiles(id){
     })
   }
 }
+
+export function getCurrentFile(id, shared){
+  return function(dispatch){
+    dispatch({type:"GETTING_CURRENT_FILES"})
+    dispatch({
+      type: "GOT_CURRENT_FILE",
+      payload: {
+        id: id,
+        shared: shared
+      }
+    })
+  }
+}

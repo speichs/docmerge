@@ -24,13 +24,6 @@ const boxSource = {
   },
 };
 
-// @connect((store)=>{
-//   return {
-//     user: store.user.user,
-//     dustbins: store.dnd.dustbins,
-//     boxes: store.dnd.boxes,
-//   }
-// })
 class Box extends Component {
 
   render() {
@@ -48,7 +41,7 @@ class Box extends Component {
   }
 }
 
-export default DragSource(props => props.type, boxSource, (connect, monitor) => ({
+export default DragSource('paper', boxSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 }))(Box)

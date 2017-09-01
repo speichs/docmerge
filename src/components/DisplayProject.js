@@ -27,12 +27,11 @@ export default class CreateAccount extends React.Component{
   }
   render(){
     return (
-      <h1>{
-
+      <h1>
+        {
         JSON.stringify(this.props.files.fetchedFiles)
-
-
-      }</h1>
+        }
+    </h1>
     )
   }
 }

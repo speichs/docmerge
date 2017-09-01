@@ -27,7 +27,7 @@ const App = () => (
 
       <Route path="/createaccount" component={CreateAccount}/>
 
-      <Route path="/project/:id" component={DisplayProject}></Route>
+      <Route path="/project/:id" component={Container}></Route>
 
       <Route path="/dnd" component={Container}></Route>
     </div>

@@ -1,9 +1,11 @@
 const initialState = {
-  file:{
+  currentFile:{
     id:null,
-    headers: [],
+    name:null,
     data: null
   },
+  isSettingCurrent:false,
+  currentFileKeys:[],
   fetching:false,
   fetched:false,
   error:null,
@@ -64,6 +66,34 @@ export default function reducer(state=initialState, action){
     }
     case "GET_SHARED_FILES_REJECTED":{
       return{...state, fetchingSharedFiles:false, error: action.payload}
+    }
+    case "GETTING_CURRENT_FILES":{
+      return {...state, isSettingCurrent:true}
+    }
+    case "GOT_CURRENT_FILE":{
+      let id = action.payload.id;
+      let isShared = action.payload.shared;
+      let currentFile = {...state.currentFile}
+      let currentFileKeys = [...state.currentFileKeys]
+      if(isShared=== "?true"){
+        let data = [...state.sharedFiles]
+        for(let i = 0; i < data.length; i++){
+          if(data[i].id === id){
+            currentFile = data[i];
+            currentFileKeys = Object.keys(currentFile);
+            return {...state, currentFile: currentFile, currentFileKeys: currentFileKeys, isSettingCurrent:false};
+          }
+        }
+      }else{
+        let data = [...state.fetchedFiles]
+        for(let i = 0; i < data.length; i++){
+          if(data[i].id === id){
+            currentFile = data[i];
+            currentFileKeys = Object.keys(currentFile);
+            return {...state, currentFile: currentFile, currentFileKeys: currentFileKeys, isSettingCurrent:false};
+          }
+        }
+      }
     }
   }
   return state

@@ -6,7 +6,6 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
 
@@ -16,7 +15,6 @@ import * as fileActions from '../actions/fileActions'
     redirect: store.user.createdUser
   }
 })
-
 export default class Project extends React.Component{
 
   render(){

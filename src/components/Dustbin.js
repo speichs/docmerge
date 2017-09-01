@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux'
 import store from '../store'
@@ -55,7 +54,7 @@ class Dustbin extends Component {
     );
   }
 }
-export default DropTarget(props => props.accepts, dustbinTarget, (connect, monitor) => ({
+export default DropTarget('paper', dustbinTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
