@@ -26,7 +26,6 @@ router.get('/share/:id', (req,res,next)=>{
   knex.select('*')
   .from('files')
   .innerJoin('client_files', 'files.id', 'client_files.file_id').then(result=>{
-    console.log('result', result)
     res.send(result)
   }
   )

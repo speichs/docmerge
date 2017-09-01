@@ -28,7 +28,7 @@ router.post('/files', (req,res,next)=>{
 
 router.get('/files/:id', (req,res,next)=>{
   let id = req.params.id
-  console.log('bitch you here');
+  console.log('bitch you here' + id);
   console.log(id);
   knex('files')
   .select('*')

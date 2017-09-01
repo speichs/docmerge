@@ -20,13 +20,12 @@ import * as fileActions from '../actions/fileActions'
 export default class Project extends React.Component{
 
   render(){
-    let route = `/project/${this.props.key}`
+    let route = `/project/${this.props.id}/?${this.props.shared}`
     return(
       <Col xs={6}>
         <Link to={route}>
         <Panel className="text-center" bsStyle="success">
           {this.props.text}
-          {this.props.id}
         </Panel>
         </Link>
       </Col>

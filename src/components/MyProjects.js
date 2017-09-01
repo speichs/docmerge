@@ -25,6 +25,7 @@ import * as fileActions from '../actions/fileActions'
 export default class MyProjects extends React.Component{
   componentWillMount(){
     let id = this.props.user.id;
+    console.log(id)
     this.props.dispatch(fileActions.getOwnedFiles(id))
     this.props.dispatch(fileActions.getSharedFiles(id))
   }
@@ -76,12 +77,13 @@ export default class MyProjects extends React.Component{
           <Col xs={6}>
             <Row>
               {
-                this.props.hasFetchedOwned ?
+                this.props.hasFetchedOwned && this.props.ownedFiles.length ?
                 this.props.ownedFiles.map(e => (
                   <Project
                     key={e.id}
                     text={e.name}
-                    id={e.id}>
+                    id={e.id}
+                    shared="false">
                   </Project>)) : <p></p>
               }
             </Row>
@@ -90,13 +92,15 @@ export default class MyProjects extends React.Component{
           <Col xs={6}>
             <Row>
               {
-                this.props.hasFetchedShared?
+                this.props.hasFetchedShared && this.props.sharedFiles.length?
                 this.props.sharedFiles.map(e=>(
                   <Project
                     key={e.id}
                     text={e.name}
-                    id = {e.id}>
-                  </Project>)): <h1></h1>
+                    id = {e.id}
+                    shared="true"
+                    >
+                  </Project>)): <h1>Nothing to Load</h1>
               }
             </Row>
           </Col>

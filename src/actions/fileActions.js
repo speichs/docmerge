@@ -16,7 +16,7 @@ export function createFile(f){
 export function getOwnedFiles(id){
   return function(dispatch){
     dispatch({type:"GET_OWNED_FILES"})
-    axios.get('http://localhost:8080/files/2')
+    axios.get('/files/3')
     .then((response)=>{
       dispatch({type:"GET_OWNED_FILES_FULFILLED", payload: response.data})
     })

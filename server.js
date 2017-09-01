@@ -47,7 +47,7 @@ module.exports = {
     })
 
     app.use('*', (req,res,next)=>{
-      console.log('you hit the route')
+      console.log('you hit the routey')
       res.sendFile(indexPath)
     })
 

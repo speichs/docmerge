@@ -11,6 +11,6 @@ const main = document.getElementById('main')
 
 ReactDOM.render(
   <Provider store={store}>
-  <App></App>
-</Provider>, main
+    <App></App>
+  </Provider>, main
 )

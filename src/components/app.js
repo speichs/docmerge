@@ -2,7 +2,8 @@ import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  withRouter,
 } from 'react-router-dom'
 
 import Login from './Login'
@@ -21,9 +22,13 @@ const App = () => (
         <li><Link to="/dnd">DND</Link></li>
       </ul>
       <Route exact path="/" component={Login}/>
+
       <Route path="/myprojects" component={MyProjects}/>
+
       <Route path="/createaccount" component={CreateAccount}/>
+
       <Route path="/project/:id" component={DisplayProject}></Route>
+
       <Route path="/dnd" component={Container}></Route>
     </div>
   </Router>
