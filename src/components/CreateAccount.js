@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from "react-redux"
-
 import {
   BrowserRouter as Router,
   Route,
@@ -52,12 +51,8 @@ export default class CreateAccount extends React.Component{
   }
 
   render(){
-    const { user } = this.props;
-    const firstName = user.firstName;
-    const { lastName } = this.props.user;
-    const { email } = this.props.user
-    const { redirect } = this.props
-
+    const { user, redirect } = this.props;
+    const { firstName, lastName, email }= user;
     const { from } = { from: { pathname:'/myprojects'} }
 
     if(redirect){

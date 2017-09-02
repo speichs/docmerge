@@ -2,7 +2,9 @@ const initialState = {
   currentFile:{
     id:null,
     name:null,
-    data: null
+    data: null,
+    map: null,
+    isProject: null,
   },
   isSettingCurrent:false,
   currentFileKeys:[],

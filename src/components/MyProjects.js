@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from "react-redux"
 import { Grid, Row, Panel, Col, Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import { Link } from 'react-router-dom'
 
 import Project from './Project.js'
 import FileDnd from './FileDnd'
@@ -23,12 +24,19 @@ import * as fileActions from '../actions/fileActions'
   }
 })
 export default class MyProjects extends React.Component{
+
   componentWillMount(){
     let id = this.props.user.id;
-    console.log(id)
     this.props.dispatch(fileActions.getOwnedFiles(id))
     this.props.dispatch(fileActions.getSharedFiles(id))
   }
+
+  handleNewProjClick(){
+    e.preventDefault()
+  }
+
+
+
   render(){
     if(this.props.isFetchingOwned || this.props.isFechingShared){
       return(
@@ -36,26 +44,25 @@ export default class MyProjects extends React.Component{
       )
     }
 
+    //NOTE: you might want to change FontAwesome className to name becuase the console keeps screaming at you
+
     return (
       <Grid bsClass='container-fluid'>
-        <Row>
-          <Col xs={2}>
-            <FileDnd></FileDnd>
-          </Col>
-        </Row>
 
         <Row>
           <Col xs={12}>
-            {}
+            {this.props.user.id}, {this.props.user.firstName}
           </Col>
         </Row>
 
         <Row>
-          <Col xs={5}>
+          <Col className='text-center' xs={4} xsPush={4}>
+            <Link to='/newproject'>
             <Button bsSize="large" bsStyle="primary">
               <FontAwesome className="fa-plus"></FontAwesome>
               Create New Project
             </Button>
+          </Link>
           </Col>
         </Row>
 

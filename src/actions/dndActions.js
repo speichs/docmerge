@@ -7,3 +7,5 @@ export function itemDrop(index, item){
     }
   }
 }
+
+//export function addBin(id, name, data)

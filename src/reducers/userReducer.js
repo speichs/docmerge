@@ -16,18 +16,21 @@ const initialState = {
 
 export default function reducer(state=initialState, action){
   switch (action.type){
-    case "FETCH_USER": {
+    case "LOGIN_USER": {
       return {...state, fetching: true}
     }
-    case "FETCH_USER_REJECTED": {
+    case "LOGIN_USER_REJECTED": {
         return {...state, fetching: false, error: action.payload}
     }
-    case "FETCH_USER_FULFILLED": {
+    case "LOGIN_USER_FULFILLED": {
+      let newUserObj = {...state.user}
+      newUserObj = action.payload
+      newUserObj.password = null
       return {
         ...state,
         fetching: false,
         fetched: true,
-        user: action.payload,
+        user: newUserObj,
       }
     }
     case "SET_FIRSTNAME":{
@@ -69,7 +72,13 @@ export default function reducer(state=initialState, action){
         email: action.payload.email,
         password: null,
       }
-      let newState = {...state, user:newUserObj, creatingUser:false, createdUser:true, redirect:true}
+      let newState = {
+        ...state,
+        user:newUserObj,
+        creatingUser:false,
+        createdUser:true,
+        redirect:true
+      }
       return newState
     }
   }

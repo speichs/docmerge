@@ -9,25 +9,25 @@ const saltRounds = 10;
 const secret = process.env.SECRET;
 
 router.post('/users', (req, res, next) => {
-  console.log("You arrived at the /users route");
+  // console.log("You arrived at the /users route");
   const body = req.body;
   if (!body.firstName) {
-    console.log('badname');
+    // console.log('badname');
     return res.status(400)
       .set({ 'Content-Type': 'plain/text' })
       .send('First name must not be blank');
   } else if (!body.lastName) {
-    console.log('badlastname');
+    // console.log('badlastname');
     return res.status(400)
       .set({ 'Content-Type': 'plain/text' })
       .send('Last Name must not be blank');
   } else if (!body.email) {
-    console.log('bademail');
+    // console.log('bademail');
     return res.status(400)
       .set({ 'Content-Type': 'plain/text' })
       .send('Email must not be blank');
   } else if (!body.password) {
-    console.log('badpass');
+    // console.log('badpass');
     return res.status(400)
       .set({ 'Content-Type': 'plain/text' })
       .send('Password must not be blank');
@@ -59,6 +59,8 @@ router.post('/users', (req, res, next) => {
         .send('Email already exists boo');
     });
 });
+
+// BELOW APP.USE WAS THERE IN OLD AUTH FILE
 
 // router.use((req, res, next) => {
 //   console.log("router.use in users.js");

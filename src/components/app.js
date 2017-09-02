@@ -1,4 +1,5 @@
 import React from 'react'
+import { Navbar, NavItem} from 'react-bootstrap'
 import {
   BrowserRouter as Router,
   Route,
@@ -15,6 +16,17 @@ import Container from './Container'
 const App = () => (
   <Router>
     <div>
+      {/* <Navbar>
+        <Link to="/">
+          <NavItem>Home</NavItem>
+        </Link>
+        <Link to="/myprojects">
+          <NavItem>My Projects</NavItem>
+        </Link>
+        <Link to="/createaccount">
+          <NavItem>Create Account</NavItem>
+        </Link>
+      </Navbar> */}
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/myprojects">MyProjects</Link></li>
@@ -28,6 +40,8 @@ const App = () => (
       <Route path="/createaccount" component={CreateAccount}/>
 
       <Route path="/project/:id" component={Container}></Route>
+
+      <Route path="/newproject" component={Container}></Route>
 
       <Route path="/dnd" component={Container}></Route>
     </div>
