@@ -6,6 +6,14 @@ const initialState = {
     map: null,
     isProject: null,
   },
+  currentProject:{
+    name: null,
+    data: null,
+    map: null,
+    isProject: true,
+  },
+  associativeFiles:[],
+  validName: false,
   isSettingCurrent:false,
   currentFileKeys:[],
   fetching:false,
@@ -27,16 +35,24 @@ const initialState = {
 export default function reducer(state=initialState, action){
   switch(action.type){
     case "CREATE_FILE":{
-      return {...state, creatingUser: true}
+      return {...state, creatingFile: true}
     }
     case "CREATE_FILE_REJECTED":{
-      return {...state, creatingUser:false, error: action.payload}
+      return {...state, creatingFile:false, error: action.payload}
     }
     case "CREATE_FILE_FULFILLED":{
-      let newFile = {
-        id: action.payload.id,
-        headers: [],
-        data: action.payload.data
+      let newFile = action.payload;
+      let copyFetchedFileArray = [...state.fetchedFiles]
+
+      let copyAssociativeArray = [...state.associativeFiles]
+      copyAssociativeArray.push(newFile)
+
+      copyFetchedFileArray.push(newFile);
+      return {
+        ...state,
+        fetchedFiles: copyFetchedFileArray, associativeFiles: copyAssociativeArray,
+        creatingFile:false,
+        createdFile:true
       }
     }
     case "GET_OWNED_FILES":{
@@ -71,6 +87,15 @@ export default function reducer(state=initialState, action){
     }
     case "GETTING_CURRENT_FILES":{
       return {...state, isSettingCurrent:true}
+    }
+    case "CHANGE_VALID_NAME":{
+      let bool = !state.validName
+      return {...state, validName: bool}
+    }
+    case "NAME_CURRENT_PROJECT":{
+      let proj = {...state.currentProject}
+      proj.name = action.payload
+      return {...state, currentProject: proj}
     }
     case "GOT_CURRENT_FILE":{
       let id = action.payload.id;

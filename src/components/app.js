@@ -12,6 +12,7 @@ import MyProjects from './MyProjects'
 import CreateAccount from './CreateAccount'
 import DisplayProject from './DisplayProject'
 import Container from './Container'
+import FileDnd from './FileDnd'
 
 const App = () => (
   <Router>
@@ -43,7 +44,7 @@ const App = () => (
 
       <Route path="/newproject" component={Container}></Route>
 
-      <Route path="/dnd" component={Container}></Route>
+      <Route path="/dnd" component={FileDnd}></Route>
     </div>
   </Router>
 )

@@ -17,7 +17,6 @@ import { Redirect } from 'react-router-dom'
 import store from '../store'
 import { fetchUser } from '../actions/userActions'
 
-
 @connect((store)=>{
   return {
     user: store.user.user.firstName,

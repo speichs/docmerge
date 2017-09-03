@@ -32,6 +32,8 @@ import * as fileActions from '../actions/fileActions'
     currentFile: store.file.currentFile,
     currentFileKeys: store.file.currentFileKeys,
     isSettingCurrent: store.file.isSettingCurrent,
+    currentProject: store.file.currentProject,
+    associativeFiles: store.file.associativeFiles,
     areDustbins: false,
   }
 })
@@ -59,8 +61,14 @@ class Container extends Component {
 
   render()
   {
-    const { boxes, dustbins, currentFileKeys, areDustbins } = this.props;
-
+    const {
+      boxes,
+      dustbins,
+      currentFileKeys,
+      areDustbins,
+      currentProject,
+      associativeFiles
+    } = this.props;
 
     //NOTE: keep this code - just needs to be transformed soi that it knows not to display this when we are doing newProject
     // if(this.props.isSettingCurrent){
@@ -72,6 +80,15 @@ class Container extends Component {
 
     return (
       <Grid bsClass='container-fluid'>
+
+        <Row>
+          <Col className='text-center' xs={4} xsPush={4}>
+            <h2>{currentProject.name}</h2>
+          </Col>
+        </Row>
+
+
+
         <Row>
           <Col className='text-center' xs={4} xsPush={4}>
             <FileDnd></FileDnd>
@@ -81,23 +98,28 @@ class Container extends Component {
         <Row>
           <Col className='text-center' xs={12}>
             <h1>Drag</h1>
-            <p>this.props.user.id</p>
+            <p>{this.props.user.id}</p>
           </Col>
         </Row>
 
         <Row>
           <Col className="text-center" xs={12}>
             <div style={{ overflow: 'hidden', clear: 'both' }}>
-              {currentFileKeys.map((e, index) =>
-                <Box
-                  name={e}
-                  isDropped={this.isDropped(name)}
-                  key={index}
-                />,
-              )}
+              {
+               associativeFiles.map((e, index) =>{
+                 let keys = Object.keys(e.data[0])
+                 return keys.map((el,ind)=>
+                 <Box
+                   fileId={e.id}
+                   name={el}
+                   isDropped={this.isDropped(name)}
+                   key={ind}
+                   >{e.name}</Box>)
+                })
+              }
             </div>
             <h1>Drop</h1>
-            <div style={{ overflow: 'hidden', clear: 'both' }}>
+            {/* <div style={{ overflow: 'hidden', clear: 'both' }}>
               {
                 areDustbins?
                 dustbins.map((e, index) =>
@@ -113,13 +135,13 @@ class Container extends Component {
                   </Col>
                 </Row>
               }
-            </div>
+            </div> */}
           </Col>
         </Row>
 
         <Row>
           <Col xs={4} xsPush={8}>
-            <Button onClick={this.handleSave}></Button>
+            <Button onClick={this.handleSave}>Save</Button>
           </Col>
         </Row>
       </Grid>

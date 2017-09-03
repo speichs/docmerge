@@ -1,6 +1,18 @@
 import React from 'react'
 import { connect } from "react-redux"
-import { Grid, Row, Panel, Col, Button } from 'react-bootstrap'
+import ReactDOM from 'react-dom'
+import {
+  Grid,
+  Row,
+  Panel,
+  Col,
+  Button,
+  Form,
+  FormControl,
+  FormGroup,
+  FieldGroup,
+  ControlLabel
+} from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { Link } from 'react-router-dom'
 
@@ -21,6 +33,8 @@ import * as fileActions from '../actions/fileActions'
     filesExist: store.file.filesExist,
     isFetchingOwned: store.file.fetchingOwnedFiles,
     isFetchingShared: store.file.fetchingSharedFiles,
+    validName: store.file.validName
+
   }
 })
 export default class MyProjects extends React.Component{
@@ -35,9 +49,26 @@ export default class MyProjects extends React.Component{
     e.preventDefault()
   }
 
+  handleSubmitName(e){
+    e.preventDefault()
+  }
+
+  handleProjectNameChange(e){
+    e.preventDefault()
+    let text = ReactDOM.findDOMNode(this.name).value
+    if(this.props.validName){
+      this.props.dispatch(fileActions.nameCurrentProject(text))
+    }
+    else if(text.length){
+      this.props.dispatch(fileActions.changeValidName())
+      this.props.dispatch(fileActions.nameCurrentProject(text))
+    }
+  }
+
 
 
   render(){
+
     if(this.props.isFetchingOwned || this.props.isFechingShared){
       return(
         <h1>loading...</h1>
@@ -57,14 +88,32 @@ export default class MyProjects extends React.Component{
 
         <Row>
           <Col className='text-center' xs={4} xsPush={4}>
-            <Link to='/newproject'>
             <Button bsSize="large" bsStyle="primary">
               <FontAwesome className="fa-plus"></FontAwesome>
               Create New Project
             </Button>
-          </Link>
           </Col>
         </Row>
+
+        <Row>
+          <Col xs={4} xsPush={4}>
+            <Form onSubmit={this.handleSubmitName.bind(this)}>
+              <FormGroup controlId='formHorizontalName'>
+                <ControlLabel>
+                  Name Your Project
+                </ControlLabel>
+                <FormControl onChange={this.handleProjectNameChange.bind(this)} ref={name=>{this.name = name}} type='text' placeholder='My_Project'>
+                </FormControl>
+              </FormGroup>
+              <Link to='/newproject'>
+                <Button bsStyle='primary' type="submit" disabled={!this.props.validName}>
+                  Get Started
+                </Button>
+              </Link>
+            </Form>
+          </Col>
+        </Row>
+
 
         <Row>
           <Col xs={6}>
@@ -110,18 +159,6 @@ export default class MyProjects extends React.Component{
                   </Project>)): <h1>Nothing to Load</h1>
               }
             </Row>
-          </Col>
-        </Row>
-
-
-
-
-        <Row>
-          <Col xs={5}>
-            <Button bsSize="large" bsStyle="primary">
-              <FontAwesome className="fa-envelope-o"></FontAwesome>
-              Create New Project
-            </Button>
           </Col>
         </Row>
       </Grid>

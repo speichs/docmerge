@@ -20,6 +20,7 @@ const boxSource = {
   beginDrag(props) {
     return {
       name: props.name,
+      fileId: props.fileId
     };
   },
 };
@@ -27,13 +28,13 @@ const boxSource = {
 class Box extends Component {
 
   render() {
-    const { name, isDropped, isDragging, connectDragSource } = this.props;
+    const { name, isDropped, isDragging, connectDragSource, fileId } = this.props;
     const opacity = isDragging ? 0.4 : 1;
 
     return connectDragSource(
       <div style={{ ...style, opacity }}>
         {isDropped ?
-          <s>{name}</s> :
+          <s>{name}, snooop</s> :
           name
         }
       </div>,

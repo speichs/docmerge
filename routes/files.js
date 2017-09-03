@@ -14,14 +14,15 @@ router.post('/files', (req,res,next)=>{
   .where('email', body.email)
   .then(upperResult => {
     knex('files')
-    .insert({data: JSON.stringify(body.data), owner_id: upperResult[0]["id"]})
+    .insert({name: body.name, data: JSON.stringify(body.data), owner_id: upperResult[0]["id"]})
     .returning([
       'id',
       'data',
+      'name',
       'map',
       'isProject',
       'owner_id'
-    ]).then(lowerResult => res.send(lowerResult))
+    ]).then(lowerResult => res.send(lowerResult[0]))
     .catch(err => res.sendStatus(404))
   })
 })

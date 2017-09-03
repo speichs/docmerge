@@ -53,3 +53,11 @@ export function getCurrentFile(id, shared){
     })
   }
 }
+
+export function changeValidName(){
+  return {type: "CHANGE_VALID_NAME"}
+}
+
+export function nameCurrentProject(name){
+  return {type: "NAME_CURRENT_PROJECT", payload: name}
+}
