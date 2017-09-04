@@ -88,19 +88,18 @@ class Container extends Component {
         </Row>
 
 
-
         <Row>
           <Col className='text-center' xs={4} xsPush={4}>
             <FileDnd></FileDnd>
           </Col>
         </Row>
 
-        <Row>
+        {/* <Row>
           <Col className='text-center' xs={12}>
             <h1>Drag</h1>
             <p>{this.props.user.id}</p>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row>
           <Col className="text-center" xs={12}>
@@ -118,7 +117,7 @@ class Container extends Component {
                 })
               }
             </div>
-            <h1>Drop</h1>
+            {/* <h1>Drop</h1> */}
             {/* <div style={{ overflow: 'hidden', clear: 'both' }}>
               {
                 areDustbins?
@@ -139,11 +138,11 @@ class Container extends Component {
           </Col>
         </Row>
 
-        <Row>
+        {/* <Row>
           <Col xs={4} xsPush={8}>
             <Button onClick={this.handleSave}>Save</Button>
           </Col>
-        </Row>
+        </Row> */}
       </Grid>
     );
   }
