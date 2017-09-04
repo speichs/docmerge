@@ -12,26 +12,11 @@ import {
 import store from '../store'
 import * as userActions from '../actions/userActions'
 
-@connect((store)=>{
-  return {
-    user: store.user.user,
-    redirect: store.user.createdUser,
-    files: store.file
-  }
-})
 
 export default class CreateAccount extends React.Component{
-  constructor(){
-    super()
-    console.log('hello world ')
-  }
   render(){
     return (
-      <h1>
-        {
-        JSON.stringify(this.props.files.fetchedFiles)
-        }
-    </h1>
+      <h1>Hello World from Display Proj {this.props.match.params.id}</h1>
     )
   }
 }

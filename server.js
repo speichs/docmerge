@@ -16,6 +16,7 @@ module.exports = {
     const token = require('./middleware/authCheck')
     const users = require('./routes/users.js')
     const files = require('./routes/files.js');
+    const share = require('./routes/share.js');
 
     app.use(bodyParser.json())
     app.use(cookieParser())
@@ -26,6 +27,7 @@ module.exports = {
     app.get('/', function (_, res) { res.sendFile(indexPath) })
 
     app.use(users)
+    app.use(share)
 
 
     app.use((req,res,next)=>{
@@ -45,7 +47,7 @@ module.exports = {
     })
 
     app.use('*', (req,res,next)=>{
-      console.log('you hit the route')
+      console.log('you hit the routey')
       res.sendFile(indexPath)
     })
 

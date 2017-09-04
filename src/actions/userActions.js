@@ -1,14 +1,15 @@
 import axios from "axios";
 
-export function fetchUser(){
-  return {
-    type: "FETCH_USER_FULFILLED",
-    payload:{
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      email: "test@gmail.com"
-    }
+export function fetchUser(user){
+  return function(dispatch){
+    dispatch({type:'LOGIN_USER'})
+    axios.post('token', user).then((response) => {
+      dispatch({type: "LOGIN_USER_FULFILLED", payload: response.data})
+    })
+    .catch((err) => {
+      dispatch({type: "LOGIN_USE_REJECTED",
+      payload: err})
+    })
   }
 }
 
