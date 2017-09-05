@@ -163,7 +163,7 @@ class Container extends Component {
 
         <Row>
           <Col className="text-center" xs={12}>
-            <Row>
+            <Row className='createSchemaButton'>
               <Col xs={4} xsPush={4}>
                 <Button
                   bsStyle="primary"
@@ -175,21 +175,24 @@ class Container extends Component {
                 </Button>
               </Col>
             </Row>
-            
-            <div style={{ overflow: 'hidden', clear: 'both' }}>
-              {
-               associativeFiles.map((e, index) =>{
-                 let keys = Object.keys(e.data[0])
-                 return keys.map((el,ind)=>
-                 <Box
-                   fileId={e.id}
-                   name={el}
-                   isDropped={this.isDropped(name)}
-                   key={ind}
-                   >{e.name}</Box>)
-                })
-              }
-            </div>
+            <Row>
+              <Col xs={10} xsPush={1}>
+                <div style={{ overflow: 'hidden', clear: 'both' }}>
+                  {
+                    associativeFiles.map((e, index) =>{
+                      let keys = Object.keys(e.data[0])
+                      return keys.map((el,ind)=>
+                      <Box
+                        fileId={e.id}
+                        name={el}
+                        isDropped={this.isDropped(name)}
+                        key={ind}
+                        >{e.name}</Box>)
+                      })
+                    }
+                  </div>
+              </Col>
+            </Row>
 
             <Row>
 

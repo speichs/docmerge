@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "11d783dc20ad5ced2521"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e27131a75428fcfd1386"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -13030,7 +13030,7 @@ exports = module.exports = __webpack_require__(749)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Pacifico|Roboto);", ""]);
 
 // module
-exports.push([module.i, "body{\n  font-family: 'Roboto', sans-serif;\n}\nh1{\n  font-family: 'Roboto', sans-serif;\n  font-weight: bold;\n}\n\nh3{\n  font-family: 'Roboto', sans-serif;\n}\n\n#dnd{\n  color: blue;\n  height:100px;\n}\n\n\n/*for file drag and drop box*/\n.dropzone{\n  height:200px;\n  width: 357px;\n  border: 1px dashed grey;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.innerDropzone{\n  align-self: center;\n  color: grey;\n}\n\n\n/*for login*/\n.loginCol{\n  background-color: rgb(36,49,60);\n  padding: 10%;\n}\n.loginRow{\n margin-top: 15%;\n}\n\n.loginForm{\n\n  background-color:\n}\n#welcomeLogin{\n  color: rgb(36,49,60);\n}\n.loginHeader{\n  color: white;\n}\n\n/*my project page panels*/\n.outerpanel{\n  border: none;\n  border-radius: 2%;\n  box-shadow: 3px 3px 0px 0px #888888;\n}\n.panel-body{\n  background-color: rgb(36,49,60);\n}\n.create{\n  margin:2%;\n}\n\n.createProjectRow{\n  margin-top:3%;\n}\n\n/*newProject Page*/\n.projNameRow{\n  margin-top: 3%;\n\n}\n.modal-container{\n  height: 15%;\n}\n.modal-content{\n  margin-top: 15%;\n}\n.modal-header{\n  align-self: center;\n}\n\n.filedragcol{\n  margin-bottom: 1%;\n}\n", ""]);
+exports.push([module.i, "body{\n  font-family: 'Roboto', sans-serif;\n}\nh1{\n  font-family: 'Roboto', sans-serif;\n  font-weight: bold;\n}\n\nh3{\n  font-family: 'Roboto', sans-serif;\n}\n\n#dnd{\n  color: blue;\n  height:100px;\n}\n\n\n/*for file drag and drop box*/\n.dropzone{\n  height:200px;\n  width: 357px;\n  border: 1px dashed grey;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.innerDropzone{\n  align-self: center;\n  color: grey;\n}\n\n\n/*for login*/\n.loginCol{\n  background-color: rgb(36,49,60);\n  padding: 10%;\n}\n.loginRow{\n margin-top: 10%;\n}\n\n.loginForm{\n}\n#welcomeLogin{\n  color: rgb(36,49,60);\n}\n.loginHeader{\n  color: white;\n}\n\n/*my project page panels*/\n.outerpanel{\n  border: none;\n  border-radius: 2%;\n  box-shadow: 3px 3px 0px 0px #888888;\n}\n.panel-body{\n  background-color: rgb(36,49,60);\n  color: white;\n  text-decoration: none;\n}\n\n.panel-body:hover{\n  text-decoration: none;\n}\n\na:hover{\n  text-decoration: none;\n}\n\n.create{\n  margin:2%;\n}\n\n.createProjectRow{\n  margin-top:3%;\n}\n\n/*newProject Page*/\n.projNameRow{\n  margin-top: 3%;\n\n}\n.modal-container{\n  height: 15%;\n}\n.modal-content{\n  margin-top: 15%;\n}\n.modal-header{\n  align-self: center;\n}\n\n.filedragcol{\n  margin-bottom: 1%;\n}\n\n.createSchemaButton{\n  margin-bottom: 2%;\n}\n", ""]);
 
 // exports
 
@@ -31168,7 +31168,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
             { className: 'text-center', xs: 12 },
             _react2.default.createElement(
               _reactBootstrap.Row,
-              null,
+              { className: 'createSchemaButton' },
               _react2.default.createElement(
                 _reactBootstrap.Col,
                 { xs: 4, xsPush: 4 },
@@ -31185,23 +31185,31 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
               )
             ),
             _react2.default.createElement(
-              'div',
-              { style: { overflow: 'hidden', clear: 'both' } },
-              associativeFiles.map(function (e, index) {
-                var keys = Object.keys(e.data[0]);
-                return keys.map(function (el, ind) {
-                  return _react2.default.createElement(
-                    _Box2.default,
-                    {
-                      fileId: e.id,
-                      name: el,
-                      isDropped: _this2.isDropped(name),
-                      key: ind
-                    },
-                    e.name
-                  );
-                });
-              })
+              _reactBootstrap.Row,
+              null,
+              _react2.default.createElement(
+                _reactBootstrap.Col,
+                { xs: 10, xsPush: 1 },
+                _react2.default.createElement(
+                  'div',
+                  { style: { overflow: 'hidden', clear: 'both' } },
+                  associativeFiles.map(function (e, index) {
+                    var keys = Object.keys(e.data[0]);
+                    return keys.map(function (el, ind) {
+                      return _react2.default.createElement(
+                        _Box2.default,
+                        {
+                          fileId: e.id,
+                          name: el,
+                          isDropped: _this2.isDropped(name),
+                          key: ind
+                        },
+                        e.name
+                      );
+                    });
+                  })
+                )
+              )
             ),
             _react2.default.createElement(
               _reactBootstrap.Row,
@@ -31701,29 +31709,24 @@ var Dustbin = function (_Component) {
 
       var isActive = isOver && canDrop;
       var backgroundColor = '#ffffff';
+      var color = 'black';
       if (isActive) {
-        backgroundColor = 'darkgreen';
+        backgroundColor = 'rgb(154,251,166)';
+        color = 'white';
       } else if (canDrop) {
-        backgroundColor = 'darkkhaki';
+        backgroundColor = 'rgb(15,46,0)';
+        color = 'white';
       }
-
-      console.log(lastDroppedItem);
 
       return connectDropTarget(_react2.default.createElement(
         'div',
-        { style: _extends({}, style, { backgroundColor: backgroundColor }) },
+        { style: _extends({}, style, { backgroundColor: backgroundColor, color: color }) },
         isActive ? 'Release to drop' : 'Header: ' + accepts.colName,
         lastDroppedItem && _react2.default.createElement(
           'p',
           null,
-          'Last dropped:',
+          'Dropped:',
           lastDroppedItem
-        ),
-        associatedFile && _react2.default.createElement(
-          'p',
-          null,
-          'associatedFile:',
-          associatedFile
         )
       ));
     }

@@ -39,12 +39,10 @@ h3{
   padding: 10%;
 }
 .loginRow{
- margin-top: 15%;
+ margin-top: 10%;
 }
 
 .loginForm{
-
-  background-color:
 }
 #welcomeLogin{
   color: rgb(36,49,60);
@@ -61,7 +59,18 @@ h3{
 }
 .panel-body{
   background-color: rgb(36,49,60);
+  color: white;
+  text-decoration: none;
 }
+
+.panel-body:hover{
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
 .create{
   margin:2%;
 }
@@ -87,4 +96,8 @@ h3{
 
 .filedragcol{
   margin-bottom: 1%;
+}
+
+.createSchemaButton{
+  margin-bottom: 2%;
 }

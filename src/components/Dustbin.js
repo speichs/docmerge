@@ -31,27 +31,24 @@ class Dustbin extends Component {
     const { accepts, isOver, canDrop, connectDropTarget, lastDroppedItem, associatedFile } = this.props;
     const isActive = isOver && canDrop;
     let backgroundColor = '#ffffff';
+    let color = 'black';
     if (isActive) {
-      backgroundColor = 'darkgreen';
+      backgroundColor = 'rgb(154,251,166)';
+      color = 'white';
     } else if (canDrop) {
-      backgroundColor = 'darkkhaki';
+      backgroundColor = 'rgb(15,46,0)';
+      color = 'white';
     }
 
-    console.log(lastDroppedItem)
-
     return connectDropTarget(
-      <div style={{ ...style, backgroundColor }}>
+      <div style={{ ...style, backgroundColor, color }}>
         {isActive ?
           'Release to drop' :
           `Header: ${accepts.colName}`
         }
 
         {lastDroppedItem &&
-          <p>Last dropped:{lastDroppedItem}</p>
-        }
-
-        {associatedFile &&
-          <p>associatedFile:{associatedFile}</p>
+          <p>Dropped:{lastDroppedItem}</p>
         }
 
       </div>,
