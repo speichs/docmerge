@@ -20,6 +20,7 @@ import Project from './Project.js'
 import FileDnd from './FileDnd'
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
+import * as showHideActions from '../actions/showhideactions'
 
 @connect((store)=>{
   return {
@@ -33,7 +34,8 @@ import * as fileActions from '../actions/fileActions'
     filesExist: store.file.filesExist,
     isFetchingOwned: store.file.fetchingOwnedFiles,
     isFetchingShared: store.file.fetchingSharedFiles,
-    validName: store.file.validName
+    validName: store.file.validName,
+    isCreateNew: store.showhide.isCreateNew
 
   }
 })
@@ -65,7 +67,13 @@ export default class MyProjects extends React.Component{
     }
   }
 
+  toggleNameProject(){
+    this.props.dispatch(showHideActions.toggleNameProject())
+  }
+
   render(){
+
+    const { isCreateNew } = this.props
 
     if(this.props.isFetchingOwned || this.props.isFechingShared){
       return(
@@ -78,29 +86,41 @@ export default class MyProjects extends React.Component{
 
         <Row className='createProjectRow'>
           <Col className='text-center' xs={4} xsPush={4}>
-            <Button bsSize="large" bsStyle="success">
-              <FontAwesome className="fa-plus create"></FontAwesome>
-              Create New Project
+            <Button
+              id='successbutton'
+              bsSize="large"
+              bsStyle="success"
+              onClick={this.toggleNameProject.bind(this)}
+            >
+              {
+                !isCreateNew?
+                <FontAwesome className="fa-plus create"></FontAwesome>:
+                <FontAwesome className="fa-minus create"></FontAwesome>
+
+              }
+              New Project
             </Button>
           </Col>
         </Row>
 
         <Row>
           <Col xs={4} xsPush={4}>
-            <Form onSubmit={this.handleSubmitName.bind(this)}>
-              <FormGroup controlId='formHorizontalName'>
-                <ControlLabel>
-                  Name Your Project
-                </ControlLabel>
-                <FormControl onChange={this.handleProjectNameChange.bind(this)} ref={name=>{this.name = name}} type='text' placeholder='My_Project'>
-                </FormControl>
-              </FormGroup>
-              <Link to='/newproject'>
-                <Button bsStyle='primary' type="submit" disabled={!this.props.validName}>
+            {
+              isCreateNew? <Form onSubmit={this.handleSubmitName.bind(this)}>
+                <FormGroup controlId='formHorizontalName'>
+                  <ControlLabel>
+                    Name Your Project
+                  </ControlLabel>
+                  <FormControl onChange={this.handleProjectNameChange.bind(this)} ref={name=>{this.name = name}} type='text' placeholder='My_Project'>
+                  </FormControl>
+                </FormGroup>
+                <Link to='/newproject'>
+                <Button id="successbutton" bsStyle='primary' type="submit" disabled={!this.props.validName}>
                   Get Started
                 </Button>
               </Link>
-            </Form>
+            </Form> : <h1></h1>
+            }
           </Col>
         </Row>
 

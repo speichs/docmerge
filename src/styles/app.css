@@ -101,3 +101,29 @@ a:hover{
 .createSchemaButton{
   margin-bottom: 2%;
 }
+/*Button*/
+
+#successbutton{
+  background-image:none;
+  background-color: rgba(8, 37, 67, .8);
+  border-color:rgba(8, 37, 67, .8);
+  color: white;
+  margin: 0;
+}
+#successbutton:focus,
+#successbutton.focus{
+  background-image:none;
+  background-color: rgba(8, 37, 67, .8);
+  border-color:rgba(8, 37, 67, .8);
+  color: white;
+}
+#successbutton:active{
+  background-image:none;
+  background-color: rgba(8, 37, 67, .8);
+  border-color:rgba(8, 37, 67, .8);
+  color: white;
+}
+#successbutton:hover{
+  background-color: rgb(8, 37, 67);
+  border-color: rgb(8, 37, 67);
+}

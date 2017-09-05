@@ -8,12 +8,13 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom'
-import { DropTarget } from 'react-dnd'
+import { DropTarget, DragSource } from 'react-dnd'
 import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 
 
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
+import * as showHideActions from '../actions/showhideactions'
 
 const dustbinTarget = {
   drop(props, monitor) {
@@ -21,10 +22,15 @@ const dustbinTarget = {
   },
 };
 
+const outerStyle = {
+
+}
+
 @connect((store)=>{
   return {
     user: store.user.user,
     file: store.file.file,
+    wasDropped: store.showhide.wasDropped,
   }
 })
 class fileDND extends React.Component{
@@ -49,15 +55,17 @@ class fileDND extends React.Component{
         that.props.dispatch(fileActions.createFile(obj))
       }
     })
+    this.props.dispatch(showHideActions.toggleDropColor())
   }
 
   render(){
-    const { connectDropTarget } = this.props
+    const { connectDropTarget, isOver, canDrop } = this.props
+
 
     return connectDropTarget(
       <div className="dragContiner">
         <div
-          onDrop = {this.handleDrop.bind(this)}
+          onDrop={this.handleDrop.bind(this)}
           className="dropzone">
           <h5 className='innerDropzone'>
             Drag and Drop Files

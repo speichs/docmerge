@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e27131a75428fcfd1386"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6d2b7e4b9e88e2eebfc9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -11771,6 +11771,10 @@ var _fileActions = __webpack_require__(133);
 
 var fileActions = _interopRequireWildcard(_fileActions);
 
+var _showhideactions = __webpack_require__(1142);
+
+var showHideActions = _interopRequireWildcard(_showhideactions);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -11787,10 +11791,13 @@ var dustbinTarget = {
   }
 };
 
+var outerStyle = {};
+
 var fileDND = (_dec = (0, _reactRedux.connect)(function (store) {
   return {
     user: store.user.user,
-    file: store.file.file
+    file: store.file.file,
+    wasDropped: store.showhide.wasDropped
   };
 }), _dec(_class = function (_React$Component) {
   _inherits(fileDND, _React$Component);
@@ -11823,11 +11830,15 @@ var fileDND = (_dec = (0, _reactRedux.connect)(function (store) {
           that.props.dispatch(fileActions.createFile(obj));
         }
       });
+      this.props.dispatch(showHideActions.toggleDropColor());
     }
   }, {
     key: 'render',
     value: function render() {
-      var connectDropTarget = this.props.connectDropTarget;
+      var _props = this.props,
+          connectDropTarget = _props.connectDropTarget,
+          isOver = _props.isOver,
+          canDrop = _props.canDrop;
 
 
       return connectDropTarget(_react2.default.createElement(
@@ -11869,6 +11880,8 @@ var _temp = function () {
   }
 
   __REACT_HOT_LOADER__.register(dustbinTarget, 'dustbinTarget', '/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/components/FileDnd.js');
+
+  __REACT_HOT_LOADER__.register(outerStyle, 'outerStyle', '/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/components/FileDnd.js');
 
   __REACT_HOT_LOADER__.register(fileDND, 'fileDND', '/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/components/FileDnd.js');
 
@@ -13030,7 +13043,7 @@ exports = module.exports = __webpack_require__(749)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Pacifico|Roboto);", ""]);
 
 // module
-exports.push([module.i, "body{\n  font-family: 'Roboto', sans-serif;\n}\nh1{\n  font-family: 'Roboto', sans-serif;\n  font-weight: bold;\n}\n\nh3{\n  font-family: 'Roboto', sans-serif;\n}\n\n#dnd{\n  color: blue;\n  height:100px;\n}\n\n\n/*for file drag and drop box*/\n.dropzone{\n  height:200px;\n  width: 357px;\n  border: 1px dashed grey;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.innerDropzone{\n  align-self: center;\n  color: grey;\n}\n\n\n/*for login*/\n.loginCol{\n  background-color: rgb(36,49,60);\n  padding: 10%;\n}\n.loginRow{\n margin-top: 10%;\n}\n\n.loginForm{\n}\n#welcomeLogin{\n  color: rgb(36,49,60);\n}\n.loginHeader{\n  color: white;\n}\n\n/*my project page panels*/\n.outerpanel{\n  border: none;\n  border-radius: 2%;\n  box-shadow: 3px 3px 0px 0px #888888;\n}\n.panel-body{\n  background-color: rgb(36,49,60);\n  color: white;\n  text-decoration: none;\n}\n\n.panel-body:hover{\n  text-decoration: none;\n}\n\na:hover{\n  text-decoration: none;\n}\n\n.create{\n  margin:2%;\n}\n\n.createProjectRow{\n  margin-top:3%;\n}\n\n/*newProject Page*/\n.projNameRow{\n  margin-top: 3%;\n\n}\n.modal-container{\n  height: 15%;\n}\n.modal-content{\n  margin-top: 15%;\n}\n.modal-header{\n  align-self: center;\n}\n\n.filedragcol{\n  margin-bottom: 1%;\n}\n\n.createSchemaButton{\n  margin-bottom: 2%;\n}\n", ""]);
+exports.push([module.i, "body{\n  font-family: 'Roboto', sans-serif;\n}\nh1{\n  font-family: 'Roboto', sans-serif;\n  font-weight: bold;\n}\n\nh3{\n  font-family: 'Roboto', sans-serif;\n}\n\n#dnd{\n  color: blue;\n  height:100px;\n}\n\n\n/*for file drag and drop box*/\n.dropzone{\n  height:200px;\n  width: 357px;\n  border: 1px dashed grey;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.innerDropzone{\n  align-self: center;\n  color: grey;\n}\n\n\n/*for login*/\n.loginCol{\n  background-color: rgb(36,49,60);\n  padding: 10%;\n}\n.loginRow{\n margin-top: 10%;\n}\n\n.loginForm{\n}\n#welcomeLogin{\n  color: rgb(36,49,60);\n}\n.loginHeader{\n  color: white;\n}\n\n/*my project page panels*/\n.outerpanel{\n  border: none;\n  border-radius: 2%;\n  box-shadow: 3px 3px 0px 0px #888888;\n}\n.panel-body{\n  background-color: rgb(36,49,60);\n  color: white;\n  text-decoration: none;\n}\n\n.panel-body:hover{\n  text-decoration: none;\n}\n\na:hover{\n  text-decoration: none;\n}\n\n.create{\n  margin:2%;\n}\n\n.createProjectRow{\n  margin-top:3%;\n}\n\n/*newProject Page*/\n.projNameRow{\n  margin-top: 3%;\n\n}\n.modal-container{\n  height: 15%;\n}\n.modal-content{\n  margin-top: 15%;\n}\n.modal-header{\n  align-self: center;\n}\n\n.filedragcol{\n  margin-bottom: 1%;\n}\n\n.createSchemaButton{\n  margin-bottom: 2%;\n}\n/*Button*/\n\n#successbutton{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n  margin: 0;\n}\n#successbutton:focus,\n#successbutton.focus{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#successbutton:active{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#successbutton:hover{\n  background-color: rgb(8, 37, 67);\n  border-color: rgb(8, 37, 67);\n}\n", ""]);
 
 // exports
 
@@ -17865,7 +17878,7 @@ var Login = (_dec = (0, _reactRedux.connect)(function (store) {
                         { xs: 12 },
                         _react2.default.createElement(
                           _reactBootstrap.Button,
-                          { block: true, bsSize: 'large', bsStyle: 'success', type: 'submit' },
+                          { id: 'successbutton', block: true, bsSize: 'large', bsStyle: 'success', type: 'submit' },
                           'Sign in'
                         )
                       )
@@ -30861,7 +30874,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var style = {
-  border: '1px solid blue',
+  border: '2px solid rgba(8, 37, 67, .8)',
   backgroundColor: 'white',
   padding: '0.5rem 1rem',
   marginRight: '1.5rem',
@@ -31175,6 +31188,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                 _react2.default.createElement(
                   _reactBootstrap.Button,
                   {
+                    id: 'successbutton',
                     bsStyle: 'primary',
                     bsSize: 'large',
                     onClick: this.handleAddSchemaClick.bind(this),
@@ -31311,10 +31325,15 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
           null,
           _react2.default.createElement(
             _reactBootstrap.Col,
-            { xs: 4, xsPush: 8 },
+            { xs: 2, xsPush: 9 },
             _react2.default.createElement(
               _reactBootstrap.Button,
-              { onClick: this.handleSave.bind(this) },
+              {
+                id: 'successbutton',
+                className: 'savebutton',
+                block: true,
+                bsSize: 'large',
+                onClick: this.handleSave.bind(this) },
               'Save'
             )
           )
@@ -31711,10 +31730,10 @@ var Dustbin = function (_Component) {
       var backgroundColor = '#ffffff';
       var color = 'black';
       if (isActive) {
-        backgroundColor = 'rgb(154,251,166)';
+        backgroundColor = '#00BF9A';
         color = 'white';
       } else if (canDrop) {
-        backgroundColor = 'rgb(15,46,0)';
+        backgroundColor = '#008975';
         color = 'white';
       }
 
@@ -31812,6 +31831,10 @@ var _fileActions = __webpack_require__(133);
 
 var fileActions = _interopRequireWildcard(_fileActions);
 
+var _showhideactions = __webpack_require__(1142);
+
+var showHideActions = _interopRequireWildcard(_showhideactions);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31834,7 +31857,8 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
     filesExist: store.file.filesExist,
     isFetchingOwned: store.file.fetchingOwnedFiles,
     isFetchingShared: store.file.fetchingSharedFiles,
-    validName: store.file.validName
+    validName: store.file.validName,
+    isCreateNew: store.showhide.isCreateNew
 
   };
 }), _dec(_class = function (_React$Component) {
@@ -31876,9 +31900,17 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
       }
     }
   }, {
+    key: 'toggleNameProject',
+    value: function toggleNameProject() {
+      this.props.dispatch(showHideActions.toggleNameProject());
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
+
+      var isCreateNew = this.props.isCreateNew;
+
 
       if (this.props.isFetchingOwned || this.props.isFechingShared) {
         return _react2.default.createElement(
@@ -31899,9 +31931,14 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
             { className: 'text-center', xs: 4, xsPush: 4 },
             _react2.default.createElement(
               _reactBootstrap.Button,
-              { bsSize: 'large', bsStyle: 'success' },
-              _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-plus create' }),
-              'Create New Project'
+              {
+                id: 'successbutton',
+                bsSize: 'large',
+                bsStyle: 'success',
+                onClick: this.toggleNameProject.bind(this)
+              },
+              !isCreateNew ? _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-plus create' }) : _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-minus create' }),
+              'New Project'
             )
           )
         ),
@@ -31911,7 +31948,7 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
           _react2.default.createElement(
             _reactBootstrap.Col,
             { xs: 4, xsPush: 4 },
-            _react2.default.createElement(
+            isCreateNew ? _react2.default.createElement(
               _reactBootstrap.Form,
               { onSubmit: this.handleSubmitName.bind(this) },
               _react2.default.createElement(
@@ -31931,11 +31968,11 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
                 { to: '/newproject' },
                 _react2.default.createElement(
                   _reactBootstrap.Button,
-                  { bsStyle: 'primary', type: 'submit', disabled: !this.props.validName },
+                  { id: 'successbutton', bsStyle: 'primary', type: 'submit', disabled: !this.props.validName },
                   'Get Started'
                 )
               )
-            )
+            ) : _react2.default.createElement('h1', null)
           )
         ),
         _react2.default.createElement(
@@ -32532,11 +32569,16 @@ var _dndReducer = __webpack_require__(492);
 
 var _dndReducer2 = _interopRequireDefault(_dndReducer);
 
+var _showhidereducer = __webpack_require__(1143);
+
+var _showhidereducer2 = _interopRequireDefault(_showhidereducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = (0, _redux.combineReducers)({
   user: _userReducer2.default,
-  file: _fileReducer2.default
+  file: _fileReducer2.default,
+  showhide: _showhidereducer2.default
 });
 
 exports.default = _default;
@@ -75996,6 +76038,93 @@ __webpack_require__(463);
 __webpack_require__(464);
 module.exports = __webpack_require__(462);
 
+
+/***/ }),
+/* 1142 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toggleNameProject = toggleNameProject;
+exports.toggleDropColor = toggleDropColor;
+function toggleNameProject() {
+  return { type: "TOGGLE_NAME_PROJECT" };
+}
+
+function toggleDropColor() {
+  return { type: "TOGGLE_DROP_COLOR" };
+}
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(toggleNameProject, "toggleNameProject", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/showhideactions.js");
+
+  __REACT_HOT_LOADER__.register(toggleDropColor, "toggleDropColor", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/showhideactions.js");
+}();
+
+;
+
+/***/ }),
+/* 1143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.default = reducer;
+var initialState = {
+  isCreateNew: false,
+  wasDropped: false
+};
+
+function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case "TOGGLE_NAME_PROJECT":
+      {
+        var bool = state.isCreateNew;
+        bool = !bool;
+        return _extends({}, state, { isCreateNew: bool });
+      }
+    case "TOGGLE_DROP_COLOR":
+      {
+        var _bool = state.wasDropped;
+        _bool = !_bool;
+        return _extends({}, state, { wasDropped: _bool });
+      }
+
+  }
+  return state;
+}
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(initialState, "initialState", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/reducers/showhidereducer.js");
+
+  __REACT_HOT_LOADER__.register(reducer, "reducer", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/reducers/showhidereducer.js");
+}();
+
+;
 
 /***/ })
 /******/ ]);

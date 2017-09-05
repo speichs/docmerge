@@ -166,6 +166,7 @@ class Container extends Component {
             <Row className='createSchemaButton'>
               <Col xs={4} xsPush={4}>
                 <Button
+                  id='successbutton'
                   bsStyle="primary"
                   bsSize='large'
                   onClick={this.handleAddSchemaClick.bind(this)}
@@ -262,8 +263,15 @@ class Container extends Component {
         </Row>
 
         <Row>
-          <Col xs={4} xsPush={8}>
-            <Button onClick={this.handleSave.bind(this)}>Save</Button>
+          <Col xs={2} xsPush={9}>
+            <Button
+              id='successbutton'
+              className='savebutton'
+              block
+              bsSize='large'
+              onClick={this.handleSave.bind(this)}>
+              Save
+            </Button>
           </Col>
         </Row>
 

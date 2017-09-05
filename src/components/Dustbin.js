@@ -33,10 +33,10 @@ class Dustbin extends Component {
     let backgroundColor = '#ffffff';
     let color = 'black';
     if (isActive) {
-      backgroundColor = 'rgb(154,251,166)';
+      backgroundColor = '#00BF9A';
       color = 'white';
     } else if (canDrop) {
-      backgroundColor = 'rgb(15,46,0)';
+      backgroundColor = '#008975';
       color = 'white';
     }
 
