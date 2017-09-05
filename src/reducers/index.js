@@ -6,5 +6,4 @@ import dnd from "./dndReducer"
 export default combineReducers({
   user,
    file,
-    dnd,
 })

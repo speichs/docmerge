@@ -1,12 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Roboto');
+body{
+  font-family: 'Roboto', sans-serif;
+}
+h1{
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+h3{
+  font-family: 'Roboto', sans-serif;
+}
+
 #dnd{
   color: blue;
   height:100px;
 }
 
+
 /*for file drag and drop box*/
 .dropzone{
   height:200px;
-  width: 350px;
+  width: 357px;
   border: 1px dashed grey;
   display: flex;
   align-items: center;
@@ -16,5 +30,61 @@
 .innerDropzone{
   align-self: center;
   color: grey;
-  
+}
+
+
+/*for login*/
+.loginCol{
+  background-color: rgb(36,49,60);
+  padding: 10%;
+}
+.loginRow{
+ margin-top: 15%;
+}
+
+.loginForm{
+
+  background-color:
+}
+#welcomeLogin{
+  color: rgb(36,49,60);
+}
+.loginHeader{
+  color: white;
+}
+
+/*my project page panels*/
+.outerpanel{
+  border: none;
+  border-radius: 2%;
+  box-shadow: 3px 3px 0px 0px #888888;
+}
+.panel-body{
+  background-color: rgb(36,49,60);
+}
+.create{
+  margin:2%;
+}
+
+.createProjectRow{
+  margin-top:3%;
+}
+
+/*newProject Page*/
+.projNameRow{
+  margin-top: 3%;
+
+}
+.modal-container{
+  height: 15%;
+}
+.modal-content{
+  margin-top: 15%;
+}
+.modal-header{
+  align-self: center;
+}
+
+.filedragcol{
+  margin-bottom: 1%;
 }

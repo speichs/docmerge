@@ -5,7 +5,7 @@ import store from '../store'
 import * as fileActions from '../actions/dndActions'
 
 const style = {
-  height: '12rem',
+  height: '6rem',
   width: '12rem',
   marginRight: '1.5rem',
   marginBottom: '1.5rem',
@@ -25,35 +25,40 @@ const dustbinTarget = {
 };
 
 
+
 class Dustbin extends Component {
   render() {
-    const { accepts, isOver, canDrop, connectDropTarget, lastDroppedItem } = this.props;
-
-    console.log(isOver, lastDroppedItem, accepts)
-
+    const { accepts, isOver, canDrop, connectDropTarget, lastDroppedItem, associatedFile } = this.props;
     const isActive = isOver && canDrop;
-
     let backgroundColor = '#ffffff';
     if (isActive) {
       backgroundColor = 'darkgreen';
     } else if (canDrop) {
       backgroundColor = 'darkkhaki';
     }
+
     console.log(lastDroppedItem)
+
     return connectDropTarget(
       <div style={{ ...style, backgroundColor }}>
         {isActive ?
           'Release to drop' :
-          `This dustbin accepts: ${accepts.join(', ')}`
+          `Header: ${accepts.colName}`
         }
 
         {lastDroppedItem &&
-          <p>Last dropped: {JSON.stringify(lastDroppedItem)}</p>
+          <p>Last dropped:{lastDroppedItem}</p>
         }
+
+        {associatedFile &&
+          <p>associatedFile:{associatedFile}</p>
+        }
+
       </div>,
     );
   }
 }
+
 export default DropTarget('paper', dustbinTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),

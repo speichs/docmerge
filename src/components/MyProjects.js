@@ -65,8 +65,6 @@ export default class MyProjects extends React.Component{
     }
   }
 
-
-
   render(){
 
     if(this.props.isFetchingOwned || this.props.isFechingShared){
@@ -75,21 +73,13 @@ export default class MyProjects extends React.Component{
       )
     }
 
-    //NOTE: you might want to change FontAwesome className to name becuase the console keeps screaming at you
-
     return (
       <Grid bsClass='container-fluid'>
 
-        <Row>
-          <Col xs={12}>
-            {this.props.user.id}, {this.props.user.firstName}
-          </Col>
-        </Row>
-
-        <Row>
+        <Row className='createProjectRow'>
           <Col className='text-center' xs={4} xsPush={4}>
-            <Button bsSize="large" bsStyle="primary">
-              <FontAwesome className="fa-plus"></FontAwesome>
+            <Button bsSize="large" bsStyle="success">
+              <FontAwesome className="fa-plus create"></FontAwesome>
               Create New Project
             </Button>
           </Col>
@@ -114,7 +104,6 @@ export default class MyProjects extends React.Component{
           </Col>
         </Row>
 
-
         <Row>
           <Col xs={6}>
             <h3 className="text-center">
@@ -127,7 +116,6 @@ export default class MyProjects extends React.Component{
             </h3>
           </Col>
         </Row>
-
 
         <Row>
           <Col xs={6}>
@@ -156,7 +144,7 @@ export default class MyProjects extends React.Component{
                     id = {e.id}
                     shared="true"
                     >
-                  </Project>)): <h1>Nothing to Load</h1>
+                  </Project>)): <h1></h1>
               }
             </Row>
           </Col>

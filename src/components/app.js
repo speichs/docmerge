@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NavItem} from 'react-bootstrap'
+import { Navbar, NavItem, Nav} from 'react-bootstrap'
 import {
   BrowserRouter as Router,
   Route,
@@ -17,23 +17,12 @@ import FileDnd from './FileDnd'
 const App = () => (
   <Router>
     <div>
-      {/* <Navbar>
-        <Link to="/">
-          <NavItem>Home</NavItem>
-        </Link>
-        <Link to="/myprojects">
-          <NavItem>My Projects</NavItem>
-        </Link>
-        <Link to="/createaccount">
-          <NavItem>Create Account</NavItem>
-        </Link>
-      </Navbar> */}
-      <ul>
+      {/* <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/myprojects">MyProjects</Link></li>
         <li><Link to="/createaccount">CreateAccount</Link></li>
         <li><Link to="/dnd">DND</Link></li>
-      </ul>
+      </ul> */}
       <Route exact path="/" component={Login}/>
 
       <Route path="/myprojects" component={MyProjects}/>

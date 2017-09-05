@@ -22,7 +22,7 @@ export default class Project extends React.Component{
     return(
       <Col xs={6}>
         <Link to={route}>
-        <Panel className="text-center" bsStyle="success">
+        <Panel  className="text-center outerpanel" bsStyle="success">
           {this.props.text}
         </Panel>
         </Link>

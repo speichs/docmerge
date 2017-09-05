@@ -3,7 +3,19 @@ import update from 'react/lib/update';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import { connect } from 'react-redux'
-import { Grid, Row, Col, Button } from 'react-bootstrap'
+import ReactDOM from 'react-dom'
+import {
+  Grid,
+  Row,
+  Col,
+  Button,
+  Modal,
+  FormGroup,
+  Form,
+  ControlLabel,
+  FormControl,
+
+} from 'react-bootstrap'
 import {
   BrowserRouter as Router,
   Route,
@@ -16,7 +28,7 @@ import Dustbin from './Dustbin';
 import Box from './Box';
 import FileDnd from './FileDnd'
 import store from '../store'
-import * as dndActions from '../actions/dndActions'
+//import * as dndActions from '../actions/dndActions'
 import * as fileActions from '../actions/fileActions'
 
 
@@ -24,9 +36,7 @@ import * as fileActions from '../actions/fileActions'
 @connect((store)=>{
   return {
     user: store.user.user,
-    dustbins: store.dnd.dustbins,
-    boxes: store.dnd.boxes,
-    droppedBoxNames: store.dnd.droppedBoxNames,
+    droppedBoxNames: store.file.droppedBoxNames,
     ownedFiles: store.file.fetchedFiles,
     sharedFiles: store.file.sharedFiles,
     currentFile: store.file.currentFile,
@@ -34,7 +44,9 @@ import * as fileActions from '../actions/fileActions'
     isSettingCurrent: store.file.isSettingCurrent,
     currentProject: store.file.currentProject,
     associativeFiles: store.file.associativeFiles,
-    areDustbins: false,
+    showHideSchemaMaker: store.file.showHideSchemaMaker,
+    validColName: store.file.validColName,
+    currentProjectSchema: store.file.currentProjectSchema,
   }
 })
 
@@ -49,15 +61,67 @@ class Container extends Component {
     this.props.dispatch(fileActions.getCurrentFile(id,shared))
   }
 
+  handleAddSchemaClick(){
+    this.props.dispatch(fileActions.showHideSchemaMaker())
+  }
+
+  hideSchemaMaker(){
+    this.props.dispatch(fileActions.showHideSchemaMaker())
+  }
+
+  handleColNameChange(){
+    let column = ReactDOM.findDOMNode(this.column).value
+    if(this.props.validColName){
+
+    }
+    else if(column.length){
+      this.props.dispatch(fileActions.updateValidColName())
+    }
+  }
+
   handleDrop(index, item) {
-    this.props.dispatch(dndActions.itemDrop(index,item))
+    this.props.dispatch(fileActions.itemDrop(index,item))
+  }
+
+  updatefile(){
+
+
+  }
+
+  showData(){
+
   }
 
   handleSave(){
+    let that = this
+    this.props.dispatch(fileActions.makeProjectData())
+
+    setTimeout(function(){
+      let obj = {
+        email: that.props.user.email,
+        data: that.props.currentProject
+      }
+      that.props.dispatch(fileActions.createProjectFile(obj))
+    }, 4000);
+
+    // let obj = {
+    //   email: this.props.user.email,
+    //   data: this.props.currentProject
+    // }
+    //
+    // this.props.dispatch(fileActions.createProjectFile(obj))
+
     //add in handling for the save of the project
     //here you could check if the path of the route says '/myproject ' if so you would save a new file,  if not you would save the existing file
   }
 
+  handleAddColumn(e){
+    e.preventDefault()
+    let column = ReactDOM.findDOMNode(this.column).value
+    this.props.dispatch(fileActions.addColToSchema(column))
+    ReactDOM.findDOMNode(this.column).value = ''
+    this.props.dispatch(fileActions.updateValidColName())
+  }
 
   render()
   {
@@ -67,7 +131,9 @@ class Container extends Component {
       currentFileKeys,
       areDustbins,
       currentProject,
-      associativeFiles
+      associativeFiles,
+      showHideSchemaMaker,
+      currentProjectSchema,
     } = this.props;
 
     //NOTE: keep this code - just needs to be transformed soi that it knows not to display this when we are doing newProject
@@ -82,27 +148,34 @@ class Container extends Component {
       <Grid bsClass='container-fluid'>
 
         <Row>
-          <Col className='text-center' xs={4} xsPush={4}>
+          <Col className='text-center projNameRow' xs={4} xsPush={4}>
             <h2>{currentProject.name}</h2>
           </Col>
         </Row>
 
 
-        <Row>
+        <Row className='filedragcol'>
           <Col className='text-center' xs={4} xsPush={4}>
             <FileDnd></FileDnd>
           </Col>
         </Row>
 
-        {/* <Row>
-          <Col className='text-center' xs={12}>
-            <h1>Drag</h1>
-            <p>{this.props.user.id}</p>
-          </Col>
-        </Row> */}
 
         <Row>
           <Col className="text-center" xs={12}>
+            <Row>
+              <Col xs={4} xsPush={4}>
+                <Button
+                  bsStyle="primary"
+                  bsSize='large'
+                  onClick={this.handleAddSchemaClick.bind(this)}
+                  block
+                >
+                  Create Schema
+                </Button>
+              </Col>
+            </Row>
+            
             <div style={{ overflow: 'hidden', clear: 'both' }}>
               {
                associativeFiles.map((e, index) =>{
@@ -117,32 +190,80 @@ class Container extends Component {
                 })
               }
             </div>
-            {/* <h1>Drop</h1> */}
-            {/* <div style={{ overflow: 'hidden', clear: 'both' }}>
-              {
-                areDustbins?
-                dustbins.map((e, index) =>
-                <Dustbin
-                  accepts={e.accepts}
-                  lastDroppedItem={e.lastDroppedItem}
-                  onDrop={item => this.handleDrop(index, item)}
-                  key={index}
-                />) :
-                <Row>
-                  <Col xs={3}>
-                    <Button onClick={this.genBin}>Generate Schema</Button>
-                  </Col>
-                </Row>
-              }
-            </div> */}
+
+            <Row>
+
+              <Col xs={6}>
+                  <Modal
+                    className='modal'
+                    show={showHideSchemaMaker}
+                  >
+                    <Modal.Header>
+                      <Modal.Title  id="contained-modal-title">
+                        CreateSchema
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form>
+                        <FormGroup controlId='formHorizontalName'>
+                          <ControlLabel>
+                            Set New Column Header
+                          </ControlLabel>
+                          <FormControl
+                            ref={column=>{this.column = column}}
+                            type='text'
+                            placeholder='Header_1'
+                            onChange={this.handleColNameChange.bind(this)}
+                            >
+                          </FormControl>
+                        </FormGroup>
+                        <Button
+                          bsStyle='primary'
+                          type="submit"
+                          disabled={false}
+                          onClick={this.handleAddColumn.bind(this)}
+                          >
+                          Add Header
+                        </Button>
+                      </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        onClick={this.hideSchemaMaker.bind(this)}
+                      >
+                        Close
+                    </Button>
+                    </Modal.Footer>
+                  </Modal>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={10} xsPush={1}>
+                <div style={{ overflow: 'hidden', clear: 'both' }}>
+                  {
+                    currentProjectSchema.map((e, index) =>
+                    <Dustbin
+                      accepts={e}
+                      lastDroppedItem={e.lastDroppedItem}
+                      associatedFile={e.associatedFile}
+                      onDrop={item => this.handleDrop(index, item)}
+                      key={index}
+                    />)
+                  }
+                </div>
+              </Col>
+            </Row>
+
           </Col>
         </Row>
 
-        {/* <Row>
+        <Row>
           <Col xs={4} xsPush={8}>
-            <Button onClick={this.handleSave}>Save</Button>
+            <Button onClick={this.handleSave.bind(this)}>Save</Button>
           </Col>
-        </Row> */}
+        </Row>
+
       </Grid>
     );
   }

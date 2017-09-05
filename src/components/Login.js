@@ -39,38 +39,56 @@ export default class Login extends React.Component{
 
   render(){
     const { user, userFetched } = this.props;
+    const blank = '   '
     if(!userFetched){
       return (
-        <Grid>
-          <Row>
+        <Grid className='loginGrid'>
+          <Row className='loginRow'>
             <Col xs={4} xsPush={4}>
-              <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
-                <FormGroup controlId="formHorizontalEmail">
-                  <Col componentClass={ControlLabel} sm={2}>
-                    Email
-                  </Col>
-                  <Col sm={10}>
-                    <FormControl ref={email=>{this.email = email}} type="email" placeholder="Email" />
-                  </Col>
-                </FormGroup>
+              <Row>
+                <Col className='text-center' xs={12}>
+                  <h1 id='welcomeLogin'>Welcome to DocMerge</h1>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                </Col>
+              </Row>
 
-                <FormGroup controlId="formHorizontalPassword">
-                  <Col componentClass={ControlLabel} sm={2}>
-                    Password
-                  </Col>
-                  <Col sm={10}>
-                    <FormControl ref={password=>{this.password = password}}type="password" placeholder="Password" />
-                  </Col>
-                </FormGroup>
+              <Row>
+                <Col className='loginCol text-center' xs={12}>
 
-                <FormGroup>
-                  <Col smOffset={2} sm={10}>
-                    <Button bsStyle='success' type="submit">
-                      Sign in
-                    </Button>
-                  </Col>
-                </FormGroup>
-              </Form>
+                  <h4 className='loginHeader'>Login</h4>
+                  <Form className= 'loginForm' horizontal onSubmit={this.handleSubmit.bind(this)}
+                  >
+                    <FormGroup controlId="formHorizontalEmail">
+                      {/* <Col  componentClass={ControlLabel} sm={2}>
+                      </Col> */}
+                      <Col sm={12}>
+                        <FormControl ref={email=>{this.email = email}} type="email" placeholder="Email" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup controlId="formHorizontalPassword">
+                      {/* <Col componentClass={ControlLabel} sm={2}>
+                      </Col> */}
+                      <Col sm={12}>
+                        <FormControl ref={password=>{this.password = password}}type="password" placeholder="Password" />
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                      <Col  xs={12} >
+                        <Button block bsSize='large' bsStyle='success' type="submit">
+                          Sign in
+                        </Button>
+                      </Col>
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
+
+
             </Col>
           </Row>
         </Grid>

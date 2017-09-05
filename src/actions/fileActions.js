@@ -25,7 +25,6 @@ export function getOwnedFiles(id){
     })
   }
 }
-
 //insert a shareFile function
 
 export function getSharedFiles(id){
@@ -60,4 +59,45 @@ export function changeValidName(){
 
 export function nameCurrentProject(name){
   return {type: "NAME_CURRENT_PROJECT", payload: name}
+}
+
+export function showHideSchemaMaker(){
+  return {type: "SHOW_HIDE_SCHEMA_MAKER"}
+}
+
+export function addColToSchema(col){
+  return {type: "ADD_COL_TO_SCHEMA", payload: col}
+}
+
+export function updateValidColName(){
+  return {type: "UPDATE_VALID_COL_NAME"}
+}
+
+export function itemDrop(index, item){
+  return {
+    type: "DROP_ITEM",
+    payload:{
+      index:index,
+      item:item
+    }
+  }
+}
+
+export function makeProjectData(user){
+  return function(dispatch){
+    dispatch({type: "MAKE_PROJECT_DATA"})
+  }
+}
+
+export function createProjectFile(f){
+  return function(dispatch){
+    dispatch({type:"CREATE_PROJECT_FILE"})
+    axios.post("projects", f)
+    .then((response)=>{
+      dispatch({type:"CREATE_PROJECT_FILE_FULFILLED", payload: response.data})
+    })
+    .catch((err)=>{
+      dispatch({type:"CREATE_PROJECT_FILE_REJECTED", payload:err})
+    })
+  }
 }

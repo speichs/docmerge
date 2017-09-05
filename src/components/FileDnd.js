@@ -50,26 +50,19 @@ class fileDND extends React.Component{
       }
     })
   }
-  //
-  // handleDragOver(e){
-  //   e.preventDefault();
-  // }
 
   render(){
     const { connectDropTarget } = this.props
 
     return connectDropTarget(
-      // <div className="dragContiner">
-      //   <div onDrop={this.handleDrop.bind(this)}
-      //   onDragOver={this.handleDragOver.bind(this)} className="dropzone">
-      //     <h5 className='innerDropzone'>Drag and Drop Files</h5>
-      //   </div>
-      // </div>
       <div className="dragContiner">
         <div
           onDrop = {this.handleDrop.bind(this)}
           className="dropzone">
-          <h5 className='innerDropzone'>Drag and Drop Files</h5>
+          <h5 className='innerDropzone'>
+            Drag and Drop Files
+          </h5>
+          <img src='src/pics/green_csv.png'></img>
         </div>
       </div>
     )

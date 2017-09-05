@@ -1,3 +1,28 @@
+function instantiateSchema(schema){
+  let obj = {}
+  schema.forEach(e => obj[e.colName] = null)
+  return obj
+}
+
+function mapData(schema, files){
+  let frameObj = instantiateSchema(schema)
+  let newData = [];
+  for(let i = 0; i < files.length; i++){
+    let data = files[i].data
+    for(let j = 0; j < data.length; j++){
+      let obj = Object.assign({}, frameObj)
+      for(let k = 0; k < schema.length; k++){
+        if(data[j].hasOwnProperty(schema[k].lastDroppedItem)){
+          obj[schema[k].colName] = data[j][schema[k].lastDroppedItem]
+        }
+      }
+      newData.push(obj)
+    }
+  }
+  return newData
+}
+
+
 const initialState = {
   currentFile:{
     id:null,
@@ -12,6 +37,10 @@ const initialState = {
     map: null,
     isProject: true,
   },
+  validColName: false,
+  currentProjectSchema: [],
+  droppedBoxNames:[],
+  showHideSchemaMaker:true,
   associativeFiles:[],
   validName: false,
   isSettingCurrent:false,
@@ -122,6 +151,77 @@ export default function reducer(state=initialState, action){
         }
       }
     }
+    case "SHOW_HIDE_SCHEMA_MAKER":{
+      let bool = state.showHideSchemaMaker
+      bool = !bool
+      return {...state, showHideSchemaMaker: bool}
+    }
+    case "ADD_COL_TO_SCHEMA":{
+      let copyCurrentProjectSchema = [...state.currentProjectSchema]
+      copyCurrentProjectSchema.push({colName: action.payload, lastDroppedItem:null})
+
+      return {
+        ...state,
+        currentProjectSchema: copyCurrentProjectSchema
+      }
+    }
+    case "UPDATE_VALID_COL_NAME":{
+      let bool = {...state.validColName}
+      bool = !bool
+      return {...state, validColName: bool}
+    }
+    case "DROP_ITEM":{
+      let index = action.payload.index
+      let item = action.payload.item
+      let copyDropped = [...state.droppedBoxNames]
+
+      if(!copyDropped.includes(item.name)){
+        copyDropped.push(item.name)
+      }else{
+        copyDropped = copyDropped
+      }
+
+      let copySchema=[...state.currentProjectSchema]
+      copySchema[index].lastDroppedItem = item.name
+      copySchema[index].associatedFile = item.fileId
+
+      return {
+        ...state,
+        currentProjectSchema:copySchema,
+        droppedBoxNames: copyDropped
+      }
+    }
+    case "MAKE_PROJECT_DATA":{
+      let projectData = mapData(state.currentProjectSchema, state.associativeFiles);
+      console.log(projectData);
+      let copyProject = {...state.currentProject}
+      console.log(copyProject);
+      copyProject.data = projectData;
+      console.log(copyProject);
+      copyProject.map = [...state.currentProjectSchema]
+      console.log(copyProject);
+      return {...state, currentProject: copyProject}
+    }
+    case "CREATE_PROJECT_FILE":{
+      return {...state, creatingFile: true}
+    }
+    case "CREATE_PROJECT_FILE_REJECTED":{
+      return {...state, creatingFile:false, error: action.payload}
+    }
+    case "CREATE_PROJECT_FILE_FULFILLED":{
+      let newFile = action.payload;
+      let copyFetchedFileArray = [...state.fetchedFiles]
+      copyFetchedFileArray.push(newFile);
+      return {
+        ...state,
+        fetchedFiles: copyFetchedFileArray,
+        creatingFile:false,
+        createdFile:true
+      }
+    }
+
+
+
   }
   return state
 }
