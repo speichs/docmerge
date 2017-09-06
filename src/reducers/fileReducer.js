@@ -253,6 +253,21 @@ export default function reducer(state=initialState, action){
     case "UPDATE_PROJECT_FILE":{
       return {...state, updatingProjectFile: true}
     }
+    case "CLEAR_CURRENT_PROJECT":{
+      let clearedProject = {
+        id:null,
+        name: action.payload,
+        data: null,
+        map: null,
+        isProject: true,
+      }
+      return {
+        ...state,
+        currentProject : clearedProject,
+        currentProjectSchema : [],
+        droppedBoxNames : []
+      }
+    }
     case "UPDATE_PROJECT_FILE_FULFILLED":{
       return {...state, updatingProjectFile: false, updatedProjectFile: true}
     }

@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom'
 
 import Project from './Project.js'
 import FileDnd from './FileDnd'
+import CustomNav from './CustomNav'
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
 import * as showHideActions from '../actions/showhideactions'
@@ -82,78 +83,77 @@ export default class MyProjects extends React.Component{
     }
 
     return (
-      <Grid bsClass='container-fluid'>
+        <Grid bsClass='container-fluid'>
+          <Row className='createProjectRow'>
+            <Col className='text-center' xs={4} xsPush={4}>
+              <Button
+                id='successbutton'
+                bsSize="large"
+                bsStyle="success"
+                onClick={this.toggleNameProject.bind(this)}
+                >
+                  {
+                    !isCreateNew?
+                    <FontAwesome className="fa-plus create"></FontAwesome>:
+                    <FontAwesome className="fa-minus create"></FontAwesome>
 
-        <Row className='createProjectRow'>
-          <Col className='text-center' xs={4} xsPush={4}>
-            <Button
-              id='successbutton'
-              bsSize="large"
-              bsStyle="success"
-              onClick={this.toggleNameProject.bind(this)}
-            >
-              {
-                !isCreateNew?
-                <FontAwesome className="fa-plus create"></FontAwesome>:
-                <FontAwesome className="fa-minus create"></FontAwesome>
-
-              }
-              New Project
-            </Button>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={4} xsPush={4}>
-            {
-              isCreateNew? <Form onSubmit={this.handleSubmitName.bind(this)}>
-                <FormGroup controlId='formHorizontalName'>
-                  <ControlLabel>
-                    Name Your Project
-                  </ControlLabel>
-                  <FormControl onChange={this.handleProjectNameChange.bind(this)} ref={name=>{this.name = name}} type='text' placeholder='My_Project'>
-                  </FormControl>
-                </FormGroup>
-                <Link to='/newproject'>
-                <Button id="successbutton" bsStyle='primary' type="submit" disabled={!this.props.validName}>
-                  Get Started
-                </Button>
-              </Link>
-            </Form> : <h1></h1>
-            }
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={6}>
-            <h3 className="text-center">
-              My Projects
-            </h3>
-          </Col>
-          <Col xs={6}>
-            <h3 className="text-center">
-              Shared Projects
-            </h3>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={6}>
-            <Row>
-              {
-                this.props.hasFetchedOwned?
-                this.props.ownedFiles.map(e =>{
-                  if(e.isProject){
-                    return(
-                      <Project
-                        key={e.id}
-                        text={e.name}
-                        id={e.id}
-                        shared="false">
-                      </Project>
-                    )
                   }
-                }
+                  New Project
+                </Button>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={4} xsPush={4}>
+                {
+                  isCreateNew? <Form onSubmit={this.handleSubmitName.bind(this)}>
+                    <FormGroup controlId='formHorizontalName'>
+                      <ControlLabel>
+                        Name Your Project
+                      </ControlLabel>
+                      <FormControl onChange={this.handleProjectNameChange.bind(this)} ref={name=>{this.name = name}} type='text' placeholder='My_Project'>
+                      </FormControl>
+                    </FormGroup>
+                    <Link to='/newproject'>
+                    <Button id="successbutton" bsStyle='primary' type="submit" disabled={!this.props.validName}>
+                      Get Started
+                    </Button>
+                  </Link>
+                </Form> : <h1></h1>
+              }
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs={6}>
+              <h3 className="text-center">
+                My Projects
+              </h3>
+            </Col>
+            <Col xs={6}>
+              <h3 className="text-center">
+                Shared Projects
+              </h3>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs={6}>
+              <Row>
+                {
+                  this.props.hasFetchedOwned?
+                  this.props.ownedFiles.map(e =>{
+                    if(e.isProject){
+                      return(
+                        <Project
+                          key={e.id}
+                          text={e.name}
+                          id={e.id}
+                          shared="false">
+                        </Project>
+                      )
+                    }
+                  }
                 ):<p>Nothing</p>
               }
             </Row>
@@ -170,12 +170,13 @@ export default class MyProjects extends React.Component{
                     id = {e.id}
                     shared="true"
                     >
-                  </Project>)): <h1></h1>
-              }
+                    </Project>)): <h1></h1>
+                  }
+                </Row>
+              </Col>
             </Row>
-          </Col>
-        </Row>
-      </Grid>
+          </Grid>
+
 
 
     )

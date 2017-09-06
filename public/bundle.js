@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1e22e5da4901129a7715"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6492115f6de1c245d7b2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -8392,6 +8392,8 @@ exports.createProjectFile = createProjectFile;
 exports.sendEmail = sendEmail;
 exports.updateProjectData = updateProjectData;
 exports.updateProjectFile = updateProjectFile;
+exports.clearCurrentProject = clearCurrentProject;
+exports.shareProject = shareProject;
 
 var _axios = __webpack_require__(285);
 
@@ -8532,6 +8534,23 @@ function updateProjectFile(obj) {
     });
   };
 }
+
+function clearCurrentProject(name) {
+  return function (dispatch) {
+    dispatch({ type: "CLEAR_CURRENT_PROJECT", payload: name });
+  };
+}
+
+function shareProject(obj) {
+  return function (dispatch) {
+    dispatch({ type: "SHARE_PROJECT" });
+    _axios2.default.post("http://localhost:8080/share", obj).then(function (response) {
+      dispatch({ type: "SHARE_PROJECT_FULFILLED", payload: response.data });
+    }).catch(function (err) {
+      dispatch({ type: "SHARE_PROJECT_REJECTED", payload: err });
+    });
+  };
+}
 ;
 
 var _temp = function () {
@@ -8570,6 +8589,10 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(updateProjectData, "updateProjectData", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 
   __REACT_HOT_LOADER__.register(updateProjectFile, "updateProjectFile", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
+
+  __REACT_HOT_LOADER__.register(clearCurrentProject, "clearCurrentProject", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
+
+  __REACT_HOT_LOADER__.register(shareProject, "shareProject", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 }();
 
 ;
@@ -29854,6 +29877,10 @@ var _store2 = _interopRequireDefault(_store);
 
 var _reactRedux = __webpack_require__(60);
 
+var _CustomNav = __webpack_require__(1145);
+
+var _CustomNav2 = _interopRequireDefault(_CustomNav);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var main = document.getElementById('main');
@@ -31201,8 +31228,6 @@ Object.defineProperty(exports, "__esModule", {
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _class;
-//import * as dndActions from '../actions/dndActions'
-
 
 var _react = __webpack_require__(0);
 
@@ -31262,7 +31287,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//NOTE: comb through what you are bringing into store and get rid of all of the superfluous crap
 var Container = (_dec = (0, _reactRedux.connect)(function (store) {
   return {
     user: store.user.user,
@@ -31302,7 +31326,9 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
 
       console.log('location.search: ', shared);
 
-      if (!id) {} else if (shared === "?false") {
+      if (!shared) {
+        this.props.dispatch(fileActions.clearCurrentProject(this.props.currentProject.name));
+      } else if (shared === "?false") {
         this.props.ownedFiles.map(function (e) {
           if (e.id === id) {
             var copy = Object.assign({}, e);
@@ -31382,6 +31408,12 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
       var shareEmail = _reactDom2.default.findDOMNode(this.useremail).value;
       var fileId = this.props.currentProject.id;
       var userId = this.props.user.id;
+      var obj = {
+        shareEmail: shareEmail,
+        fileId: fileId,
+        userId: userId
+      };
+      this.props.dispatch(fileActions.shareProject(obj));
     }
   }, {
     key: 'handleUpdate',
@@ -31670,6 +31702,28 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                 _reactBootstrap.Button,
                 { type: 'submit' },
                 'Share'
+              )
+            )
+          )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          _reactBootstrap.Row,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 2, xsPush: 9 },
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/myprojects' },
+              _react2.default.createElement(
+                _reactBootstrap.Button,
+                {
+                  id: 'successbutton',
+                  bsSize: 'large',
+                  block: true
+                },
+                'My Projects'
               )
             )
           )
@@ -32207,6 +32261,10 @@ var _FileDnd = __webpack_require__(183);
 
 var _FileDnd2 = _interopRequireDefault(_FileDnd);
 
+var _CustomNav = __webpack_require__(1145);
+
+var _CustomNav2 = _interopRequireDefault(_CustomNav);
+
 var _store = __webpack_require__(49);
 
 var _store2 = _interopRequireDefault(_store);
@@ -32577,6 +32635,10 @@ var _FileDnd = __webpack_require__(183);
 
 var _FileDnd2 = _interopRequireDefault(_FileDnd);
 
+var _CustomNav = __webpack_require__(1145);
+
+var _CustomNav2 = _interopRequireDefault(_CustomNav);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
@@ -32586,6 +32648,11 @@ var App = function App() {
     _react2.default.createElement(
       'div',
       null,
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_CustomNav2.default, null)
+      ),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Login2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { path: '/myprojects', component: _MyProjects2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { path: '/createaccount', component: _CreateAccount2.default }),
@@ -32943,6 +33010,21 @@ function reducer() {
     case "UPDATE_PROJECT_FILE":
       {
         return _extends({}, state, { updatingProjectFile: true });
+      }
+    case "CLEAR_CURRENT_PROJECT":
+      {
+        var clearedProject = {
+          id: null,
+          name: action.payload,
+          data: null,
+          map: null,
+          isProject: true
+        };
+        return _extends({}, state, {
+          currentProject: clearedProject,
+          currentProjectSchema: [],
+          droppedBoxNames: []
+        });
       }
     case "UPDATE_PROJECT_FILE_FULFILLED":
       {
@@ -76421,6 +76503,91 @@ __webpack_require__(465);
 __webpack_require__(466);
 module.exports = __webpack_require__(464);
 
+
+/***/ }),
+/* 1144 */,
+/* 1145 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(30);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactBootstrap = __webpack_require__(109);
+
+var _reactRouterDom = __webpack_require__(74);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CustomNav = function (_React$Component) {
+  _inherits(CustomNav, _React$Component);
+
+  function CustomNav() {
+    _classCallCheck(this, CustomNav);
+
+    return _possibleConstructorReturn(this, (CustomNav.__proto__ || Object.getPrototypeOf(CustomNav)).apply(this, arguments));
+  }
+
+  _createClass(CustomNav, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _reactBootstrap.Grid,
+        null,
+        _react2.default.createElement(
+          _reactBootstrap.Row,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 2, xsPush: 1 },
+            'DocMerge'
+          ),
+          _react2.default.createElement(_reactBootstrap.Col, { xs: 6 }),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { className: 'text-center', xs: 3 },
+            'LinkLeft'
+          )
+        )
+      );
+    }
+  }]);
+
+  return CustomNav;
+}(_react2.default.Component);
+
+exports.default = CustomNav;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(CustomNav, 'CustomNav', '/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/components/CustomNav.js');
+}();
+
+;
 
 /***/ })
 /******/ ]);

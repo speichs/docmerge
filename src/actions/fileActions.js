@@ -145,3 +145,22 @@ export function updateProjectFile(obj){
     })
   }
 }
+
+export function clearCurrentProject(name){
+  return function(dispatch){
+    dispatch({type: "CLEAR_CURRENT_PROJECT", payload:name})
+  }
+}
+
+export function shareProject(obj){
+  return function(dispatch){
+    dispatch({type: "SHARE_PROJECT"})
+    axios.post("http://localhost:8080/share", obj)
+    .then((response)=>{
+      dispatch({type:"SHARE_PROJECT_FULFILLED", payload: response.data})
+    })
+    .catch((err)=>{
+      dispatch({type:"SHARE_PROJECT_REJECTED", payload:err})
+    })
+  }
+}

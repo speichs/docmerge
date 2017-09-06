@@ -5,12 +5,14 @@ import Login from './components/Login.js'
 import './styles/app.css'
 import store from './store'
 import { Provider } from "react-redux"
+import CustomNav from './components/CustomNav'
 
 
 const main = document.getElementById('main')
 
 ReactDOM.render(
   <Provider store={store}>
-    <App></App>
+    <App>
+    </App>
   </Provider>, main
 )

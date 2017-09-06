@@ -15,7 +15,6 @@ import {
   Form,
   ControlLabel,
   FormControl,
-
 } from 'react-bootstrap'
 import {
   BrowserRouter as Router,
@@ -59,7 +58,8 @@ class Container extends Component {
 
     console.log('location.search: ', shared)
 
-    if(!id){
+    if(!shared){
+      this.props.dispatch(fileActions.clearCurrentProject(this.props.currentProject.name))
     }
     else if(shared === "?false"){
       this.props.ownedFiles.map(e=>{
@@ -136,6 +136,12 @@ class Container extends Component {
     let shareEmail = ReactDOM.findDOMNode(this.useremail).value
     let fileId = this.props.currentProject.id;
     let userId = this.props.user.id;
+    let obj = {
+      shareEmail,
+      fileId,
+      userId
+    }
+    this.props.dispatch(fileActions.shareProject(obj))
   }
 
   handleUpdate(e){
@@ -340,6 +346,22 @@ class Container extends Component {
             </Form>
           </Col>
         </Row>
+        <br/>
+        <Row>
+          <Col xs={2} xsPush={9}>
+          <Link to='/myprojects'>
+            <Button
+              id='successbutton'
+              bsSize='large'
+              block
+            >
+              My Projects
+            </Button>
+          </Link>
+          </Col>
+        </Row>
+
+
 
       </Grid>
     );

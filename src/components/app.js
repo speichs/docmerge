@@ -13,16 +13,15 @@ import CreateAccount from './CreateAccount'
 import DisplayProject from './DisplayProject'
 import Container from './Container'
 import FileDnd from './FileDnd'
+import CustomNav from './CustomNav'
 
 const App = () => (
   <Router>
     <div>
-      {/* <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/myprojects">MyProjects</Link></li>
-        <li><Link to="/createaccount">CreateAccount</Link></li>
-        <li><Link to="/dnd">DND</Link></li>
-      </ul> */}
+      <div>
+        <CustomNav></CustomNav>
+      </div>
+
       <Route exact path="/" component={Login}/>
 
       <Route path="/myprojects" component={MyProjects}/>

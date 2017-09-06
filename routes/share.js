@@ -8,16 +8,16 @@ const saltRounds = 10;
 const secret = process.env.SECRET;
 
 router.post('/share', (req,res,next)=>{
-  const body = req.body
+  const { shareEmail, fileId, userId } = req.body
   knex('users')
   .select('id')
-  .where('email', body.email)
-  .then(firstResult => {
+  .where('email', shareEmail)
+  .then(upper => {
     knex('client_files')
-    .insert({file_id: body.file_id, client_id: firstResult[0].id})
+    .insert({file_id: fileId, client_id: upper[0].id})
     .returning('*')
-    .then(secondResult => res.send(secondResult[0]))
-  })
+    .then(lower => res.send(lower[0]))
+  }).catch(err => res.send(err))
 })
 
 router.get('/share/:id', (req,res,next)=>{
