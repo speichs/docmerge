@@ -24,6 +24,11 @@ import { fetchUser } from '../actions/userActions'
   }
 })
 export default class Login extends React.Component{
+  componentWillMount(){
+    
+  }
+
+
   handleSubmit(e){
     e.preventDefault()
     let email = ReactDOM.findDOMNode(this.email).value

@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6492115f6de1c245d7b2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "364848c06fe29ac18fe3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -11739,7 +11739,9 @@ function fetchUser(user) {
   return function (dispatch) {
     dispatch({ type: 'LOGIN_USER' });
     _axios2.default.post('token', user).then(function (response) {
-      dispatch({ type: "LOGIN_USER_FULFILLED", payload: response.data });
+      dispatch({ type: "LOGIN_USER_FULFILLED", payload: { data: response.data, headers: response }
+
+      });
     }).catch(function (err) {
       dispatch({ type: "LOGIN_USE_REJECTED",
         payload: err });
@@ -11777,7 +11779,10 @@ function createUser(userInfo) {
   return function (dispatch) {
     dispatch({ type: "CREATE_USER" });
     _axios2.default.post("users", userInfo).then(function (response) {
-      dispatch({ type: "CREATE_USER_FULFILLED", payload: response.data });
+      dispatch({
+        type: "CREATE_USER_FULFILLED",
+        payload: response.data
+      });
     }).catch(function (err) {
       dispatch({ type: "CREATE_USER_REJECTED", payload: err });
     });
@@ -17891,6 +17896,9 @@ var Login = (_dec = (0, _reactRedux.connect)(function (store) {
   }
 
   _createClass(Login, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {}
+  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
@@ -31290,6 +31298,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Container = (_dec = (0, _reactRedux.connect)(function (store) {
   return {
     user: store.user.user,
+    header: store.user.header,
     droppedBoxNames: store.file.droppedBoxNames,
     ownedFiles: store.file.fetchedFiles,
     sharedFiles: store.file.sharedFiles,
@@ -31447,288 +31456,295 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
           currentProjectSchema = _props.currentProjectSchema;
 
 
-      return _react2.default.createElement(
-        _reactBootstrap.Grid,
-        { bsClass: 'container-fluid' },
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
+      if (this.props.header) {
+        return _react2.default.createElement(
+          _reactBootstrap.Grid,
+          { bsClass: 'container-fluid' },
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { className: 'text-center projNameRow', xs: 4, xsPush: 4 },
+            _reactBootstrap.Row,
+            null,
             _react2.default.createElement(
-              'h2',
-              null,
-              currentProject.name
+              _reactBootstrap.Col,
+              { className: 'text-center projNameRow', xs: 4, xsPush: 4 },
+              _react2.default.createElement(
+                'h2',
+                null,
+                currentProject.name
+              )
             )
-          )
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          { className: 'filedragcol' },
+          ),
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { className: 'text-center', xs: 4, xsPush: 4 },
-            _react2.default.createElement(_FileDnd2.default, null)
-          )
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
+            _reactBootstrap.Row,
+            { className: 'filedragcol' },
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { className: 'text-center', xs: 4, xsPush: 4 },
+              _react2.default.createElement(_FileDnd2.default, null)
+            )
+          ),
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { className: 'text-center', xs: 12 },
+            _reactBootstrap.Row,
+            null,
             _react2.default.createElement(
-              _reactBootstrap.Row,
-              { className: 'createSchemaButton' },
+              _reactBootstrap.Col,
+              { className: 'text-center', xs: 12 },
               _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 4, xsPush: 4 },
+                _reactBootstrap.Row,
+                { className: 'createSchemaButton' },
                 _react2.default.createElement(
-                  _reactBootstrap.Button
-                  // disabled = {this.props.wasSaved || this.props.match.params.id >=0 }
-                  ,
-                  {
-                    id: 'successbutton',
-                    bsStyle: 'primary',
-                    bsSize: 'large',
-                    onClick: this.handleAddSchemaClick.bind(this),
-                    block: true
-                  },
-                  'Create Schema'
-                )
-              )
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Row,
-              null,
-              _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 10, xsPush: 1 },
-                _react2.default.createElement(
-                  'div',
-                  { style: { overflow: 'hidden', clear: 'both' } },
-                  associativeFiles.length ? associativeFiles.map(function (e, index) {
-                    var keys = Object.keys(e.data[0]);
-                    return keys.map(function (el, ind) {
-                      return _react2.default.createElement(
-                        _Box2.default,
-                        {
-                          fileId: e.id,
-                          name: el,
-                          isDropped: _this3.isDropped(name),
-                          key: ind
-                        },
-                        e.name
-                      );
-                    });
-                  }) : _react2.default.createElement('p', null)
-                )
-              )
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Row,
-              null,
-              _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 6 },
-                _react2.default.createElement(
-                  _reactBootstrap.Modal,
-                  {
-                    className: 'modal',
-                    show: showHideSchemaMaker
-                  },
+                  _reactBootstrap.Col,
+                  { xs: 4, xsPush: 4 },
                   _react2.default.createElement(
-                    _reactBootstrap.Modal.Header,
-                    null,
-                    _react2.default.createElement(
-                      _reactBootstrap.Modal.Title,
-                      { id: 'contained-modal-title' },
-                      'CreateSchema'
-                    )
-                  ),
+                    _reactBootstrap.Button
+                    // disabled = {this.props.wasSaved || this.props.match.params.id >=0 }
+                    ,
+                    {
+                      id: 'successbutton',
+                      bsStyle: 'primary',
+                      bsSize: 'large',
+                      onClick: this.handleAddSchemaClick.bind(this),
+                      block: true
+                    },
+                    'Create Schema'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Row,
+                null,
+                _react2.default.createElement(
+                  _reactBootstrap.Col,
+                  { xs: 10, xsPush: 1 },
                   _react2.default.createElement(
-                    _reactBootstrap.Modal.Body,
-                    null,
+                    'div',
+                    { style: { overflow: 'hidden', clear: 'both' } },
+                    associativeFiles.length ? associativeFiles.map(function (e, index) {
+                      var keys = Object.keys(e.data[0]);
+                      return keys.map(function (el, ind) {
+                        return _react2.default.createElement(
+                          _Box2.default,
+                          {
+                            fileId: e.id,
+                            name: el,
+                            isDropped: _this3.isDropped(name),
+                            key: ind
+                          },
+                          e.name
+                        );
+                      });
+                    }) : _react2.default.createElement('p', null)
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Row,
+                null,
+                _react2.default.createElement(
+                  _reactBootstrap.Col,
+                  { xs: 6 },
+                  _react2.default.createElement(
+                    _reactBootstrap.Modal,
+                    {
+                      className: 'modal',
+                      show: showHideSchemaMaker
+                    },
                     _react2.default.createElement(
-                      _reactBootstrap.Form,
+                      _reactBootstrap.Modal.Header,
                       null,
                       _react2.default.createElement(
-                        _reactBootstrap.FormGroup,
-                        { controlId: 'formHorizontalName' },
+                        _reactBootstrap.Modal.Title,
+                        { id: 'contained-modal-title' },
+                        'CreateSchema'
+                      )
+                    ),
+                    _react2.default.createElement(
+                      _reactBootstrap.Modal.Body,
+                      null,
+                      _react2.default.createElement(
+                        _reactBootstrap.Form,
+                        null,
                         _react2.default.createElement(
-                          _reactBootstrap.ControlLabel,
-                          null,
-                          'Set New Column Header'
+                          _reactBootstrap.FormGroup,
+                          { controlId: 'formHorizontalName' },
+                          _react2.default.createElement(
+                            _reactBootstrap.ControlLabel,
+                            null,
+                            'Set New Column Header'
+                          ),
+                          _react2.default.createElement(_reactBootstrap.FormControl, {
+                            ref: function ref(column) {
+                              _this3.column = column;
+                            },
+                            type: 'text',
+                            placeholder: 'Header_1',
+                            onChange: this.handleColNameChange.bind(this)
+                          })
                         ),
-                        _react2.default.createElement(_reactBootstrap.FormControl, {
-                          ref: function ref(column) {
-                            _this3.column = column;
+                        _react2.default.createElement(
+                          _reactBootstrap.Button,
+                          {
+                            bsStyle: 'primary',
+                            type: 'submit',
+                            disabled: false,
+                            onClick: this.handleAddColumn.bind(this)
                           },
-                          type: 'text',
-                          placeholder: 'Header_1',
-                          onChange: this.handleColNameChange.bind(this)
-                        })
-                      ),
+                          'Add Header'
+                        )
+                      )
+                    ),
+                    _react2.default.createElement(
+                      _reactBootstrap.Modal.Footer,
+                      null,
                       _react2.default.createElement(
                         _reactBootstrap.Button,
                         {
-                          bsStyle: 'primary',
-                          type: 'submit',
-                          disabled: false,
-                          onClick: this.handleAddColumn.bind(this)
+                          onClick: this.hideSchemaMaker.bind(this)
                         },
-                        'Add Header'
+                        'Close'
                       )
-                    )
-                  ),
-                  _react2.default.createElement(
-                    _reactBootstrap.Modal.Footer,
-                    null,
-                    _react2.default.createElement(
-                      _reactBootstrap.Button,
-                      {
-                        onClick: this.hideSchemaMaker.bind(this)
-                      },
-                      'Close'
                     )
                   )
                 )
-              )
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Row,
-              null,
+              ),
               _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 10, xsPush: 1 },
+                _reactBootstrap.Row,
+                null,
                 _react2.default.createElement(
-                  'div',
-                  { style: { overflow: 'hidden', clear: 'both' } },
-                  currentProjectSchema.map(function (e, index) {
-                    return _react2.default.createElement(_Dustbin2.default, {
-                      accepts: e,
-                      lastDroppedItem: e.lastDroppedItem,
-                      associatedFile: e.associatedFile,
-                      onDrop: function onDrop(item) {
-                        return _this3.handleDrop(index, item);
-                      },
-                      key: index
-                    });
+                  _reactBootstrap.Col,
+                  { xs: 10, xsPush: 1 },
+                  _react2.default.createElement(
+                    'div',
+                    { style: { overflow: 'hidden', clear: 'both' } },
+                    currentProjectSchema.map(function (e, index) {
+                      return _react2.default.createElement(_Dustbin2.default, {
+                        accepts: e,
+                        lastDroppedItem: e.lastDroppedItem,
+                        associatedFile: e.associatedFile,
+                        onDrop: function onDrop(item) {
+                          return _this3.handleDrop(index, item);
+                        },
+                        key: index
+                      });
+                    })
+                  )
+                )
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Row,
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { xs: 2, xsPush: 9 },
+              !this.props.location.search ? _react2.default.createElement(
+                _reactBootstrap.Button,
+                {
+                  id: 'successbutton',
+                  className: 'savebutton',
+                  block: true,
+                  bsSize: 'large',
+                  onClick: this.handleSave.bind(this) },
+                'Save'
+              ) : _react2.default.createElement(
+                _reactBootstrap.Button,
+                {
+                  id: 'successbutton',
+                  className: 'savebutton',
+                  block: true,
+                  bsSize: 'large',
+                  onClick: this.handleUpdate.bind(this) },
+                'Update'
+              )
+            )
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            _reactBootstrap.Row,
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { xs: 2, xsPush: 9 },
+              _react2.default.createElement(
+                _reactBootstrap.Button,
+                { id: 'successbutton',
+                  className: 'savebutton',
+                  block: true,
+                  bsSize: 'large',
+                  onClick: this.handleSend.bind(this) },
+                _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-envelope create' }),
+                'Send Email'
+              )
+            )
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            _reactBootstrap.Row,
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { className: 'text-center', xs: 4 },
+              _react2.default.createElement(
+                'h4',
+                null,
+                'Share With Another User'
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Form,
+                { onSubmit: this.shareFile.bind(this) },
+                _react2.default.createElement(
+                  _reactBootstrap.FormGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    'Email'
+                  ),
+                  _react2.default.createElement(_reactBootstrap.FormControl, {
+                    ref: function ref(useremail) {
+                      _this3.useremail = useremail;
+                    },
+                    type: 'email',
+                    placeholder: 'User Email'
                   })
+                ),
+                _react2.default.createElement(
+                  _reactBootstrap.Button,
+                  { type: 'submit' },
+                  'Share'
+                )
+              )
+            )
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            _reactBootstrap.Row,
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { xs: 2, xsPush: 9 },
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: '/myprojects' },
+                _react2.default.createElement(
+                  _reactBootstrap.Button,
+                  {
+                    id: 'successbutton',
+                    bsSize: 'large',
+                    block: true
+                  },
+                  'My Projects'
                 )
               )
             )
           )
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 2, xsPush: 9 },
-            !this.props.location.search ? _react2.default.createElement(
-              _reactBootstrap.Button,
-              {
-                id: 'successbutton',
-                className: 'savebutton',
-                block: true,
-                bsSize: 'large',
-                onClick: this.handleSave.bind(this) },
-              'Save'
-            ) : _react2.default.createElement(
-              _reactBootstrap.Button,
-              {
-                id: 'successbutton',
-                className: 'savebutton',
-                block: true,
-                bsSize: 'large',
-                onClick: this.handleUpdate.bind(this) },
-              'Update'
-            )
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 2, xsPush: 9 },
-            _react2.default.createElement(
-              _reactBootstrap.Button,
-              { id: 'successbutton',
-                className: 'savebutton',
-                block: true,
-                bsSize: 'large',
-                onClick: this.handleSend.bind(this) },
-              _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-envelope create' }),
-              'Send Email'
-            )
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { className: 'text-center', xs: 4 },
-            _react2.default.createElement(
-              'h4',
-              null,
-              'Share With Another User'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Form,
-              { onSubmit: this.shareFile.bind(this) },
-              _react2.default.createElement(
-                _reactBootstrap.FormGroup,
-                null,
-                _react2.default.createElement(
-                  _reactBootstrap.ControlLabel,
-                  null,
-                  'Email'
-                ),
-                _react2.default.createElement(_reactBootstrap.FormControl, {
-                  ref: function ref(useremail) {
-                    _this3.useremail = useremail;
-                  },
-                  type: 'email',
-                  placeholder: 'User Email'
-                })
-              ),
-              _react2.default.createElement(
-                _reactBootstrap.Button,
-                { type: 'submit' },
-                'Share'
-              )
-            )
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 2, xsPush: 9 },
-            _react2.default.createElement(
-              _reactRouterDom.Link,
-              { to: '/myprojects' },
-              _react2.default.createElement(
-                _reactBootstrap.Button,
-                {
-                  id: 'successbutton',
-                  bsSize: 'large',
-                  block: true
-                },
-                'My Projects'
-              )
-            )
-          )
-        )
-      );
+        );
+      } else {
+        var _from = { from: { pathname: '/' } },
+            from = _from.from;
+
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: from });
+      }
     }
   }]);
 
@@ -32290,6 +32306,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
   return {
     user: store.user.user,
+    header: store.user.header,
     redirect: store.user.createdUser,
     ownedFiles: store.file.fetchedFiles,
     hasFetchedOwned: store.file.fetchedOwnedFiles,
@@ -32352,135 +32369,139 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
       var _this2 = this;
 
       var isCreateNew = this.props.isCreateNew;
+      var _from = { from: { pathname: '/' } },
+          from = _from.from;
 
 
-      if (this.props.isFetchingOwned || this.props.isFechingShared) {
+      if (!this.props.header) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: from });
+      } else if (this.props.isFetchingOwned || this.props.isFechingShared) {
         return _react2.default.createElement(
           'h1',
           null,
           'loading...'
         );
-      }
-
-      return _react2.default.createElement(
-        _reactBootstrap.Grid,
-        { bsClass: 'container-fluid' },
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          { className: 'createProjectRow' },
+      } else {
+        return _react2.default.createElement(
+          _reactBootstrap.Grid,
+          { bsClass: 'container-fluid' },
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { className: 'text-center', xs: 4, xsPush: 4 },
+            _reactBootstrap.Row,
+            { className: 'createProjectRow' },
             _react2.default.createElement(
-              _reactBootstrap.Button,
-              {
-                id: 'successbutton',
-                bsSize: 'large',
-                bsStyle: 'success',
-                onClick: this.toggleNameProject.bind(this)
-              },
-              !isCreateNew ? _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-plus create' }) : _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-minus create' }),
-              'New Project'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, xsPush: 4 },
-            isCreateNew ? _react2.default.createElement(
-              _reactBootstrap.Form,
-              { onSubmit: this.handleSubmitName.bind(this) },
+              _reactBootstrap.Col,
+              { className: 'text-center', xs: 4, xsPush: 4 },
               _react2.default.createElement(
-                _reactBootstrap.FormGroup,
-                { controlId: 'formHorizontalName' },
-                _react2.default.createElement(
-                  _reactBootstrap.ControlLabel,
-                  null,
-                  'Name Your Project'
-                ),
-                _react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleProjectNameChange.bind(this), ref: function ref(name) {
-                    _this2.name = name;
-                  }, type: 'text', placeholder: 'My_Project' })
-              ),
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: '/newproject' },
-                _react2.default.createElement(
-                  _reactBootstrap.Button,
-                  { id: 'successbutton', bsStyle: 'primary', type: 'submit', disabled: !this.props.validName },
-                  'Get Started'
-                )
+                _reactBootstrap.Button,
+                {
+                  id: 'successbutton',
+                  bsSize: 'large',
+                  bsStyle: 'success',
+                  onClick: this.toggleNameProject.bind(this)
+                },
+                !isCreateNew ? _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-plus create' }) : _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-minus create' }),
+                'New Project'
               )
-            ) : _react2.default.createElement('h1', null)
-          )
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 6 },
-            _react2.default.createElement(
-              'h3',
-              { className: 'text-center' },
-              'My Projects'
             )
           ),
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 6 },
+            _reactBootstrap.Row,
+            null,
             _react2.default.createElement(
-              'h3',
-              { className: 'text-center' },
-              'Shared Projects'
+              _reactBootstrap.Col,
+              { xs: 4, xsPush: 4 },
+              isCreateNew ? _react2.default.createElement(
+                _reactBootstrap.Form,
+                { onSubmit: this.handleSubmitName.bind(this) },
+                _react2.default.createElement(
+                  _reactBootstrap.FormGroup,
+                  { controlId: 'formHorizontalName' },
+                  _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    'Name Your Project'
+                  ),
+                  _react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleProjectNameChange.bind(this), ref: function ref(name) {
+                      _this2.name = name;
+                    }, type: 'text', placeholder: 'My_Project' })
+                ),
+                _react2.default.createElement(
+                  _reactRouterDom.Link,
+                  { to: '/newproject' },
+                  _react2.default.createElement(
+                    _reactBootstrap.Button,
+                    { id: 'successbutton', bsStyle: 'primary', type: 'submit', disabled: !this.props.validName },
+                    'Get Started'
+                  )
+                )
+              ) : _react2.default.createElement('h1', null)
             )
-          )
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
+          ),
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 6 },
+            _reactBootstrap.Row,
+            null,
             _react2.default.createElement(
-              _reactBootstrap.Row,
-              null,
-              this.props.hasFetchedOwned ? this.props.ownedFiles.map(function (e) {
-                if (e.isProject) {
+              _reactBootstrap.Col,
+              { xs: 6 },
+              _react2.default.createElement(
+                'h3',
+                { className: 'text-center' },
+                'My Projects'
+              )
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { xs: 6 },
+              _react2.default.createElement(
+                'h3',
+                { className: 'text-center' },
+                'Shared Projects'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Row,
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { xs: 6 },
+              _react2.default.createElement(
+                _reactBootstrap.Row,
+                null,
+                this.props.hasFetchedOwned ? this.props.ownedFiles.map(function (e) {
+                  if (e.isProject) {
+                    return _react2.default.createElement(_Project2.default, {
+                      key: e.id,
+                      text: e.name,
+                      id: e.id,
+                      shared: 'false' });
+                  }
+                }) : _react2.default.createElement(
+                  'p',
+                  null,
+                  'Nothing'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Col,
+              { xs: 6 },
+              _react2.default.createElement(
+                _reactBootstrap.Row,
+                null,
+                this.props.hasFetchedShared && this.props.sharedFiles.length ? this.props.sharedFiles.map(function (e) {
                   return _react2.default.createElement(_Project2.default, {
                     key: e.id,
                     text: e.name,
                     id: e.id,
-                    shared: 'false' });
-                }
-              }) : _react2.default.createElement(
-                'p',
-                null,
-                'Nothing'
+                    shared: 'true'
+                  });
+                }) : _react2.default.createElement('h1', null)
               )
             )
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 6 },
-            _react2.default.createElement(
-              _reactBootstrap.Row,
-              null,
-              this.props.hasFetchedShared && this.props.sharedFiles.length ? this.props.sharedFiles.map(function (e) {
-                return _react2.default.createElement(_Project2.default, {
-                  key: e.id,
-                  text: e.name,
-                  id: e.id,
-                  shared: 'true'
-                });
-              }) : _react2.default.createElement('h1', null)
-            )
           )
-        )
-      );
+        );
+      }
     }
   }]);
 
@@ -33233,7 +33254,8 @@ var initialState = {
   error: null,
   creatingUser: false,
   createdUser: false,
-  redirect: false
+  redirect: false,
+  header: null
 };
 
 function reducer() {
@@ -33252,12 +33274,13 @@ function reducer() {
     case "LOGIN_USER_FULFILLED":
       {
         var newUserObj = _extends({}, state.user);
-        newUserObj = action.payload;
+        newUserObj = action.payload.data;
         newUserObj.password = null;
         return _extends({}, state, {
           fetching: false,
           fetched: true,
-          user: newUserObj
+          user: newUserObj,
+          header: document.cookie
         });
       }
     case "SET_FIRSTNAME":
@@ -33310,7 +33333,8 @@ function reducer() {
           user: _newUserObj5,
           creatingUser: false,
           createdUser: true,
-          redirect: true
+          redirect: true,
+          header: document.cookie
         });
         return _newState4;
       }

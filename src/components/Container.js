@@ -33,6 +33,7 @@ import * as fileActions from '../actions/fileActions'
 @connect((store)=>{
   return {
     user: store.user.user,
+    header: store.user.header,
     droppedBoxNames: store.file.droppedBoxNames,
     ownedFiles: store.file.fetchedFiles,
     sharedFiles: store.file.sharedFiles,
@@ -172,199 +173,207 @@ class Container extends Component {
       currentProjectSchema,
     } = this.props;
 
-    return (
-      <Grid bsClass='container-fluid'>
+    if(this.props.header){
+      return (
+        <Grid bsClass='container-fluid'>
 
-        <Row>
-          <Col className='text-center projNameRow' xs={4} xsPush={4}>
-            <h2>{currentProject.name}</h2>
-          </Col>
-        </Row>
-
-
-        <Row className='filedragcol'>
-          <Col className='text-center' xs={4} xsPush={4}>
-            <FileDnd></FileDnd>
-          </Col>
-        </Row>
+          <Row>
+            <Col className='text-center projNameRow' xs={4} xsPush={4}>
+              <h2>{currentProject.name}</h2>
+            </Col>
+          </Row>
 
 
-        <Row>
-          <Col className="text-center" xs={12}>
-            <Row className='createSchemaButton'>
-              <Col xs={4} xsPush={4}>
-                <Button
-                  id='successbutton'
-                  bsStyle="primary"
-                  bsSize='large'
-                  onClick={this.handleAddSchemaClick.bind(this)}
-                  block
-                >
-                  Create Schema
-                </Button>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={10} xsPush={1}>
-                <div style={{ overflow: 'hidden', clear: 'both' }}>
-                  {
-                    associativeFiles.length? associativeFiles.map((e, index) =>{
-                      let keys = Object.keys(e.data[0])
-                      return keys.map((el,ind)=>
-                      <Box
-                        fileId={e.id}
-                        name={el}
-                        isDropped={this.isDropped(name)}
-                        key={ind}
-                        >{e.name}</Box>)
-                      }) : <p></p>
+          <Row className='filedragcol'>
+            <Col className='text-center' xs={4} xsPush={4}>
+              <FileDnd></FileDnd>
+            </Col>
+          </Row>
+
+
+          <Row>
+            <Col className="text-center" xs={12}>
+              <Row className='createSchemaButton'>
+                <Col xs={4} xsPush={4}>
+                  <Button
+                    id='successbutton'
+                    bsStyle="primary"
+                    bsSize='large'
+                    onClick={this.handleAddSchemaClick.bind(this)}
+                    block
+                  >
+                    Create Schema
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={10} xsPush={1}>
+                  <div style={{ overflow: 'hidden', clear: 'both' }}>
+                    {
+                      associativeFiles.length? associativeFiles.map((e, index) =>{
+                        let keys = Object.keys(e.data[0])
+                        return keys.map((el,ind)=>
+                        <Box
+                          fileId={e.id}
+                          name={el}
+                          isDropped={this.isDropped(name)}
+                          key={ind}
+                          >{e.name}</Box>)
+                        }) : <p></p>
+                      }
+                    </div>
+                </Col>
+              </Row>
+
+              <Row>
+
+                <Col xs={6}>
+                    <Modal
+                      className='modal'
+                      show={showHideSchemaMaker}
+                    >
+                      <Modal.Header>
+                        <Modal.Title  id="contained-modal-title">
+                          CreateSchema
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form>
+                          <FormGroup controlId='formHorizontalName'>
+                            <ControlLabel>
+                              Set New Column Header
+                            </ControlLabel>
+                            <FormControl
+                              ref={column=>{this.column = column}}
+                              type='text'
+                              placeholder='Header_1'
+                              onChange={this.handleColNameChange.bind(this)}
+                              >
+                            </FormControl>
+                          </FormGroup>
+                          <Button
+                            bsStyle='primary'
+                            type="submit"
+                            disabled={false}
+                            onClick={this.handleAddColumn.bind(this)}
+                            >
+                            Add Header
+                          </Button>
+                        </Form>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button
+                          onClick={this.hideSchemaMaker.bind(this)}
+                        >
+                          Close
+                      </Button>
+                      </Modal.Footer>
+                    </Modal>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs={10} xsPush={1}>
+                  <div style={{ overflow: 'hidden', clear: 'both' }}>
+                    {
+                      currentProjectSchema.map((e, index) =>
+                      <Dustbin
+                        accepts={e}
+                        lastDroppedItem={e.lastDroppedItem}
+                        associatedFile={e.associatedFile}
+                        onDrop={item => this.handleDrop(index, item)}
+                        key={index}
+                      />)
                     }
                   </div>
-              </Col>
-            </Row>
+                </Col>
+              </Row>
 
-            <Row>
+            </Col>
+          </Row>
 
-              <Col xs={6}>
-                  <Modal
-                    className='modal'
-                    show={showHideSchemaMaker}
-                  >
-                    <Modal.Header>
-                      <Modal.Title  id="contained-modal-title">
-                        CreateSchema
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Form>
-                        <FormGroup controlId='formHorizontalName'>
-                          <ControlLabel>
-                            Set New Column Header
-                          </ControlLabel>
-                          <FormControl
-                            ref={column=>{this.column = column}}
-                            type='text'
-                            placeholder='Header_1'
-                            onChange={this.handleColNameChange.bind(this)}
-                            >
-                          </FormControl>
-                        </FormGroup>
-                        <Button
-                          bsStyle='primary'
-                          type="submit"
-                          disabled={false}
-                          onClick={this.handleAddColumn.bind(this)}
-                          >
-                          Add Header
-                        </Button>
-                      </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        onClick={this.hideSchemaMaker.bind(this)}
-                      >
-                        Close
-                    </Button>
-                    </Modal.Footer>
-                  </Modal>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col xs={10} xsPush={1}>
-                <div style={{ overflow: 'hidden', clear: 'both' }}>
-                  {
-                    currentProjectSchema.map((e, index) =>
-                    <Dustbin
-                      accepts={e}
-                      lastDroppedItem={e.lastDroppedItem}
-                      associatedFile={e.associatedFile}
-                      onDrop={item => this.handleDrop(index, item)}
-                      key={index}
-                    />)
-                  }
-                </div>
-              </Col>
-            </Row>
-
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={2} xsPush={9}>
-            {
-              !this.props.location.search?<Button
+          <Row>
+            <Col xs={2} xsPush={9}>
+              {
+                !this.props.location.search?<Button
+                  id='successbutton'
+                  className='savebutton'
+                  block
+                  bsSize='large'
+                  onClick={this.handleSave.bind(this)}>
+                  Save
+                </Button> : <Button
+                  id='successbutton'
+                  className='savebutton'
+                  block
+                  bsSize='large'
+                  onClick={this.handleUpdate.bind(this)}>
+                  Update
+                </Button>
+              }
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col xs={2} xsPush={9}>
+              <Button
+                // disabled = {this.props.wasSaved || this.props.match.params.id >=0 }
                 id='successbutton'
                 className='savebutton'
                 block
                 bsSize='large'
-                onClick={this.handleSave.bind(this)}>
-                Save
-              </Button> : <Button
-                id='successbutton'
-                className='savebutton'
-                block
-                bsSize='large'
-                onClick={this.handleUpdate.bind(this)}>
-                Update
+                onClick={this.handleSend.bind(this)}>
+                <FontAwesome className="fa-envelope create"></FontAwesome>
+                Send Email
               </Button>
-            }
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col xs={2} xsPush={9}>
-            <Button
-              // disabled = {this.props.wasSaved || this.props.match.params.id >=0 }
-              id='successbutton'
-              className='savebutton'
-              block
-              bsSize='large'
-              onClick={this.handleSend.bind(this)}>
-              <FontAwesome className="fa-envelope create"></FontAwesome>
-              Send Email
-            </Button>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col className='text-center' xs={4}>
-            <h4>Share With Another User</h4>
-            <Form onSubmit={this.shareFile.bind(this)}>
-              <FormGroup>
-                <ControlLabel>
-                  Email
-                </ControlLabel>
-                <FormControl
-                ref={useremail=>{this.useremail = useremail}}
-                type="email"
-                placeholder="User Email"
-                >
-                </FormControl>
-              </FormGroup>
-              <Button type='submit'>Share</Button>
-            </Form>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col xs={2} xsPush={9}>
-          <Link to='/myprojects'>
-            <Button
-              id='successbutton'
-              bsSize='large'
-              block
-            >
-              My Projects
-            </Button>
-          </Link>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col className='text-center' xs={4}>
+              <h4>Share With Another User</h4>
+              <Form onSubmit={this.shareFile.bind(this)}>
+                <FormGroup>
+                  <ControlLabel>
+                    Email
+                  </ControlLabel>
+                  <FormControl
+                  ref={useremail=>{this.useremail = useremail}}
+                  type="email"
+                  placeholder="User Email"
+                  >
+                  </FormControl>
+                </FormGroup>
+                <Button type='submit'>Share</Button>
+              </Form>
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col xs={2} xsPush={9}>
+            <Link to='/myprojects'>
+              <Button
+                id='successbutton'
+                bsSize='large'
+                block
+              >
+                My Projects
+              </Button>
+            </Link>
+            </Col>
+          </Row>
 
 
 
-      </Grid>
-    );
+        </Grid>
+      );
+    }else{
+      const { from } = { from: { pathname:'/'} }
+      return (
+        <Redirect to={from}></Redirect>
+      )
+    }
+
   }
 }
 

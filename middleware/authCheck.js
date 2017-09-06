@@ -32,9 +32,7 @@ router.post('/token', (req, res, next) => {
         email: user.email
       };
       const token = jwt.sign(userInfo, secret);
-      res.cookie('token', token, {
-        httpOnly:true
-      }).send(userInfo)
+      res.cookie('token', token).send(userInfo)
     }else {
       res.status(400)
       .set({ 'Content-Type': 'plain/text' })

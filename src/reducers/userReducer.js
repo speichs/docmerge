@@ -12,6 +12,7 @@ const initialState = {
   creatingUser: false,
   createdUser: false,
   redirect:false,
+  header:null,
 }
 
 export default function reducer(state=initialState, action){
@@ -24,13 +25,14 @@ export default function reducer(state=initialState, action){
     }
     case "LOGIN_USER_FULFILLED": {
       let newUserObj = {...state.user}
-      newUserObj = action.payload
+      newUserObj = action.payload.data
       newUserObj.password = null
       return {
         ...state,
         fetching: false,
         fetched: true,
         user: newUserObj,
+        header: document.cookie
       }
     }
     case "SET_FIRSTNAME":{
@@ -77,7 +79,8 @@ export default function reducer(state=initialState, action){
         user:newUserObj,
         creatingUser:false,
         createdUser:true,
-        redirect:true
+        redirect:true,
+        header: document.cookie
       }
       return newState
     }
