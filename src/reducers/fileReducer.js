@@ -22,6 +22,23 @@ function mapData(schema, files){
   return newData
 }
 
+function updateMapData(schema, files, current){
+  let frameObj = instantiateSchema(schema)
+  for(let i = 0; i < files.length; i++){
+    let data = files[i].data
+    for(let j = 0; j < data.length; j++){
+      let obj = Object.assign({}, frameObj)
+      for(let k = 0; k < schema.length; k++){
+        if(data[j].hasOwnProperty(schema[k].lastDroppedItem)){
+          obj[schema[k].colName] = data[j][schema[k].lastDroppedItem]
+        }
+      }
+      current.push(obj)
+    }
+  }
+  return current
+}
+
 const initialState = {
   currentFile:{
     id:null,
@@ -31,6 +48,7 @@ const initialState = {
     isProject: null,
   },
   currentProject:{
+    id:null,
     name: null,
     data: null,
     map: null,
@@ -61,6 +79,8 @@ const initialState = {
   sharesExist:false,
   sendingEmail:false,
   emailSent: false,
+  updatingProjectFile: false,
+  updatedProjectFile: false,
 }
 
 export default function reducer(state=initialState, action){
@@ -222,6 +242,24 @@ export default function reducer(state=initialState, action){
       copyProject.map = [...state.currentProjectSchema]
       return {...state, currentProject: copyProject}
     }
+    case "UPDATE_PROJECT_DATA":{
+      let copyCurrent = [...state.currentProject.data]
+      let projectData = updateMapData(state.currentProjectSchema, state.associativeFiles, copyCurrent)
+      let copyProject = {...state.currentProject}
+      copyProject.data = projectData;
+      copyProject.map = [...state.currentProjectSchema]
+      return {...state, currentProject: copyProject}
+    }
+    case "UPDATE_PROJECT_FILE":{
+      return {...state, updatingProjectFile: true}
+    }
+    case "UPDATE_PROJECT_FILE_FULFILLED":{
+      return {...state, updatingProjectFile: false, updatedProjectFile: true}
+    }
+    case "UPDATE_PROJECT_FILE_REJECTED":{
+      return {...state, error: action.payload}
+    }
+
     case "CREATE_PROJECT_FILE":{
       return {...state, creatingFile: true}
     }

@@ -34,4 +34,14 @@ router.post('/projects', (req,res,next)=>{
   })
 })
 
+router.patch('/projects/:id', (req,res,next)=>{
+  const { email, data } = req.body;
+  knex('files')
+  .where('id', req.params.id)
+  .returning('*')
+  .update({data: JSON.stringify(data.data)})
+  .then(result => res.send(result[0]))
+  .catch(err => res.sendStatus(404))
+})
+
 module.exports = router;

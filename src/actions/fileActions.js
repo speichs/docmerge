@@ -3,7 +3,7 @@ import axios from 'axios'
 export function createFile(f){
   return function(dispatch){
     dispatch({type:"CREATE_FILE"})
-    axios.post("files", f)
+    axios.post("http://localhost:8080/files", f)
     .then((response)=>{
       dispatch({type:"CREATE_FILE_FULFILLED", payload: response.data})
     })
@@ -122,6 +122,26 @@ export function sendEmail(obj){
     })
     .catch((err)=>{
       dispatch({type:"SEND_EMAIL_REJECTED", payload:err})
+    })
+  }
+}
+
+export function updateProjectData(){
+  return function(dispatch){
+    dispatch({type: "UPDATE_PROJECT_DATA"})
+  }
+}
+
+export function updateProjectFile(obj){
+  return function(dispatch){
+    dispatch({type:"UPDATE_PROJECT_FILE"})
+    let id = obj.data.id
+    axios.patch(`http://localhost:8080/projects/${id}`, obj)
+    .then((response)=>{
+      dispatch({type:"UPDATE_PROJECT_FILE_FULFILLED", payload: response.data})
+    })
+    .catch((err)=>{
+      dispatch({type:"UPDATE_PROJECT_FILE_REJECTED", payload:err})
     })
   }
 }

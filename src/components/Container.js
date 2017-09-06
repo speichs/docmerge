@@ -29,11 +29,8 @@ import Dustbin from './Dustbin';
 import Box from './Box';
 import FileDnd from './FileDnd'
 import store from '../store'
-//import * as dndActions from '../actions/dndActions'
 import * as fileActions from '../actions/fileActions'
 
-
-//NOTE: comb through what you are bringing into store and get rid of all of the superfluous crap
 @connect((store)=>{
   return {
     user: store.user.user,
@@ -59,6 +56,9 @@ class Container extends Component {
   componentWillMount(){
     let id = parseInt(this.props.match.params.id)
     let shared = this.props.location.search;
+
+    console.log('location.search: ', shared)
+
     if(!id){
     }
     else if(shared === "?false"){
@@ -131,6 +131,28 @@ class Container extends Component {
     this.props.dispatch(fileActions.updateValidColName())
   }
 
+  shareFile(e){
+    e.preventDefault()
+    let shareEmail = ReactDOM.findDOMNode(this.useremail).value
+    let fileId = this.props.currentProject.id;
+    let userId = this.props.user.id;
+  }
+
+  handleUpdate(e){
+    e.preventDefault();
+    let that = this
+
+    this.props.dispatch(fileActions.updateProjectData())
+
+    setTimeout(function(){
+      let obj = {
+        email: that.props.user.email,
+        data: that.props.currentProject
+      }
+      that.props.dispatch(fileActions.updateProjectFile(obj))
+    }, 4000);
+  }
+
   render()
   {
     const {
@@ -180,7 +202,7 @@ class Container extends Component {
               <Col xs={10} xsPush={1}>
                 <div style={{ overflow: 'hidden', clear: 'both' }}>
                   {
-                    associativeFiles.map((e, index) =>{
+                    associativeFiles.length? associativeFiles.map((e, index) =>{
                       let keys = Object.keys(e.data[0])
                       return keys.map((el,ind)=>
                       <Box
@@ -189,7 +211,7 @@ class Container extends Component {
                         isDropped={this.isDropped(name)}
                         key={ind}
                         >{e.name}</Box>)
-                      })
+                      }) : <p></p>
                     }
                   </div>
               </Col>
@@ -264,17 +286,25 @@ class Container extends Component {
 
         <Row>
           <Col xs={2} xsPush={9}>
-            <Button
-              id='successbutton'
-              className='savebutton'
-              block
-              bsSize='large'
-              onClick={this.handleSave.bind(this)}>
-              Save
-            </Button>
+            {
+              !this.props.location.search?<Button
+                id='successbutton'
+                className='savebutton'
+                block
+                bsSize='large'
+                onClick={this.handleSave.bind(this)}>
+                Save
+              </Button> : <Button
+                id='successbutton'
+                className='savebutton'
+                block
+                bsSize='large'
+                onClick={this.handleUpdate.bind(this)}>
+                Update
+              </Button>
+            }
           </Col>
         </Row>
-        <br/>
         <br/>
         <Row>
           <Col xs={2} xsPush={9}>
@@ -290,7 +320,26 @@ class Container extends Component {
             </Button>
           </Col>
         </Row>
-
+        <br/>
+        <Row>
+          <Col className='text-center' xs={4}>
+            <h4>Share With Another User</h4>
+            <Form onSubmit={this.shareFile.bind(this)}>
+              <FormGroup>
+                <ControlLabel>
+                  Email
+                </ControlLabel>
+                <FormControl
+                ref={useremail=>{this.useremail = useremail}}
+                type="email"
+                placeholder="User Email"
+                >
+                </FormControl>
+              </FormGroup>
+              <Button type='submit'>Share</Button>
+            </Form>
+          </Col>
+        </Row>
 
       </Grid>
     );

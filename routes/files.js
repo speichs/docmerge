@@ -8,7 +8,11 @@ const saltRounds = 10;
 const secret = process.env.SECRET;
 
 router.post('/files', (req,res,next)=>{
+
+
   const body = req.body;
+  console.log('hello from the body', body);
+
   knex('users')
   .select('id')
   .where('email', body.email)
@@ -35,5 +39,7 @@ router.get('/files/:id', (req,res,next)=>{
   .then(result => {res.send(result)})
   .catch(err => res.sendStatus(404))
 })
+
+
 
 module.exports = router;
