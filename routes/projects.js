@@ -6,10 +6,13 @@ const jwt = require('jsonwebtoken');
 const knex = require('../knex');
 const saltRounds = 10;
 const secret = process.env.SECRET;
+const fs = require('fs');
+const papaparse=require('papaparse')
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 router.post('/projects', (req,res,next)=>{
-  console.log(req.body.data);
   const { email, data } = req.body;
   knex('users')
   .select('id')
@@ -24,7 +27,9 @@ router.post('/projects', (req,res,next)=>{
       isProject: data.isProject
     })
     .returning('*')
-    .then(lowerResult => res.send(lowerResult[0]))
+    .then(lowerResult => {
+      res.send(lowerResult[0])
+    })
     .catch(err => res.sendStatus(404))
   })
 })

@@ -4,6 +4,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 import { connect } from 'react-redux'
 import ReactDOM from 'react-dom'
+import FontAwesome from 'react-fontawesome'
 import {
   Grid,
   Row,
@@ -57,8 +58,26 @@ class Container extends Component {
 
   componentWillMount(){
     let id = parseInt(this.props.match.params.id)
-    let shared = this.props.location.search
-    this.props.dispatch(fileActions.getCurrentFile(id,shared))
+    let shared = this.props.location.search;
+    if(!id){
+    }
+    else if(shared === "?false"){
+      this.props.ownedFiles.map(e=>{
+        if(e.id === id){
+          let copy = Object.assign({},e)
+          console.log(copy);
+          this.props.dispatch(fileActions.setCurrentProject(copy))
+        }
+      })
+    }else if(shared === "?true"){
+      this.props.sharedFiles.map(e=>{
+        if(e.id === id){
+          let copy = Object.assign({},e)
+
+          this.props.dispatch(fileActions.setCurrentProject(copy))
+        }
+      })
+    }
   }
 
   handleAddSchemaClick(){
@@ -83,13 +102,12 @@ class Container extends Component {
     this.props.dispatch(fileActions.itemDrop(index,item))
   }
 
-  updatefile(){
-
-
-  }
-
-  showData(){
-
+  handleSend(){
+    let obj = {
+      email: this.props.user.email,
+      data: this.props.currentProject
+    }
+    this.props.dispatch(fileActions.sendEmail(obj))
   }
 
   handleSave(){
@@ -103,16 +121,6 @@ class Container extends Component {
       }
       that.props.dispatch(fileActions.createProjectFile(obj))
     }, 4000);
-
-    // let obj = {
-    //   email: this.props.user.email,
-    //   data: this.props.currentProject
-    // }
-    //
-    // this.props.dispatch(fileActions.createProjectFile(obj))
-
-    //add in handling for the save of the project
-    //here you could check if the path of the route says '/myproject ' if so you would save a new file,  if not you would save the existing file
   }
 
   handleAddColumn(e){
@@ -135,14 +143,6 @@ class Container extends Component {
       showHideSchemaMaker,
       currentProjectSchema,
     } = this.props;
-
-    //NOTE: keep this code - just needs to be transformed soi that it knows not to display this when we are doing newProject
-    // if(this.props.isSettingCurrent){
-    //   return(
-    //     <h1>Loading...</h1>
-    //   )
-    // }
-
 
     return (
       <Grid bsClass='container-fluid'>
@@ -274,6 +274,23 @@ class Container extends Component {
             </Button>
           </Col>
         </Row>
+        <br/>
+        <br/>
+        <Row>
+          <Col xs={2} xsPush={9}>
+            <Button
+              // disabled = {this.props.wasSaved || this.props.match.params.id >=0 }
+              id='successbutton'
+              className='savebutton'
+              block
+              bsSize='large'
+              onClick={this.handleSend.bind(this)}>
+              <FontAwesome className="fa-envelope create"></FontAwesome>
+              Send Email
+            </Button>
+          </Col>
+        </Row>
+
 
       </Grid>
     );

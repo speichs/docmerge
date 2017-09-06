@@ -25,6 +25,16 @@ export function getOwnedFiles(id){
     })
   }
 }
+
+export function setCurrentProject(obj){
+  return function(dispatch){
+    dispatch({
+      type:"SET_CURRENT_PROJECT",
+      payload: obj
+    })
+  }
+}
+
 //insert a shareFile function
 
 export function getSharedFiles(id){
@@ -40,14 +50,15 @@ export function getSharedFiles(id){
   }
 }
 
-export function getCurrentFile(id, shared){
+export function getCurrentFile(id, shared, sharedFiles, ownedFiles){
   return function(dispatch){
-    dispatch({type:"GETTING_CURRENT_FILES"})
     dispatch({
       type: "GOT_CURRENT_FILE",
       payload: {
         id: id,
-        shared: shared
+        shared: shared,
+        sharedFiles: sharedFiles,
+        ownedFiles: ownedFiles,
       }
     })
   }
@@ -98,6 +109,19 @@ export function createProjectFile(f){
     })
     .catch((err)=>{
       dispatch({type:"CREATE_PROJECT_FILE_REJECTED", payload:err})
+    })
+  }
+}
+
+export function sendEmail(obj){
+  return function(dispatch){
+    dispatch({type:"SEND_EMAIL"})
+    axios.post("/email", obj)
+    .then((response)=>{
+      dispatch({type:"SEND_EMAIL_FULFILLED", payload: response.data})
+    })
+    .catch((err)=>{
+      dispatch({type:"SEND_EMAIL_REJECTED", payload:err})
     })
   }
 }

@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6d2b7e4b9e88e2eebfc9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c978e401c2198e719207"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -8378,6 +8378,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createFile = createFile;
 exports.getOwnedFiles = getOwnedFiles;
+exports.setCurrentProject = setCurrentProject;
 exports.getSharedFiles = getSharedFiles;
 exports.getCurrentFile = getCurrentFile;
 exports.changeValidName = changeValidName;
@@ -8388,6 +8389,7 @@ exports.updateValidColName = updateValidColName;
 exports.itemDrop = itemDrop;
 exports.makeProjectData = makeProjectData;
 exports.createProjectFile = createProjectFile;
+exports.sendEmail = sendEmail;
 
 var _axios = __webpack_require__(285);
 
@@ -8416,6 +8418,16 @@ function getOwnedFiles(id) {
     });
   };
 }
+
+function setCurrentProject(obj) {
+  return function (dispatch) {
+    dispatch({
+      type: "SET_CURRENT_PROJECT",
+      payload: obj
+    });
+  };
+}
+
 //insert a shareFile function
 
 function getSharedFiles(id) {
@@ -8429,14 +8441,15 @@ function getSharedFiles(id) {
   };
 }
 
-function getCurrentFile(id, shared) {
+function getCurrentFile(id, shared, sharedFiles, ownedFiles) {
   return function (dispatch) {
-    dispatch({ type: "GETTING_CURRENT_FILES" });
     dispatch({
       type: "GOT_CURRENT_FILE",
       payload: {
         id: id,
-        shared: shared
+        shared: shared,
+        sharedFiles: sharedFiles,
+        ownedFiles: ownedFiles
       }
     });
   };
@@ -8488,6 +8501,17 @@ function createProjectFile(f) {
     });
   };
 }
+
+function sendEmail(obj) {
+  return function (dispatch) {
+    dispatch({ type: "SEND_EMAIL" });
+    _axios2.default.post("/email", obj).then(function (response) {
+      dispatch({ type: "SEND_EMAIL_FULFILLED", payload: response.data });
+    }).catch(function (err) {
+      dispatch({ type: "SEND_EMAIL_REJECTED", payload: err });
+    });
+  };
+}
 ;
 
 var _temp = function () {
@@ -8498,6 +8522,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(createFile, "createFile", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 
   __REACT_HOT_LOADER__.register(getOwnedFiles, "getOwnedFiles", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
+
+  __REACT_HOT_LOADER__.register(setCurrentProject, "setCurrentProject", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 
   __REACT_HOT_LOADER__.register(getSharedFiles, "getSharedFiles", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 
@@ -8518,6 +8544,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(makeProjectData, "makeProjectData", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 
   __REACT_HOT_LOADER__.register(createProjectFile, "createProjectFile", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
+
+  __REACT_HOT_LOADER__.register(sendEmail, "sendEmail", "/Users/seaneichenberger/Desktop/Galvanize/Q4/reactly-starter-kit/src/actions/fileActions.js");
 }();
 
 ;
@@ -30992,6 +31020,10 @@ var _reactDom = __webpack_require__(32);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _reactFontawesome = __webpack_require__(1068);
+
+var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
+
 var _reactBootstrap = __webpack_require__(126);
 
 var _reactRouterDom = __webpack_require__(74);
@@ -31059,9 +31091,27 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
+      var _this2 = this;
+
       var id = parseInt(this.props.match.params.id);
       var shared = this.props.location.search;
-      this.props.dispatch(fileActions.getCurrentFile(id, shared));
+      if (!id) {} else if (shared === "?false") {
+        this.props.ownedFiles.map(function (e) {
+          if (e.id === id) {
+            var copy = Object.assign({}, e);
+            console.log(copy);
+            _this2.props.dispatch(fileActions.setCurrentProject(copy));
+          }
+        });
+      } else if (shared === "?true") {
+        this.props.sharedFiles.map(function (e) {
+          if (e.id === id) {
+            var copy = Object.assign({}, e);
+
+            _this2.props.dispatch(fileActions.setCurrentProject(copy));
+          }
+        });
+      }
     }
   }, {
     key: 'handleAddSchemaClick',
@@ -31087,11 +31137,14 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
       this.props.dispatch(fileActions.itemDrop(index, item));
     }
   }, {
-    key: 'updatefile',
-    value: function updatefile() {}
-  }, {
-    key: 'showData',
-    value: function showData() {}
+    key: 'handleSend',
+    value: function handleSend() {
+      var obj = {
+        email: this.props.user.email,
+        data: this.props.currentProject
+      };
+      this.props.dispatch(fileActions.sendEmail(obj));
+    }
   }, {
     key: 'handleSave',
     value: function handleSave() {
@@ -31105,16 +31158,6 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
         };
         that.props.dispatch(fileActions.createProjectFile(obj));
       }, 4000);
-
-      // let obj = {
-      //   email: this.props.user.email,
-      //   data: this.props.currentProject
-      // }
-      //
-      // this.props.dispatch(fileActions.createProjectFile(obj))
-
-      //add in handling for the save of the project
-      //here you could check if the path of the route says '/myproject ' if so you would save a new file,  if not you would save the existing file
     }
   }, {
     key: 'handleAddColumn',
@@ -31128,7 +31171,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _props = this.props,
           boxes = _props.boxes,
@@ -31139,13 +31182,6 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
           associativeFiles = _props.associativeFiles,
           showHideSchemaMaker = _props.showHideSchemaMaker,
           currentProjectSchema = _props.currentProjectSchema;
-
-      //NOTE: keep this code - just needs to be transformed soi that it knows not to display this when we are doing newProject
-      // if(this.props.isSettingCurrent){
-      //   return(
-      //     <h1>Loading...</h1>
-      //   )
-      // }
 
 
       return _react2.default.createElement(
@@ -31186,7 +31222,9 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                 _reactBootstrap.Col,
                 { xs: 4, xsPush: 4 },
                 _react2.default.createElement(
-                  _reactBootstrap.Button,
+                  _reactBootstrap.Button
+                  // disabled = {this.props.wasSaved || this.props.match.params.id >=0 }
+                  ,
                   {
                     id: 'successbutton',
                     bsStyle: 'primary',
@@ -31215,7 +31253,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                         {
                           fileId: e.id,
                           name: el,
-                          isDropped: _this2.isDropped(name),
+                          isDropped: _this3.isDropped(name),
                           key: ind
                         },
                         e.name
@@ -31262,7 +31300,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                         ),
                         _react2.default.createElement(_reactBootstrap.FormControl, {
                           ref: function ref(column) {
-                            _this2.column = column;
+                            _this3.column = column;
                           },
                           type: 'text',
                           placeholder: 'Header_1',
@@ -31310,7 +31348,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                       lastDroppedItem: e.lastDroppedItem,
                       associatedFile: e.associatedFile,
                       onDrop: function onDrop(item) {
-                        return _this2.handleDrop(index, item);
+                        return _this3.handleDrop(index, item);
                       },
                       key: index
                     });
@@ -31335,6 +31373,26 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                 bsSize: 'large',
                 onClick: this.handleSave.bind(this) },
               'Save'
+            )
+          )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          _reactBootstrap.Row,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 2, xsPush: 9 },
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { id: 'successbutton',
+                className: 'savebutton',
+                block: true,
+                bsSize: 'large',
+                onClick: this.handleSend.bind(this) },
+              _react2.default.createElement(_reactFontawesome2.default, { className: 'fa-envelope create' }),
+              'Send Email'
             )
           )
         )
@@ -32006,13 +32064,19 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
             _react2.default.createElement(
               _reactBootstrap.Row,
               null,
-              this.props.hasFetchedOwned && this.props.ownedFiles.length ? this.props.ownedFiles.map(function (e) {
-                return _react2.default.createElement(_Project2.default, {
-                  key: e.id,
-                  text: e.name,
-                  id: e.id,
-                  shared: 'false' });
-              }) : _react2.default.createElement('p', null)
+              this.props.hasFetchedOwned ? this.props.ownedFiles.map(function (e) {
+                if (e.isProject) {
+                  return _react2.default.createElement(_Project2.default, {
+                    key: e.id,
+                    text: e.name,
+                    id: e.id,
+                    shared: 'false' });
+                }
+              }) : _react2.default.createElement(
+                'p',
+                null,
+                'Nothing'
+              )
             )
           ),
           _react2.default.createElement(
@@ -32323,9 +32387,10 @@ var initialState = {
     isProject: true
   },
   validColName: false,
+  wasSaved: false,
   currentProjectSchema: [],
   droppedBoxNames: [],
-  showHideSchemaMaker: true,
+  showHideSchemaMaker: false,
   associativeFiles: [],
   validName: false,
   isSettingCurrent: false,
@@ -32343,7 +32408,9 @@ var initialState = {
   sharedFiles: [],
   fetchingSharedFiles: false,
   fetchedSharedFiles: false,
-  sharesExist: false
+  sharesExist: false,
+  sendingEmail: false,
+  emailSent: false
 };
 
 function reducer() {
@@ -32408,10 +32475,6 @@ function reducer() {
       {
         return _extends({}, state, { fetchingSharedFiles: false, error: action.payload });
       }
-    case "GETTING_CURRENT_FILES":
-      {
-        return _extends({}, state, { isSettingCurrent: true });
-      }
     case "CHANGE_VALID_NAME":
       {
         var bool = !state.validName;
@@ -32423,28 +32486,51 @@ function reducer() {
         proj.name = action.payload;
         return _extends({}, state, { currentProject: proj });
       }
-    case "GOT_CURRENT_FILE":
+    case "GOT_CURRENT_PROJECT":
       {
         var id = action.payload.id;
+        console.log('hello from the got current project');
+        console.log('id of got', id);
         var isShared = action.payload.shared;
-        var currentFile = _extends({}, state.currentFile);
-        var currentFileKeys = [].concat(_toConsumableArray(state.currentFileKeys));
+        console.log('shared of got', isShared);
+        var copyCurrentProject = {};
         if (isShared === "?true") {
-          var data = [].concat(_toConsumableArray(state.sharedFiles));
+          var data = action.payload.sharedFiles;
           for (var i = 0; i < data.length; i++) {
             if (data[i].id === id) {
-              currentFile = data[i];
-              currentFileKeys = Object.keys(currentFile);
-              return _extends({}, state, { currentFile: currentFile, currentFileKeys: currentFileKeys, isSettingCurrent: false });
+              copyCurrentProject.name = data[i].name;
+              copyCurrentProject.data = data[i].data;
+              copyCurrentProject.map = data[i].map;
+              copyCurrentProject.isProject = data[i].isProject;
+              return _extends({}, state, {
+                currentProject: copyCurrentFile,
+                isSettingCurrent: false,
+                associativeFiles: [],
+                currentProjectSchema: copyCurrentProject.map,
+                fetchedFiles: action.payload.ownedFiles,
+                sharedFiles: action.payload.sharedFiles,
+                showHideSchemaMaker: true
+              });
             }
           }
         } else {
-          var _data = [].concat(_toConsumableArray(state.fetchedFiles));
+          var _data = action.payload.ownedFiles;
           for (var _i = 0; _i < _data.length; _i++) {
             if (_data[_i].id === id) {
-              currentFile = _data[_i];
-              currentFileKeys = Object.keys(currentFile);
-              return _extends({}, state, { currentFile: currentFile, currentFileKeys: currentFileKeys, isSettingCurrent: false });
+              copyCurrentProject.name = _data[_i].name;
+              copyCurrentProject.data = _data[_i].data;
+              copyCurrentProject.map = _data[_i].map;
+              copyCurrentProject.isProject = _data[_i].isProject;
+              console.log(currentProject);
+              return _extends({}, state, {
+                currentProject: copyCurrentProject,
+                isSettingCurrent: false,
+                associativeFiles: [],
+                currentProjectSchema: copyCurrentProject.map,
+                fetchedFiles: action.payload.ownedFiles,
+                sharedFiles: action.payload.sharedFiles,
+                showHideSchemaMaker: true
+              });
             }
           }
         }
@@ -32494,13 +32580,9 @@ function reducer() {
     case "MAKE_PROJECT_DATA":
       {
         var projectData = mapData(state.currentProjectSchema, state.associativeFiles);
-        console.log(projectData);
         var copyProject = _extends({}, state.currentProject);
-        console.log(copyProject);
         copyProject.data = projectData;
-        console.log(copyProject);
         copyProject.map = [].concat(_toConsumableArray(state.currentProjectSchema));
-        console.log(copyProject);
         return _extends({}, state, { currentProject: copyProject });
       }
     case "CREATE_PROJECT_FILE":
@@ -32519,10 +32601,34 @@ function reducer() {
         return _extends({}, state, {
           fetchedFiles: _copyFetchedFileArray,
           creatingFile: false,
-          createdFile: true
+          createdFile: true,
+          wasSaved: true
         });
       }
-
+    case "SET_CURRENT_PROJECT":
+      {
+        return _extends({}, state, {
+          currentProject: action.payload,
+          currentProjectSchema: action.payload.map
+        });
+      }
+    case "SEND_EMAIL":
+      {
+        return _extends({}, state, { sendingEmail: true });
+      }
+    case "SEND_EMAIL_FULFILLED":
+      {
+        return _extends({}, state, {
+          sendingEmail: false,
+          emailSent: true
+        });
+      }
+    case "SEND_EMAIL_REJECTED":
+      {
+        return _extends({}, state, {
+          error: action.payload
+        });
+      }
   }
   return state;
 }

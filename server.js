@@ -18,6 +18,7 @@ module.exports = {
     const files = require('./routes/files.js');
     const share = require('./routes/share.js');
     const projects = require('./routes/projects.js');
+    const email = require('./routes/email.js');
 
     app.use(bodyParser.json())
     app.use(cookieParser())
@@ -25,6 +26,7 @@ module.exports = {
     app.use(token)
     app.use('/public', publicPath)
     app.use(files)
+    app.use(email)
     app.use(projects)
     app.get('/', function (_, res) { res.sendFile(indexPath) })
 
@@ -49,7 +51,6 @@ module.exports = {
     })
 
     app.use('*', (req,res,next)=>{
-      console.log('you hit the routey')
       res.sendFile(indexPath)
     })
 

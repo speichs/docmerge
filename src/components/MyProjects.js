@@ -141,14 +141,20 @@ export default class MyProjects extends React.Component{
           <Col xs={6}>
             <Row>
               {
-                this.props.hasFetchedOwned && this.props.ownedFiles.length ?
-                this.props.ownedFiles.map(e => (
-                  <Project
-                    key={e.id}
-                    text={e.name}
-                    id={e.id}
-                    shared="false">
-                  </Project>)) : <p></p>
+                this.props.hasFetchedOwned?
+                this.props.ownedFiles.map(e =>{
+                  if(e.isProject){
+                    return(
+                      <Project
+                        key={e.id}
+                        text={e.name}
+                        id={e.id}
+                        shared="false">
+                      </Project>
+                    )
+                  }
+                }
+                ):<p>Nothing</p>
               }
             </Row>
           </Col>

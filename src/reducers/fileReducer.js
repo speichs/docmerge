@@ -22,7 +22,6 @@ function mapData(schema, files){
   return newData
 }
 
-
 const initialState = {
   currentFile:{
     id:null,
@@ -38,9 +37,10 @@ const initialState = {
     isProject: true,
   },
   validColName: false,
+  wasSaved:false,
   currentProjectSchema: [],
   droppedBoxNames:[],
-  showHideSchemaMaker:true,
+  showHideSchemaMaker:false,
   associativeFiles:[],
   validName: false,
   isSettingCurrent:false,
@@ -59,6 +59,8 @@ const initialState = {
   fetchingSharedFiles: false,
   fetchedSharedFiles: false,
   sharesExist:false,
+  sendingEmail:false,
+  emailSent: false,
 }
 
 export default function reducer(state=initialState, action){
@@ -114,9 +116,6 @@ export default function reducer(state=initialState, action){
     case "GET_SHARED_FILES_REJECTED":{
       return{...state, fetchingSharedFiles:false, error: action.payload}
     }
-    case "GETTING_CURRENT_FILES":{
-      return {...state, isSettingCurrent:true}
-    }
     case "CHANGE_VALID_NAME":{
       let bool = !state.validName
       return {...state, validName: bool}
@@ -126,27 +125,52 @@ export default function reducer(state=initialState, action){
       proj.name = action.payload
       return {...state, currentProject: proj}
     }
-    case "GOT_CURRENT_FILE":{
+    case "GOT_CURRENT_PROJECT":{
       let id = action.payload.id;
+      console.log('hello from the got current project');
+      console.log('id of got', id);
       let isShared = action.payload.shared;
-      let currentFile = {...state.currentFile}
-      let currentFileKeys = [...state.currentFileKeys]
+      console.log('shared of got', isShared);
+      let copyCurrentProject = {}
       if(isShared=== "?true"){
-        let data = [...state.sharedFiles]
+        let data = action.payload.sharedFiles
         for(let i = 0; i < data.length; i++){
           if(data[i].id === id){
-            currentFile = data[i];
-            currentFileKeys = Object.keys(currentFile);
-            return {...state, currentFile: currentFile, currentFileKeys: currentFileKeys, isSettingCurrent:false};
+            copyCurrentProject.name = data[i].name;
+            copyCurrentProject.data = data[i].data;
+            copyCurrentProject.map = data[i].map;
+            copyCurrentProject.isProject = data[i].isProject
+            return {
+              ...state,
+              currentProject: copyCurrentFile,
+              isSettingCurrent:false,
+              associativeFiles: [],
+              currentProjectSchema: copyCurrentProject.map,
+              fetchedFiles: action.payload.ownedFiles,
+              sharedFiles: action.payload.sharedFiles,
+              showHideSchemaMaker:true,
+            }
           }
         }
       }else{
-        let data = [...state.fetchedFiles]
+        let data = action.payload.ownedFiles
         for(let i = 0; i < data.length; i++){
           if(data[i].id === id){
-            currentFile = data[i];
-            currentFileKeys = Object.keys(currentFile);
-            return {...state, currentFile: currentFile, currentFileKeys: currentFileKeys, isSettingCurrent:false};
+            copyCurrentProject.name = data[i].name;
+            copyCurrentProject.data = data[i].data;
+            copyCurrentProject.map = data[i].map;
+            copyCurrentProject.isProject = data[i].isProject
+            console.log(currentProject);
+            return {
+              ...state,
+              currentProject: copyCurrentProject,
+              isSettingCurrent:false,
+              associativeFiles: [],
+              currentProjectSchema: copyCurrentProject.map,
+              fetchedFiles: action.payload.ownedFiles,
+              sharedFiles: action.payload.sharedFiles,
+              showHideSchemaMaker:true,
+            }
           }
         }
       }
@@ -193,13 +217,9 @@ export default function reducer(state=initialState, action){
     }
     case "MAKE_PROJECT_DATA":{
       let projectData = mapData(state.currentProjectSchema, state.associativeFiles);
-      console.log(projectData);
       let copyProject = {...state.currentProject}
-      console.log(copyProject);
       copyProject.data = projectData;
-      console.log(copyProject);
       copyProject.map = [...state.currentProjectSchema]
-      console.log(copyProject);
       return {...state, currentProject: copyProject}
     }
     case "CREATE_PROJECT_FILE":{
@@ -216,12 +236,33 @@ export default function reducer(state=initialState, action){
         ...state,
         fetchedFiles: copyFetchedFileArray,
         creatingFile:false,
-        createdFile:true
+        createdFile:true,
+        wasSaved:true
       }
     }
-
-
-
+    case "SET_CURRENT_PROJECT":{
+      return {
+        ...state,
+        currentProject: action.payload,
+        currentProjectSchema: action.payload.map
+      }
+    }
+    case "SEND_EMAIL":{
+      return {...state, sendingEmail: true}
+    }
+    case "SEND_EMAIL_FULFILLED":{
+      return {
+        ...state,
+        sendingEmail:false,
+        emailSent: true
+      }
+    }
+    case "SEND_EMAIL_REJECTED":{
+      return {
+        ...state,
+        error: action.payload
+      }
+    }
   }
   return state
 }
