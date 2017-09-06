@@ -7,6 +7,18 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom'
+import {
+  Grid,
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  HelpBlock,
+  Button,
+} from 'react-bootstrap'
+import ReactDOM from 'react-dom'
 
 import store from '../store'
 import * as userActions from '../actions/userActions'
@@ -20,22 +32,22 @@ import * as userActions from '../actions/userActions'
 
 export default class CreateAccount extends React.Component{
   setFirstName(e){
-    let first = e.target.value
+    let first = ReactDOM.findDOMNode(this.cafirst).value
     this.props.dispatch(userActions.setFirstName(first))
   }
 
   setLastName(e){
-    let last = e.target.value
+    let last = ReactDOM.findDOMNode(this.calast).value
     this.props.dispatch(userActions.setLastName(last))
   }
 
   setEmail(e){
-    let email = e.target.value;
+    let email = ReactDOM.findDOMNode(this.caemail).value
     this.props.dispatch(userActions.setEmail(email))
   }
 
   setPassword(e){
-    let password = e.target.value
+    let password = ReactDOM.findDOMNode(this.capassword).value.replace(/\s/g,'')
     this.props.dispatch(userActions.setPassword(password))
   }
 
@@ -62,39 +74,82 @@ export default class CreateAccount extends React.Component{
     }
 
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-lg-4"></div>
-          <div className="col-lg-4 col-lg-pull-4">
-            <form onSubmit={this.createUser.bind(this)}>
+      <Grid>
+        <Row>
+          <Col xs={4} xsPush={4}>
+            <Row>
+              <Col className="text-center" xs={12}></Col>
+              <h4 className='createAccountHeader'>
+                Create Account
+              </h4>
+              <Form
+                className='createAccountForm'
+                onSubmit={this.createUser.bind(this)}
+              >
+                <FormGroup>
+                  <ControlLabel>
+                    First Name
+                  </ControlLabel>
+                  <FormControl
+                    ref={cafirst=>this.cafirst=cafirst}
+                    type="text"
+                    placeholder="John"
+                    onChange={this.setFirstName.bind(this)}
+                  >
+                  </FormControl>
+                </FormGroup>
 
-              <div className="form-group">
-                <label for="firstName">First Name: {firstName}</label>
-                <input onChange={this.setFirstName.bind(this)}  type="text" className="form-control" id="firstName" placeholder="John"></input>
-              </div>
+                <FormGroup>
+                  <ControlLabel>
+                    Last Name
+                  </ControlLabel>
+                  <FormControl
+                    ref={calast=>this.calast=calast}
+                    type="text"
+                    placeholder="Doe"
+                    onChange={this.setLastName.bind(this)}
+                  >
+                  </FormControl>
+                </FormGroup>
 
-              <div className="form-group">
-                <label for="lastName">Last Name: {lastName}</label>
-                <input onChange={this.setLastName.bind(this)} type="text" className="form-control" id="lastName" placeholder="Doe"></input>
-              </div>
+                <FormGroup>
+                  <ControlLabel>
+                    Email
+                  </ControlLabel>
+                  <FormControl
+                    ref={caemail=>this.caemail=caemail}
+                    type="email"
+                    placeholder="john_doe@gmail.com"
+                    onChange={this.setEmail.bind(this)}
+                  >
+                  </FormControl>
+                </FormGroup>
 
-              <div className="form-group">
-                <label for="exampleInputEmail1">Email address: {email}</label>
-                <input onChange={this.setEmail.bind(this)} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"></input>
-                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-              </div>
+                <FormGroup>
+                  <ControlLabel>
+                    Password
+                  </ControlLabel>
+                  <FormControl
+                    ref={capassword=>this.capassword=capassword}
+                    type="password"
+                    placeholder="password"
+                    onChange={this.setPassword.bind(this)}
+                  >
+                  </FormControl>
+                </FormGroup>
 
-              <div className="form-group">
-                <label for="password">Password</label>
-                <input onChange={this.setPassword.bind(this)} type="password" className="form-control" id="password" placeholder="Password"></input>
-              </div>
-
-              <button disabled={!email} type="submit" className="btn btn-primary">Create Account</button>
-
-            </form>
-          </div>
-        </div>
-      </div>
+                <FormGroup>
+                  <Col  xs={12} >
+                    <Button id='successbutton' block bsSize='large' bsStyle='success' type="submit">
+                      Create Account
+                    </Button>
+                  </Col>
+                </FormGroup>
+              </Form>
+            </Row>
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }

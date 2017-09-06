@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico|Roboto');
 body{
   font-family: 'Roboto', sans-serif;
+  background-color: #E1F5FE;
 }
 h1{
   font-family: 'Roboto', sans-serif;
@@ -35,7 +36,7 @@ h3{
 
 /*for login*/
 .loginCol{
-  background-color: rgb(36,49,60);
+  background-color: #607D8B;
   padding: 10%;
 }
 .loginRow{
@@ -102,6 +103,9 @@ a:hover{
   margin-bottom: 2%;
 }
 /*Button*/
+.btn-default{
+  text-shadow: none;
+}
 
 #successbutton{
   background-image:none;

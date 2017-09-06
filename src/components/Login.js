@@ -88,7 +88,6 @@ export default class Login extends React.Component{
                 </Col>
               </Row>
 
-
             </Col>
           </Row>
         </Grid>

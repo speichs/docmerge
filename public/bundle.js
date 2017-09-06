@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c978e401c2198e719207"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "435f975b3a67ed5b3add"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -13071,7 +13071,7 @@ exports = module.exports = __webpack_require__(749)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Pacifico|Roboto);", ""]);
 
 // module
-exports.push([module.i, "body{\n  font-family: 'Roboto', sans-serif;\n}\nh1{\n  font-family: 'Roboto', sans-serif;\n  font-weight: bold;\n}\n\nh3{\n  font-family: 'Roboto', sans-serif;\n}\n\n#dnd{\n  color: blue;\n  height:100px;\n}\n\n\n/*for file drag and drop box*/\n.dropzone{\n  height:200px;\n  width: 357px;\n  border: 1px dashed grey;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.innerDropzone{\n  align-self: center;\n  color: grey;\n}\n\n\n/*for login*/\n.loginCol{\n  background-color: rgb(36,49,60);\n  padding: 10%;\n}\n.loginRow{\n margin-top: 10%;\n}\n\n.loginForm{\n}\n#welcomeLogin{\n  color: rgb(36,49,60);\n}\n.loginHeader{\n  color: white;\n}\n\n/*my project page panels*/\n.outerpanel{\n  border: none;\n  border-radius: 2%;\n  box-shadow: 3px 3px 0px 0px #888888;\n}\n.panel-body{\n  background-color: rgb(36,49,60);\n  color: white;\n  text-decoration: none;\n}\n\n.panel-body:hover{\n  text-decoration: none;\n}\n\na:hover{\n  text-decoration: none;\n}\n\n.create{\n  margin:2%;\n}\n\n.createProjectRow{\n  margin-top:3%;\n}\n\n/*newProject Page*/\n.projNameRow{\n  margin-top: 3%;\n\n}\n.modal-container{\n  height: 15%;\n}\n.modal-content{\n  margin-top: 15%;\n}\n.modal-header{\n  align-self: center;\n}\n\n.filedragcol{\n  margin-bottom: 1%;\n}\n\n.createSchemaButton{\n  margin-bottom: 2%;\n}\n/*Button*/\n\n#successbutton{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n  margin: 0;\n}\n#successbutton:focus,\n#successbutton.focus{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#successbutton:active{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#successbutton:hover{\n  background-color: rgb(8, 37, 67);\n  border-color: rgb(8, 37, 67);\n}\n", ""]);
+exports.push([module.i, "body{\n  font-family: 'Roboto', sans-serif;\n  background-color: #E1F5FE;\n}\nh1{\n  font-family: 'Roboto', sans-serif;\n  font-weight: bold;\n}\n\nh3{\n  font-family: 'Roboto', sans-serif;\n}\n\n#dnd{\n  color: blue;\n  height:100px;\n}\n\n\n/*for file drag and drop box*/\n.dropzone{\n  height:200px;\n  width: 357px;\n  border: 1px dashed grey;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.innerDropzone{\n  align-self: center;\n  color: grey;\n}\n\n\n/*for login*/\n.loginCol{\n  background-color: #607D8B;\n  padding: 10%;\n}\n.loginRow{\n margin-top: 10%;\n}\n\n.loginForm{\n}\n#welcomeLogin{\n  color: rgb(36,49,60);\n}\n.loginHeader{\n  color: white;\n}\n\n/*my project page panels*/\n.outerpanel{\n  border: none;\n  border-radius: 2%;\n  box-shadow: 3px 3px 0px 0px #888888;\n}\n.panel-body{\n  background-color: rgb(36,49,60);\n  color: white;\n  text-decoration: none;\n}\n\n.panel-body:hover{\n  text-decoration: none;\n}\n\na:hover{\n  text-decoration: none;\n}\n\n.create{\n  margin:2%;\n}\n\n.createProjectRow{\n  margin-top:3%;\n}\n\n/*newProject Page*/\n.projNameRow{\n  margin-top: 3%;\n\n}\n.modal-container{\n  height: 15%;\n}\n.modal-content{\n  margin-top: 15%;\n}\n.modal-header{\n  align-self: center;\n}\n\n.filedragcol{\n  margin-bottom: 1%;\n}\n\n.createSchemaButton{\n  margin-bottom: 2%;\n}\n/*Button*/\n.btn-default{\n  text-shadow: none;\n}\n\n#successbutton{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n  margin: 0;\n}\n#successbutton:focus,\n#successbutton.focus{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#successbutton:active{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#successbutton:hover{\n  background-color: rgb(8, 37, 67);\n  border-color: rgb(8, 37, 67);\n}\n", ""]);
 
 // exports
 
@@ -31444,6 +31444,12 @@ var _reactRedux = __webpack_require__(60);
 
 var _reactRouterDom = __webpack_require__(74);
 
+var _reactBootstrap = __webpack_require__(126);
+
+var _reactDom = __webpack_require__(32);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _store = __webpack_require__(49);
 
 var _store2 = _interopRequireDefault(_store);
@@ -31479,25 +31485,25 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
   _createClass(CreateAccount, [{
     key: 'setFirstName',
     value: function setFirstName(e) {
-      var first = e.target.value;
+      var first = _reactDom2.default.findDOMNode(this.cafirst).value;
       this.props.dispatch(userActions.setFirstName(first));
     }
   }, {
     key: 'setLastName',
     value: function setLastName(e) {
-      var last = e.target.value;
+      var last = _reactDom2.default.findDOMNode(this.calast).value;
       this.props.dispatch(userActions.setLastName(last));
     }
   }, {
     key: 'setEmail',
     value: function setEmail(e) {
-      var email = e.target.value;
+      var email = _reactDom2.default.findDOMNode(this.caemail).value;
       this.props.dispatch(userActions.setEmail(email));
     }
   }, {
     key: 'setPassword',
     value: function setPassword(e) {
-      var password = e.target.value;
+      var password = _reactDom2.default.findDOMNode(this.capassword).value.replace(/\s/g, '');
       this.props.dispatch(userActions.setPassword(password));
     }
   }, {
@@ -31515,6 +31521,8 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           user = _props.user,
           redirect = _props.redirect;
@@ -31530,75 +31538,144 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
       }
 
       return _react2.default.createElement(
-        'div',
-        { className: 'container-fluid' },
+        _reactBootstrap.Grid,
+        null,
         _react2.default.createElement(
-          'div',
-          { className: 'row' },
-          _react2.default.createElement('div', { className: 'col-lg-4' }),
+          _reactBootstrap.Row,
+          null,
           _react2.default.createElement(
-            'div',
-            { className: 'col-lg-4 col-lg-pull-4' },
+            _reactBootstrap.Col,
+            { xs: 4, xsPush: 4 },
             _react2.default.createElement(
-              'form',
-              { onSubmit: this.createUser.bind(this) },
+              _reactBootstrap.Row,
+              null,
+              _react2.default.createElement(_reactBootstrap.Col, { className: 'text-center', xs: 12 }),
               _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'label',
-                  { 'for': 'firstName' },
-                  'First Name: ',
-                  firstName
-                ),
-                _react2.default.createElement('input', { onChange: this.setFirstName.bind(this), type: 'text', className: 'form-control', id: 'firstName', placeholder: 'John' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'label',
-                  { 'for': 'lastName' },
-                  'Last Name: ',
-                  lastName
-                ),
-                _react2.default.createElement('input', { onChange: this.setLastName.bind(this), type: 'text', className: 'form-control', id: 'lastName', placeholder: 'Doe' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'label',
-                  { 'for': 'exampleInputEmail1' },
-                  'Email address: ',
-                  email
-                ),
-                _react2.default.createElement('input', { onChange: this.setEmail.bind(this), type: 'email', className: 'form-control', id: 'exampleInputEmail1', 'aria-describedby': 'emailHelp', placeholder: 'Enter email' }),
-                _react2.default.createElement(
-                  'small',
-                  { id: 'emailHelp', className: 'form-text text-muted' },
-                  'We\'ll never share your email with anyone else.'
-                )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'label',
-                  { 'for': 'password' },
-                  'Password'
-                ),
-                _react2.default.createElement('input', { onChange: this.setPassword.bind(this), type: 'password', className: 'form-control', id: 'password', placeholder: 'Password' })
-              ),
-              _react2.default.createElement(
-                'button',
-                { disabled: !email, type: 'submit', className: 'btn btn-primary' },
+                'h4',
+                { className: 'createAccountHeader' },
                 'Create Account'
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Form,
+                {
+                  className: 'createAccountForm',
+                  onSubmit: this.createUser.bind(this)
+                },
+                _react2.default.createElement(
+                  _reactBootstrap.FormGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    'First Name'
+                  ),
+                  _react2.default.createElement(_reactBootstrap.FormControl, {
+                    ref: function ref(cafirst) {
+                      return _this2.cafirst = cafirst;
+                    },
+                    type: 'text',
+                    placeholder: 'John',
+                    onChange: this.setFirstName.bind(this)
+                  })
+                ),
+                _react2.default.createElement(
+                  _reactBootstrap.FormGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    'Last Name'
+                  ),
+                  _react2.default.createElement(_reactBootstrap.FormControl, {
+                    ref: function ref(calast) {
+                      return _this2.calast = calast;
+                    },
+                    type: 'text',
+                    placeholder: 'Doe',
+                    onChange: this.setLastName.bind(this)
+                  })
+                ),
+                _react2.default.createElement(
+                  _reactBootstrap.FormGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    'Email'
+                  ),
+                  _react2.default.createElement(_reactBootstrap.FormControl, {
+                    ref: function ref(caemail) {
+                      return _this2.caemail = caemail;
+                    },
+                    type: 'email',
+                    placeholder: 'john_doe@gmail.com',
+                    onChange: this.setEmail.bind(this)
+                  })
+                ),
+                _react2.default.createElement(
+                  _reactBootstrap.FormGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    'Password'
+                  ),
+                  _react2.default.createElement(_reactBootstrap.FormControl, {
+                    ref: function ref(capassword) {
+                      return _this2.capassword = capassword;
+                    },
+                    type: 'password',
+                    placeholder: 'password',
+                    onChange: this.setPassword.bind(this)
+                  })
+                ),
+                _react2.default.createElement(
+                  _reactBootstrap.FormGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.Col,
+                    { xs: 12 },
+                    _react2.default.createElement(
+                      _reactBootstrap.Button,
+                      { id: 'successbutton', block: true, bsSize: 'large', bsStyle: 'success', type: 'submit' },
+                      'Create Account'
+                    )
+                  )
+                )
               )
             )
           )
         )
-      );
+      )
+
+      /* <div className="container-fluid">
+        <div className="row">
+          <div className="col-lg-4"></div>
+          <div className="col-lg-4 col-lg-pull-4">
+            <form onSubmit={this.createUser.bind(this)}>
+               <div className="form-group">
+                <label for="firstName">First Name: {firstName}</label>
+                <input onChange={this.setFirstName.bind(this)}  type="text" className="form-control" id="firstName" placeholder="John"></input>
+              </div>
+               <div className="form-group">
+                <label for="lastName">Last Name: {lastName}</label>
+                <input onChange={this.setLastName.bind(this)} type="text" className="form-control" id="lastName" placeholder="Doe"></input>
+              </div>
+               <div className="form-group">
+                <label for="exampleInputEmail1">Email address: {email}</label>
+                <input onChange={this.setEmail.bind(this)} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"></input>
+                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+              </div>
+               <div className="form-group">
+                <label for="password">Password</label>
+                <input onChange={this.setPassword.bind(this)} type="password" className="form-control" id="password" placeholder="Password"></input>
+              </div>
+               <button disabled={!email} type="submit" className="btn btn-primary">Create Account</button>
+             </form>
+          </div>
+        </div>
+      </div> */
+      ;
     }
   }]);
 
