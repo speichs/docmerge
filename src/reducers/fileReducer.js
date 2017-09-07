@@ -265,7 +265,9 @@ export default function reducer(state=initialState, action){
         ...state,
         currentProject : clearedProject,
         currentProjectSchema : [],
-        droppedBoxNames : []
+        droppedBoxNames : [],
+        associativeFiles: [],
+        wasSaved: false,
       }
     }
     case "UPDATE_PROJECT_FILE_FULFILLED":{
@@ -297,7 +299,8 @@ export default function reducer(state=initialState, action){
       return {
         ...state,
         currentProject: action.payload,
-        currentProjectSchema: action.payload.map
+        currentProjectSchema: action.payload.map,
+        wasSaved: true
       }
     }
     case "SEND_EMAIL":{

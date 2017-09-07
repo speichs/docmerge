@@ -5,3 +5,7 @@ export function toggleNameProject(){
 export function toggleDropColor(){
   return {type: "TOGGLE_DROP_COLOR"}
 }
+
+export function toggleShare(){
+  return {type: "TOGGLE_SHARE"}
+}

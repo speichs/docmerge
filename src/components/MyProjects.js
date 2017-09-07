@@ -47,6 +47,7 @@ export default class MyProjects extends React.Component{
     let id = this.props.user.id;
     this.props.dispatch(fileActions.getOwnedFiles(id))
     this.props.dispatch(fileActions.getSharedFiles(id))
+    this.props.dispatch(fileActions.clearCurrentProject(null))
   }
 
   handleNewProjClick(){

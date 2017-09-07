@@ -113,6 +113,7 @@ a:hover{
   border-color:rgba(8, 37, 67, .8);
   color: white;
   margin: 0;
+
 }
 #successbutton:focus,
 #successbutton.focus{
@@ -130,4 +131,40 @@ a:hover{
 #successbutton:hover{
   background-color: rgb(8, 37, 67);
   border-color: rgb(8, 37, 67);
+}
+
+
+#sharebtn{
+  background-image:none;
+  background-color: rgba(8, 37, 67, .8);
+  border-color:rgba(8, 37, 67, .8);
+  color: white;
+  margin-left: 1%;
+
+}
+#sharebtn:focus,
+#sharebtn.focus{
+  background-image:none;
+  background-color: rgba(8, 37, 67, .8);
+  border-color:rgba(8, 37, 67, .8);
+  color: white;
+}
+#sharebtn:active{
+  background-image:none;
+  background-color: rgba(8, 37, 67, .8);
+  border-color:rgba(8, 37, 67, .8);
+  color: white;
+}
+#sharebtn:hover{
+  background-color: rgb(8, 37, 67);
+  border-color: rgb(8, 37, 67);
+}
+
+
+
+
+
+#shareFormLabel{
+  margin-right: 2px;
+  font-size: 2rem;
 }

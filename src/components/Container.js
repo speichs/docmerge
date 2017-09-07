@@ -15,6 +15,8 @@ import {
   Form,
   ControlLabel,
   FormControl,
+  ButtonToolbar,
+  ButtonGroup
 } from 'react-bootstrap'
 import {
   BrowserRouter as Router,
@@ -29,6 +31,7 @@ import Box from './Box';
 import FileDnd from './FileDnd'
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
+import * as showHideActions from '../actions/showhideactions'
 
 @connect((store)=>{
   return {
@@ -45,6 +48,8 @@ import * as fileActions from '../actions/fileActions'
     showHideSchemaMaker: store.file.showHideSchemaMaker,
     validColName: store.file.validColName,
     currentProjectSchema: store.file.currentProjectSchema,
+    wasSaved: store.file.wasSaved,
+    toggleShare: store.showhide.toggleShare,
   }
 })
 
@@ -113,15 +118,28 @@ class Container extends Component {
 
   handleSave(){
     let that = this
-    this.props.dispatch(fileActions.makeProjectData())
 
-    setTimeout(function(){
-      let obj = {
-        email: that.props.user.email,
-        data: that.props.currentProject
-      }
-      that.props.dispatch(fileActions.createProjectFile(obj))
-    }, 4000);
+    if(this.props.wasSaved){
+      this.props.dispatch(fileActions.updateProjectData())
+
+      setTimeout(function(){
+        let obj = {
+          email: that.props.user.email,
+          data: that.props.currentProject
+        }
+        that.props.dispatch(fileActions.updateProjectFile(obj))
+      }, 4000);
+    }else{
+      this.props.dispatch(fileActions.makeProjectData())
+
+      setTimeout(function(){
+        let obj = {
+          email: that.props.user.email,
+          data: that.props.currentProject
+        }
+        that.props.dispatch(fileActions.createProjectFile(obj))
+      }, 4000);
+    }
   }
 
   handleAddColumn(e){
@@ -130,6 +148,11 @@ class Container extends Component {
     this.props.dispatch(fileActions.addColToSchema(column))
     ReactDOM.findDOMNode(this.column).value = ''
     this.props.dispatch(fileActions.updateValidColName())
+  }
+
+  toggleShare(e){
+    e.preventDefault()
+    this.props.dispatch(showHideActions.toggleShare())
   }
 
   shareFile(e){
@@ -143,6 +166,7 @@ class Container extends Component {
       userId
     }
     this.props.dispatch(fileActions.shareProject(obj))
+    this.props.dispatch(showHideActions.toggleShare())
   }
 
   handleUpdate(e){
@@ -176,6 +200,67 @@ class Container extends Component {
     if(this.props.header){
       return (
         <Grid bsClass='container-fluid'>
+
+          <Row>
+            <Col xs={3}>
+              <ButtonToolbar>
+                <ButtonGroup bsSize="large">
+                    <Button
+                    id='successbutton'
+                    className='savebutton'
+                    bsSize='large'
+                    block
+                    onClick={this.handleSave.bind(this)}>
+                    <FontAwesome className="fa-floppy-o create"></FontAwesome>
+                    Save
+                  </Button>
+                  <Button
+                    id='successbutton'
+                    className='savebutton'
+                    bsSize='large'
+                    onClick={this.handleSend.bind(this)}>
+                    <FontAwesome className="fa-envelope create"></FontAwesome>
+                    Send Email
+                  </Button>
+                  <Button
+                    id='successbutton'
+                    className='savebutton'
+                    bsSize='large'
+                    onClick={this.toggleShare.bind(this)}>
+                    <FontAwesome className="fa-share create"></FontAwesome>
+                    Share Project
+                  </Button>
+                </ButtonGroup>
+              </ButtonToolbar>
+            </Col>
+            {
+              this.props.toggleShare?<Col className='text-center' xs={4}>
+                <Form inline onSubmit={this.shareFile.bind(this)}>
+                  <FormGroup>
+                    <ControlLabel id='shareFormLabel'>
+                      Email: {<span>  </span> }
+                    </ControlLabel>
+                    <FormControl
+                    ref={useremail=>{this.useremail = useremail}}
+                    type="email"
+                    placeholder="User Email"
+                    >
+                    </FormControl>
+                  </FormGroup>
+                  <span>  </span>
+                  <Button
+                    id='sharebtn'
+                    type='submit'
+                    bsSize='large'
+                  >
+                    Share
+                  </Button>
+                </Form>
+              </Col>: <span></span>
+            }
+
+
+          </Row>
 
           <Row>
             <Col className='text-center projNameRow' xs={4} xsPush={4}>
@@ -295,58 +380,23 @@ class Container extends Component {
           <Row>
             <Col xs={2} xsPush={9}>
               {
-                !this.props.location.search?<Button
-                  id='successbutton'
-                  className='savebutton'
-                  block
-                  bsSize='large'
-                  onClick={this.handleSave.bind(this)}>
-                  Save
-                </Button> : <Button
-                  id='successbutton'
-                  className='savebutton'
-                  block
-                  bsSize='large'
-                  onClick={this.handleUpdate.bind(this)}>
-                  Update
-                </Button>
+
+                // : <Button
+                //   id='successbutton'
+                //   className='savebutton'
+                //   block
+                //   bsSize='large'
+                //   onClick={this.handleUpdate.bind(this)}>
+                //   Update
+                // </Button>
               }
             </Col>
           </Row>
           <br/>
-          <Row>
-            <Col xs={2} xsPush={9}>
-              <Button
-                // disabled = {this.props.wasSaved || this.props.match.params.id >=0 }
-                id='successbutton'
-                className='savebutton'
-                block
-                bsSize='large'
-                onClick={this.handleSend.bind(this)}>
-                <FontAwesome className="fa-envelope create"></FontAwesome>
-                Send Email
-              </Button>
-            </Col>
-          </Row>
+          {/* SAVE WAS HERE */}
           <br/>
           <Row>
-            <Col className='text-center' xs={4}>
-              <h4>Share With Another User</h4>
-              <Form onSubmit={this.shareFile.bind(this)}>
-                <FormGroup>
-                  <ControlLabel>
-                    Email
-                  </ControlLabel>
-                  <FormControl
-                  ref={useremail=>{this.useremail = useremail}}
-                  type="email"
-                  placeholder="User Email"
-                  >
-                  </FormControl>
-                </FormGroup>
-                <Button type='submit'>Share</Button>
-              </Form>
-            </Col>
+
           </Row>
           <br/>
           <Row>

@@ -65,67 +65,70 @@ router.post('/users', (req, res, next) => {
 //   res.sendStatus(401);
 // });
 
-router.patch('/users', (req, res, next) => {
-  const id = req.user.id;
-  const body = req.body;
-  if (!Object.keys(body).length) {
-    return res.status(400)
-      .set({ 'Content-Type': 'plain/text' })
-      .send('Nothing was changed');
-  }
-  if (body.password) {
-    body.hashed_password = bcrypt.hashSync(body.password, saltRounds);
-    delete body.password;
-  }
-  knex('users')
-    .where('id', id)
-    .update(body)
-    .returning([
-      'id',
-      'firstName',
-      'lastName',
-      'email'
-    ])
-    .then((updateUser) => {
-      res.send(updateUser);
-    })
-    .catch((error) => {
-      if (error) {
-        return console.error(error);
-      }
-      return res.status(404)
-        .set({ 'Content-Type': 'plain/text' })
-        .send('Not Found');
-    });
-});
+//end of app.use/////////////////////////////////*******************
 
-router.delete('/users', (req, res, next) => {
-  const id = req.user.id;
-  knex('users')
-    .del()
-    .where('id', id)
-    .returning([
-      'id',
-      'firstName',
-      'lastName',
-      'email'
-    ])
-    .then((deletedUser) => {
-      if (!deletedUser) {
-        return res.status(404)
-          .set({ 'Content-Type': 'plain/text' })
-          .send('User not found');
-      }
-      res.clearCookie('token').send(deletedUser);
-    })
-    .catch((error) => {
-      if (error) {
-        return console.error(error);
-      }
-      return res.status(404)
-        .set({ 'Content-Type': 'plain/text' })
-        .send('Not Found');
-    });
-});
+
+// router.patch('/users', (req, res, next) => {
+//   const id = req.user.id;
+//   const body = req.body;
+//   if (!Object.keys(body).length) {
+//     return res.status(400)
+//       .set({ 'Content-Type': 'plain/text' })
+//       .send('Nothing was changed');
+//   }
+//   if (body.password) {
+//     body.hashed_password = bcrypt.hashSync(body.password, saltRounds);
+//     delete body.password;
+//   }
+//   knex('users')
+//     .where('id', id)
+//     .update(body)
+//     .returning([
+//       'id',
+//       'firstName',
+//       'lastName',
+//       'email'
+//     ])
+//     .then((updateUser) => {
+//       res.send(updateUser);
+//     })
+//     .catch((error) => {
+//       if (error) {
+//         return console.error(error);
+//       }
+//       return res.status(404)
+//         .set({ 'Content-Type': 'plain/text' })
+//         .send('Not Found');
+//     });
+// });
+//
+// router.delete('/users', (req, res, next) => {
+//   const id = req.user.id;
+//   knex('users')
+//     .del()
+//     .where('id', id)
+//     .returning([
+//       'id',
+//       'firstName',
+//       'lastName',
+//       'email'
+//     ])
+//     .then((deletedUser) => {
+//       if (!deletedUser) {
+//         return res.status(404)
+//           .set({ 'Content-Type': 'plain/text' })
+//           .send('User not found');
+//       }
+//       res.clearCookie('token').send(deletedUser);
+//     })
+//     .catch((error) => {
+//       if (error) {
+//         return console.error(error);
+//       }
+//       return res.status(404)
+//         .set({ 'Content-Type': 'plain/text' })
+//         .send('Not Found');
+//     });
+// });
 
 module.exports = router;
