@@ -75,77 +75,77 @@ export default class CreateAccount extends React.Component{
 
     return (
       <Grid>
-        <Row>
-          <Col xs={4} xsPush={4}>
+        <Row id='outerCARow'>
+          <Col className='text-center outerCACol' xs={4} xsPush={4}>
+            <h4 className='createAccountHeader'>
+              Create Account
+            </h4>
             <Row>
-              <Col className="text-center" xs={12}></Col>
-              <h4 className='createAccountHeader'>
-                Create Account
-              </h4>
-              <Form
-                className='createAccountForm'
-                onSubmit={this.createUser.bind(this)}
-              >
-                <FormGroup>
-                  <ControlLabel>
-                    First Name
-                  </ControlLabel>
-                  <FormControl
-                    ref={cafirst=>this.cafirst=cafirst}
-                    type="text"
-                    placeholder="John"
-                    onChange={this.setFirstName.bind(this)}
-                  >
-                  </FormControl>
-                </FormGroup>
+              <Col className="text-left" xs={12}>
+                <Form
+                  className='createAccountForm'
+                  onSubmit={this.createUser.bind(this)}
+                >
+                  <FormGroup>
+                    <ControlLabel>
+                      First Name
+                    </ControlLabel>
+                    <FormControl
+                      ref={cafirst=>this.cafirst=cafirst}
+                      type="text"
+                      placeholder="John"
+                      onChange={this.setFirstName.bind(this)}
+                    >
+                    </FormControl>
+                  </FormGroup>
 
-                <FormGroup>
-                  <ControlLabel>
-                    Last Name
-                  </ControlLabel>
-                  <FormControl
-                    ref={calast=>this.calast=calast}
-                    type="text"
-                    placeholder="Doe"
-                    onChange={this.setLastName.bind(this)}
-                  >
-                  </FormControl>
-                </FormGroup>
+                  <FormGroup>
+                    <ControlLabel>
+                      Last Name
+                    </ControlLabel>
+                    <FormControl
+                      ref={calast=>this.calast=calast}
+                      type="text"
+                      placeholder="Doe"
+                      onChange={this.setLastName.bind(this)}
+                    >
+                    </FormControl>
+                  </FormGroup>
 
-                <FormGroup>
-                  <ControlLabel>
-                    Email
-                  </ControlLabel>
-                  <FormControl
-                    ref={caemail=>this.caemail=caemail}
-                    type="email"
-                    placeholder="john_doe@gmail.com"
-                    onChange={this.setEmail.bind(this)}
-                  >
-                  </FormControl>
-                </FormGroup>
+                  <FormGroup>
+                    <ControlLabel>
+                      Email
+                    </ControlLabel>
+                    <FormControl
+                      ref={caemail=>this.caemail=caemail}
+                      type="email"
+                      placeholder="john_doe@gmail.com"
+                      onChange={this.setEmail.bind(this)}
+                    >
+                    </FormControl>
+                  </FormGroup>
 
-                <FormGroup>
-                  <ControlLabel>
-                    Password
-                  </ControlLabel>
-                  <FormControl
-                    ref={capassword=>this.capassword=capassword}
-                    type="password"
-                    placeholder="password"
-                    onChange={this.setPassword.bind(this)}
-                  >
-                  </FormControl>
-                </FormGroup>
+                  <FormGroup>
+                    <ControlLabel>
+                      Password
+                    </ControlLabel>
+                    <FormControl
+                      ref={capassword=>this.capassword=capassword}
+                      type="password"
+                      placeholder="password"
+                      onChange={this.setPassword.bind(this)}
+                    >
+                    </FormControl>
+                  </FormGroup>
 
-                <FormGroup>
-                  <Col  xs={12} >
-                    <Button id='successbutton' block bsSize='large' bsStyle='success' type="submit">
-                      Create Account
-                    </Button>
-                  </Col>
-                </FormGroup>
-              </Form>
+                  <FormGroup>
+                      <Button id='successbutton' block bsSize='large' bsStyle='success' type="submit">
+                        Create Account
+                      </Button>
+                  </FormGroup>
+                </Form>
+              </Col>
+
             </Row>
           </Col>
         </Row>

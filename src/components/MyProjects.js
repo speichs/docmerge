@@ -93,7 +93,7 @@ export default class MyProjects extends React.Component{
             <Row className='createProjectRow'>
               <Col className='text-center' xs={4} xsPush={4}>
                 <Button
-                  id='successbutton'
+                  id='newProjBtn'
                   bsSize="large"
                   bsStyle="success"
                   onClick={this.toggleNameProject.bind(this)}
@@ -114,14 +114,14 @@ export default class MyProjects extends React.Component{
                   {
                     isCreateNew? <Form onSubmit={this.handleSubmitName.bind(this)}>
                       <FormGroup controlId='formHorizontalName'>
-                        <ControlLabel>
+                        <ControlLabel className='myprojecttext'>
                           Name Your Project
                         </ControlLabel>
                         <FormControl onChange={this.handleProjectNameChange.bind(this)} ref={name=>{this.name = name}} type='text' placeholder='My_Project'>
                         </FormControl>
                       </FormGroup>
                       <Link to='/newproject'>
-                      <Button id="successbutton" bsStyle='primary' type="submit" disabled={!this.props.validName}>
+                      <Button id="newProjBtn" bsStyle='primary' type="submit" disabled={!this.props.validName}>
                         Get Started
                       </Button>
                     </Link>
@@ -132,12 +132,12 @@ export default class MyProjects extends React.Component{
 
             <Row>
               <Col xs={6}>
-                <h3 className="text-center">
+                <h3 className="text-center myprojecttext">
                   My Projects
                 </h3>
               </Col>
               <Col xs={6}>
-                <h3 className="text-center">
+                <h3 className="text-center myprojecttext">
                   Shared Projects
                 </h3>
               </Col>

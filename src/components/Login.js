@@ -12,7 +12,7 @@ import {
   Button,
 } from 'react-bootstrap'
 import ReactDOM from 'react-dom'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 import store from '../store'
 import { fetchUser } from '../actions/userActions'
@@ -85,9 +85,23 @@ export default class Login extends React.Component{
 
                     <FormGroup>
                       <Col  xs={12} >
-                        <Button id='successbutton' block bsSize='large' bsStyle='success' type="submit">
+                        <Button id='loginbtn' block bsSize='large' bsStyle='success' type="submit">
                           Sign in
                         </Button>
+                      </Col>
+                    </FormGroup>
+                    <FormGroup>
+                      <Col  xs={12} >
+                        <Link to='/createaccount'>
+                          <Button
+                            id='loginbtn'
+                            block
+                            bsSize='large'
+                            bsStyle='success'
+                            type="button">
+                            CreateAccount
+                          </Button>
+                        </Link>
                       </Col>
                     </FormGroup>
                   </Form>

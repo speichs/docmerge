@@ -32,16 +32,13 @@ const dustbinTarget = {
 class fileDND extends React.Component{
   handleDrop(e){
     e.preventDefault();
-    console.log('above the data right now');
     let data = e.dataTransfer.items[0].getAsFile()
-    console.log('this is data:', data);
     let name = data.name
     name = name.split('')
     name.splice(name.length-4,4)
     name = name.join('')
     e.dataTransfer.dropEffect = 'copy';
     let file = e.dataTransfer.items[0].getAsFile()
-    console.log('this is the file:', file);
     let obj = {email:this.props.user.email}
     let that = this;
     papaparse.parse(file, {
@@ -50,7 +47,6 @@ class fileDND extends React.Component{
       complete: function(results){
         obj.data = results.data
         obj.name = name
-        console.log('object from in the complete function' ,obj.data, obj.name);
         that.props.dispatch(fileActions.createFile(obj))
       }
     })

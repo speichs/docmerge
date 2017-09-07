@@ -22,7 +22,7 @@ h3{
 .dropzone{
   height:200px;
   width: 357px;
-  border: 1px dashed grey;
+  border: 1px dashed #379683;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,23 +30,33 @@ h3{
 
 .innerDropzone{
   align-self: center;
-  color: grey;
+  color: #379683;
+  font-weight: bold;
 }
-
 
 /*for login*/
+.navLink{
+  text-decoration: none;
+  color: white;
+}
+.navLink:hover, .navLink:active, .navLink:visited .navLink:link{
+  text-decoration: none;
+  color: white;
+}
+
 .loginCol{
-  background-color: #607D8B;
+  background-color: rgba(5,56,107,.7);
   padding: 10%;
+  border-radius: 2%
 }
 .loginRow{
- margin-top: 10%;
+ margin-top: 6%;
 }
 
 .loginForm{
 }
 #welcomeLogin{
-  color: rgb(36,49,60);
+  color: #EDF5E1;
 }
 .loginHeader{
   color: white;
@@ -56,12 +66,25 @@ h3{
 .outerpanel{
   border: none;
   border-radius: 2%;
-  box-shadow: 3px 3px 0px 0px #888888;
+  box-shadow: 2px 2px 0px 0px #888888;
+}
+.outerpanel:active{
+  border: none;
+  border-radius: 2%;
+  box-shadow: none
 }
 .panel-body{
-  background-color: rgb(36,49,60);
+  background-color: #05386B;
   color: white;
   text-decoration: none;
+  border-radius:2%;
+}
+.panel-body:hover{
+  background-color: #379683;
+  color: white;
+  text-decoration: none;
+  border-radius:2%;
+
 }
 
 .panel-body:hover{
@@ -97,6 +120,7 @@ a:hover{
 
 .filedragcol{
   margin-bottom: 1%;
+
 }
 
 .createSchemaButton{
@@ -107,10 +131,39 @@ a:hover{
   text-shadow: none;
 }
 
+#loginbtn, #newProjBtn{
+  background-image:none;
+  background-color: #379683;
+  border-color:#379683;
+  color: white;
+  margin: 0;
+
+}
+#loginbtn:focus,
+#loginbtn.focus,
+#newProjBtn:focus,
+#newProjBtn.focus
+{
+  background-image:none;
+  background-color: #379683;
+  border-color:#379683;
+  color: white;
+}
+#loginbtn:active, #newProjBtn:active{
+  background-image:none;
+  background-color: #379683;
+  border-color:#379683;
+  color: white;
+}
+#loginbtn:hover, #newProjBtn:hover{
+  background-color: #379683;
+  border-color: rgb(8, 37, 67);
+}
+
 #successbutton{
   background-image:none;
-  background-color: rgba(8, 37, 67, .8);
-  border-color:rgba(8, 37, 67, .8);
+  background-color: #379683;
+  border-color:#379683;
   color: white;
   margin: 0;
 
@@ -118,18 +171,18 @@ a:hover{
 #successbutton:focus,
 #successbutton.focus{
   background-image:none;
-  background-color: rgba(8, 37, 67, .8);
-  border-color:rgba(8, 37, 67, .8);
+  background-color: #379683;
+  border-color:#379683;
   color: white;
 }
 #successbutton:active{
   background-image:none;
-  background-color: rgba(8, 37, 67, .8);
-  border-color:rgba(8, 37, 67, .8);
+  background-color: #379683;
+  border-color:#379683;
   color: white;
 }
 #successbutton:hover{
-  background-color: rgb(8, 37, 67);
+  background-color: #379683;
   border-color: rgb(8, 37, 67);
 }
 
@@ -171,6 +224,45 @@ a:hover{
   margin-bottom: 2%;
 }
 
+#innerNavRow{
+  align-items: center;
+}
 .innerNavRow{
-  margin-top:1%;
+  margin-top:1.5%;
+}
+
+.createAccountHeader{
+  color: white;
+  font-weight: bold;
+}
+
+.outerCACol{
+  background-color: rgba(5,56,107,.7);
+  border-radius: 2%;
+  padding: 3% 5% 3% 5%;
+  color: white;
+}
+#outerCARow{
+  margin-top: 5%;
+}
+
+#projectName{
+  color: #EDF5E1;
+  font-weight: bold;
+}
+
+.modal-content{
+  background-color: #EDF5E1;
+  color: #05386B;
+}
+
+#contained-modal-title{
+  color: #05386B;
+}
+#modal-label{
+  color: #05386B;
+}
+
+.myprojecttext{
+  color:white;
 }

@@ -264,7 +264,7 @@ class Container extends Component {
 
           <Row>
             <Col className='text-center projNameRow' xs={4} xsPush={4}>
-              <h2>{currentProject.name}</h2>
+              <h2 id='projectName'>{currentProject.name}</h2>
             </Col>
           </Row>
 
@@ -314,6 +314,7 @@ class Container extends Component {
 
                 <Col xs={6}>
                     <Modal
+
                       className='modal'
                       show={showHideSchemaMaker}
                     >
@@ -325,7 +326,9 @@ class Container extends Component {
                       <Modal.Body>
                         <Form>
                           <FormGroup controlId='formHorizontalName'>
-                            <ControlLabel>
+                            <ControlLabel
+                              id='modal-label'
+                              >
                               Set New Column Header
                             </ControlLabel>
                             <FormControl
@@ -337,7 +340,7 @@ class Container extends Component {
                             </FormControl>
                           </FormGroup>
                           <Button
-                            bsStyle='primary'
+                            id="successbutton"
                             type="submit"
                             disabled={false}
                             onClick={this.handleAddColumn.bind(this)}
@@ -348,6 +351,7 @@ class Container extends Component {
                       </Modal.Body>
                       <Modal.Footer>
                         <Button
+                          id='successbutton'
                           onClick={this.hideSchemaMaker.bind(this)}
                         >
                           Close
@@ -376,45 +380,7 @@ class Container extends Component {
 
             </Col>
           </Row>
-
-          <Row>
-            <Col xs={2} xsPush={9}>
-              {
-
-                // : <Button
-                //   id='successbutton'
-                //   className='savebutton'
-                //   block
-                //   bsSize='large'
-                //   onClick={this.handleUpdate.bind(this)}>
-                //   Update
-                // </Button>
-              }
-            </Col>
-          </Row>
           <br/>
-          {/* SAVE WAS HERE */}
-          <br/>
-          <Row>
-
-          </Row>
-          <br/>
-          <Row>
-            <Col xs={2} xsPush={9}>
-            <Link to='/myprojects'>
-              <Button
-                id='successbutton'
-                bsSize='large'
-                block
-              >
-                My Projects
-              </Button>
-            </Link>
-            </Col>
-          </Row>
-
-
-
         </Grid>
       );
     }else{

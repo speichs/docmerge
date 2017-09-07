@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2e9a8c17ca9474fb469b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5343cc01a6a4982841ea"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -11867,7 +11867,7 @@ var CustomNav = function (_React$Component) {
             { xs: 12 },
             _react2.default.createElement(
               _reactBootstrap.Row,
-              { className: 'innerNavRow' },
+              { className: 'innerNavRow', id: 'innerNavRow' },
               _react2.default.createElement(
                 _reactBootstrap.Col,
                 { xs: 1 },
@@ -11877,19 +11877,31 @@ var CustomNav = function (_React$Component) {
                   'DocMerge'
                 )
               ),
-              _react2.default.createElement(_reactBootstrap.Col, { xs: 6 }),
+              _react2.default.createElement(_reactBootstrap.Col, { xs: 8 }),
               _react2.default.createElement(
                 _reactBootstrap.Col,
-                { className: 'text-center', xs: 3, xsPush: 1 },
+                { className: 'text-center', xs: 1 },
                 _react2.default.createElement(
-                  'h5',
-                  null,
-                  'Home'
-                ),
+                  _reactRouterDom.Link,
+                  { to: '/', className: 'navLink' },
+                  _react2.default.createElement(
+                    'h5',
+                    null,
+                    'Home'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Col,
+                { xs: 1 },
                 _react2.default.createElement(
-                  _reactBootstrap.Button,
-                  { sytle: { display: 'inline-block' } },
-                  'Logout'
+                  _reactRouterDom.Link,
+                  { to: '/myprojects', className: 'navLink' },
+                  _react2.default.createElement(
+                    'h5',
+                    null,
+                    'My Projects'
+                  )
                 )
               )
             )
@@ -11995,16 +12007,13 @@ var fileDND = (_dec = (0, _reactRedux.connect)(function (store) {
     key: 'handleDrop',
     value: function handleDrop(e) {
       e.preventDefault();
-      console.log('above the data right now');
       var data = e.dataTransfer.items[0].getAsFile();
-      console.log('this is data:', data);
       var name = data.name;
       name = name.split('');
       name.splice(name.length - 4, 4);
       name = name.join('');
       e.dataTransfer.dropEffect = 'copy';
       var file = e.dataTransfer.items[0].getAsFile();
-      console.log('this is the file:', file);
       var obj = { email: this.props.user.email };
       var that = this;
       _papaparse2.default.parse(file, {
@@ -12013,7 +12022,6 @@ var fileDND = (_dec = (0, _reactRedux.connect)(function (store) {
         complete: function complete(results) {
           obj.data = results.data;
           obj.name = name;
-          console.log('object from in the complete function', obj.data, obj.name);
           that.props.dispatch(fileActions.createFile(obj));
         }
       });
@@ -13228,7 +13236,7 @@ exports = module.exports = __webpack_require__(753)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Pacifico|Roboto);", ""]);
 
 // module
-exports.push([module.i, "body{\n  font-family: 'Roboto', sans-serif;\n  background-color: #5CDB95;\n}\nh1{\n  font-family: 'Roboto', sans-serif;\n  font-weight: bold;\n}\n\nh3{\n  font-family: 'Roboto', sans-serif;\n}\n\n#dnd{\n  color: blue;\n  height:100px;\n}\n\n\n/*for file drag and drop box*/\n.dropzone{\n  height:200px;\n  width: 357px;\n  border: 1px dashed grey;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.innerDropzone{\n  align-self: center;\n  color: grey;\n}\n\n\n/*for login*/\n.loginCol{\n  background-color: #607D8B;\n  padding: 10%;\n}\n.loginRow{\n margin-top: 10%;\n}\n\n.loginForm{\n}\n#welcomeLogin{\n  color: rgb(36,49,60);\n}\n.loginHeader{\n  color: white;\n}\n\n/*my project page panels*/\n.outerpanel{\n  border: none;\n  border-radius: 2%;\n  box-shadow: 3px 3px 0px 0px #888888;\n}\n.panel-body{\n  background-color: rgb(36,49,60);\n  color: white;\n  text-decoration: none;\n}\n\n.panel-body:hover{\n  text-decoration: none;\n}\n\na:hover{\n  text-decoration: none;\n}\n\n.create{\n  margin:2%;\n}\n\n.createProjectRow{\n  margin-top:3%;\n}\n\n/*newProject Page*/\n.projNameRow{\n  margin-top: 3%;\n\n}\n.modal-container{\n  height: 15%;\n}\n.modal-content{\n  margin-top: 15%;\n}\n.modal-header{\n  align-self: center;\n}\n\n.filedragcol{\n  margin-bottom: 1%;\n}\n\n.createSchemaButton{\n  margin-bottom: 2%;\n}\n/*Button*/\n.btn-default{\n  text-shadow: none;\n}\n\n#successbutton{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n  margin: 0;\n\n}\n#successbutton:focus,\n#successbutton.focus{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#successbutton:active{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#successbutton:hover{\n  background-color: rgb(8, 37, 67);\n  border-color: rgb(8, 37, 67);\n}\n\n\n#sharebtn{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n  margin-left: 1%;\n\n}\n#sharebtn:focus,\n#sharebtn.focus{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#sharebtn:active{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#sharebtn:hover{\n  background-color: rgb(8, 37, 67);\n  border-color: rgb(8, 37, 67);\n}\n\n#shareFormLabel{\n  margin-right: 2px;\n  font-size: 2rem;\n}\n\n.navRow{\n  background-color: #05386B;\n  color: white;\n  margin-bottom: 2%;\n}\n\n.innerNavRow{\n  margin-top:1%;\n}\n", ""]);
+exports.push([module.i, "body{\n  font-family: 'Roboto', sans-serif;\n  background-color: #5CDB95;\n}\nh1{\n  font-family: 'Roboto', sans-serif;\n  font-weight: bold;\n}\n\nh3{\n  font-family: 'Roboto', sans-serif;\n}\n\n#dnd{\n  color: blue;\n  height:100px;\n}\n\n\n/*for file drag and drop box*/\n.dropzone{\n  height:200px;\n  width: 357px;\n  border: 1px dashed #379683;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.innerDropzone{\n  align-self: center;\n  color: #379683;\n  font-weight: bold;\n}\n\n/*for login*/\n.navLink{\n  text-decoration: none;\n  color: white;\n}\n.navLink:hover, .navLink:active, .navLink:visited .navLink:link{\n  text-decoration: none;\n  color: white;\n}\n\n.loginCol{\n  background-color: rgba(5,56,107,.7);\n  padding: 10%;\n  border-radius: 2%\n}\n.loginRow{\n margin-top: 6%;\n}\n\n.loginForm{\n}\n#welcomeLogin{\n  color: #EDF5E1;\n}\n.loginHeader{\n  color: white;\n}\n\n/*my project page panels*/\n.outerpanel{\n  border: none;\n  border-radius: 2%;\n  box-shadow: 2px 2px 0px 0px #888888;\n}\n.outerpanel:active{\n  border: none;\n  border-radius: 2%;\n  box-shadow: none\n}\n.panel-body{\n  background-color: #05386B;\n  color: white;\n  text-decoration: none;\n  border-radius:2%;\n}\n.panel-body:hover{\n  background-color: #379683;\n  color: white;\n  text-decoration: none;\n  border-radius:2%;\n\n}\n\n.panel-body:hover{\n  text-decoration: none;\n}\n\na:hover{\n  text-decoration: none;\n}\n\n.create{\n  margin:2%;\n}\n\n.createProjectRow{\n  margin-top:3%;\n}\n\n/*newProject Page*/\n.projNameRow{\n  margin-top: 3%;\n\n}\n.modal-container{\n  height: 15%;\n}\n.modal-content{\n  margin-top: 15%;\n}\n.modal-header{\n  align-self: center;\n}\n\n.filedragcol{\n  margin-bottom: 1%;\n\n}\n\n.createSchemaButton{\n  margin-bottom: 2%;\n}\n/*Button*/\n.btn-default{\n  text-shadow: none;\n}\n\n#loginbtn, #newProjBtn{\n  background-image:none;\n  background-color: #379683;\n  border-color:#379683;\n  color: white;\n  margin: 0;\n\n}\n#loginbtn:focus,\n#loginbtn.focus,\n#newProjBtn:focus,\n#newProjBtn.focus\n{\n  background-image:none;\n  background-color: #379683;\n  border-color:#379683;\n  color: white;\n}\n#loginbtn:active, #newProjBtn:active{\n  background-image:none;\n  background-color: #379683;\n  border-color:#379683;\n  color: white;\n}\n#loginbtn:hover, #newProjBtn:hover{\n  background-color: #379683;\n  border-color: rgb(8, 37, 67);\n}\n\n#successbutton{\n  background-image:none;\n  background-color: #379683;\n  border-color:#379683;\n  color: white;\n  margin: 0;\n\n}\n#successbutton:focus,\n#successbutton.focus{\n  background-image:none;\n  background-color: #379683;\n  border-color:#379683;\n  color: white;\n}\n#successbutton:active{\n  background-image:none;\n  background-color: #379683;\n  border-color:#379683;\n  color: white;\n}\n#successbutton:hover{\n  background-color: #379683;\n  border-color: rgb(8, 37, 67);\n}\n\n\n#sharebtn{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n  margin-left: 1%;\n\n}\n#sharebtn:focus,\n#sharebtn.focus{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#sharebtn:active{\n  background-image:none;\n  background-color: rgba(8, 37, 67, .8);\n  border-color:rgba(8, 37, 67, .8);\n  color: white;\n}\n#sharebtn:hover{\n  background-color: rgb(8, 37, 67);\n  border-color: rgb(8, 37, 67);\n}\n\n#shareFormLabel{\n  margin-right: 2px;\n  font-size: 2rem;\n}\n\n.navRow{\n  background-color: #05386B;\n  color: white;\n  margin-bottom: 2%;\n}\n\n#innerNavRow{\n  align-items: center;\n}\n.innerNavRow{\n  margin-top:1.5%;\n}\n\n.createAccountHeader{\n  color: white;\n  font-weight: bold;\n}\n\n.outerCACol{\n  background-color: rgba(5,56,107,.7);\n  border-radius: 2%;\n  padding: 3% 5% 3% 5%;\n  color: white;\n}\n#outerCARow{\n  margin-top: 5%;\n}\n\n#projectName{\n  color: #EDF5E1;\n  font-weight: bold;\n}\n\n.modal-content{\n  background-color: #EDF5E1;\n  color: #05386B;\n}\n\n#contained-modal-title{\n  color: #05386B;\n}\n#modal-label{\n  color: #05386B;\n}\n", ""]);
 
 // exports
 
@@ -18109,8 +18117,30 @@ var Login = (_dec = (0, _reactRedux.connect)(function (store) {
                         { xs: 12 },
                         _react2.default.createElement(
                           _reactBootstrap.Button,
-                          { id: 'successbutton', block: true, bsSize: 'large', bsStyle: 'success', type: 'submit' },
+                          { id: 'loginbtn', block: true, bsSize: 'large', bsStyle: 'success', type: 'submit' },
                           'Sign in'
+                        )
+                      )
+                    ),
+                    _react2.default.createElement(
+                      _reactBootstrap.FormGroup,
+                      null,
+                      _react2.default.createElement(
+                        _reactBootstrap.Col,
+                        { xs: 12 },
+                        _react2.default.createElement(
+                          _reactRouterDom.Link,
+                          { to: '/createaccount' },
+                          _react2.default.createElement(
+                            _reactBootstrap.Button,
+                            {
+                              id: 'loginbtn',
+                              block: true,
+                              bsSize: 'large',
+                              bsStyle: 'success',
+                              type: 'button' },
+                            'CreateAccount'
+                          )
                         )
                       )
                     )
@@ -31256,13 +31286,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var style = {
-  border: '2px solid rgba(8, 37, 67, .8)',
-  backgroundColor: 'white',
+  border: '2px solid #05386B',
+  backgroundColor: '#EDF5E1',
   padding: '0.5rem 1rem',
   marginRight: '1.5rem',
   marginBottom: '1.5rem',
   cursor: 'move',
-  float: 'left'
+  float: 'left',
+  color: '#05386B'
 };
 
 var boxSource = {
@@ -31699,7 +31730,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
               { className: 'text-center projNameRow', xs: 4, xsPush: 4 },
               _react2.default.createElement(
                 'h2',
-                null,
+                { id: 'projectName' },
                 currentProject.name
               )
             )
@@ -31774,6 +31805,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                   _react2.default.createElement(
                     _reactBootstrap.Modal,
                     {
+
                       className: 'modal',
                       show: showHideSchemaMaker
                     },
@@ -31797,7 +31829,9 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                           { controlId: 'formHorizontalName' },
                           _react2.default.createElement(
                             _reactBootstrap.ControlLabel,
-                            null,
+                            {
+                              id: 'modal-label'
+                            },
                             'Set New Column Header'
                           ),
                           _react2.default.createElement(_reactBootstrap.FormControl, {
@@ -31812,7 +31846,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                         _react2.default.createElement(
                           _reactBootstrap.Button,
                           {
-                            bsStyle: 'primary',
+                            id: 'successbutton',
                             type: 'submit',
                             disabled: false,
                             onClick: this.handleAddColumn.bind(this)
@@ -31827,6 +31861,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
                       _react2.default.createElement(
                         _reactBootstrap.Button,
                         {
+                          id: 'successbutton',
                           onClick: this.hideSchemaMaker.bind(this)
                         },
                         'Close'
@@ -31860,36 +31895,7 @@ var Container = (_dec = (0, _reactRedux.connect)(function (store) {
               )
             )
           ),
-          _react2.default.createElement(
-            _reactBootstrap.Row,
-            null,
-            _react2.default.createElement(_reactBootstrap.Col, { xs: 2, xsPush: 9 })
-          ),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(_reactBootstrap.Row, null),
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            _reactBootstrap.Row,
-            null,
-            _react2.default.createElement(
-              _reactBootstrap.Col,
-              { xs: 2, xsPush: 9 },
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: '/myprojects' },
-                _react2.default.createElement(
-                  _reactBootstrap.Button,
-                  {
-                    id: 'successbutton',
-                    bsSize: 'large',
-                    block: true
-                  },
-                  'My Projects'
-                )
-              )
-            )
-          )
+          _react2.default.createElement('br', null)
         );
       } else {
         var _from = { from: { pathname: '/' } },
@@ -32042,99 +32048,98 @@ var CreateAccount = (_dec = (0, _reactRedux.connect)(function (store) {
         null,
         _react2.default.createElement(
           _reactBootstrap.Row,
-          null,
+          { id: 'outerCARow' },
           _react2.default.createElement(
             _reactBootstrap.Col,
-            { xs: 4, xsPush: 4 },
+            { className: 'text-center outerCACol', xs: 4, xsPush: 4 },
+            _react2.default.createElement(
+              'h4',
+              { className: 'createAccountHeader' },
+              'Create Account'
+            ),
             _react2.default.createElement(
               _reactBootstrap.Row,
               null,
-              _react2.default.createElement(_reactBootstrap.Col, { className: 'text-center', xs: 12 }),
               _react2.default.createElement(
-                'h4',
-                { className: 'createAccountHeader' },
-                'Create Account'
-              ),
-              _react2.default.createElement(
-                _reactBootstrap.Form,
-                {
-                  className: 'createAccountForm',
-                  onSubmit: this.createUser.bind(this)
-                },
+                _reactBootstrap.Col,
+                { className: 'text-left', xs: 12 },
                 _react2.default.createElement(
-                  _reactBootstrap.FormGroup,
-                  null,
+                  _reactBootstrap.Form,
+                  {
+                    className: 'createAccountForm',
+                    onSubmit: this.createUser.bind(this)
+                  },
                   _react2.default.createElement(
-                    _reactBootstrap.ControlLabel,
+                    _reactBootstrap.FormGroup,
                     null,
-                    'First Name'
+                    _react2.default.createElement(
+                      _reactBootstrap.ControlLabel,
+                      null,
+                      'First Name'
+                    ),
+                    _react2.default.createElement(_reactBootstrap.FormControl, {
+                      ref: function ref(cafirst) {
+                        return _this2.cafirst = cafirst;
+                      },
+                      type: 'text',
+                      placeholder: 'John',
+                      onChange: this.setFirstName.bind(this)
+                    })
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, {
-                    ref: function ref(cafirst) {
-                      return _this2.cafirst = cafirst;
-                    },
-                    type: 'text',
-                    placeholder: 'John',
-                    onChange: this.setFirstName.bind(this)
-                  })
-                ),
-                _react2.default.createElement(
-                  _reactBootstrap.FormGroup,
-                  null,
                   _react2.default.createElement(
-                    _reactBootstrap.ControlLabel,
+                    _reactBootstrap.FormGroup,
                     null,
-                    'Last Name'
+                    _react2.default.createElement(
+                      _reactBootstrap.ControlLabel,
+                      null,
+                      'Last Name'
+                    ),
+                    _react2.default.createElement(_reactBootstrap.FormControl, {
+                      ref: function ref(calast) {
+                        return _this2.calast = calast;
+                      },
+                      type: 'text',
+                      placeholder: 'Doe',
+                      onChange: this.setLastName.bind(this)
+                    })
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, {
-                    ref: function ref(calast) {
-                      return _this2.calast = calast;
-                    },
-                    type: 'text',
-                    placeholder: 'Doe',
-                    onChange: this.setLastName.bind(this)
-                  })
-                ),
-                _react2.default.createElement(
-                  _reactBootstrap.FormGroup,
-                  null,
                   _react2.default.createElement(
-                    _reactBootstrap.ControlLabel,
+                    _reactBootstrap.FormGroup,
                     null,
-                    'Email'
+                    _react2.default.createElement(
+                      _reactBootstrap.ControlLabel,
+                      null,
+                      'Email'
+                    ),
+                    _react2.default.createElement(_reactBootstrap.FormControl, {
+                      ref: function ref(caemail) {
+                        return _this2.caemail = caemail;
+                      },
+                      type: 'email',
+                      placeholder: 'john_doe@gmail.com',
+                      onChange: this.setEmail.bind(this)
+                    })
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, {
-                    ref: function ref(caemail) {
-                      return _this2.caemail = caemail;
-                    },
-                    type: 'email',
-                    placeholder: 'john_doe@gmail.com',
-                    onChange: this.setEmail.bind(this)
-                  })
-                ),
-                _react2.default.createElement(
-                  _reactBootstrap.FormGroup,
-                  null,
                   _react2.default.createElement(
-                    _reactBootstrap.ControlLabel,
+                    _reactBootstrap.FormGroup,
                     null,
-                    'Password'
+                    _react2.default.createElement(
+                      _reactBootstrap.ControlLabel,
+                      null,
+                      'Password'
+                    ),
+                    _react2.default.createElement(_reactBootstrap.FormControl, {
+                      ref: function ref(capassword) {
+                        return _this2.capassword = capassword;
+                      },
+                      type: 'password',
+                      placeholder: 'password',
+                      onChange: this.setPassword.bind(this)
+                    })
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, {
-                    ref: function ref(capassword) {
-                      return _this2.capassword = capassword;
-                    },
-                    type: 'password',
-                    placeholder: 'password',
-                    onChange: this.setPassword.bind(this)
-                  })
-                ),
-                _react2.default.createElement(
-                  _reactBootstrap.FormGroup,
-                  null,
                   _react2.default.createElement(
-                    _reactBootstrap.Col,
-                    { xs: 12 },
+                    _reactBootstrap.FormGroup,
+                    null,
                     _react2.default.createElement(
                       _reactBootstrap.Button,
                       { id: 'successbutton', block: true, bsSize: 'large', bsStyle: 'success', type: 'submit' },
@@ -32303,7 +32308,7 @@ var style = {
   fontSize: '1rem',
   lineHeight: 'normal',
   float: 'left',
-  border: '1px dashed black'
+  border: '1px dashed #05386B'
 };
 
 var dustbinTarget = {
@@ -32333,14 +32338,14 @@ var Dustbin = function (_Component) {
           associatedFile = _props.associatedFile;
 
       var isActive = isOver && canDrop;
-      var backgroundColor = '#ffffff';
+      var backgroundColor = '#EDF5E1';
       var color = 'black';
       if (isActive) {
         backgroundColor = '#00BF9A';
-        color = 'white';
+        color = '#05386B';
       } else if (canDrop) {
         backgroundColor = '#008975';
-        color = 'white';
+        color = '#05386B';
       }
 
       return connectDropTarget(_react2.default.createElement(
@@ -32547,7 +32552,7 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
               _react2.default.createElement(
                 _reactBootstrap.Button,
                 {
-                  id: 'successbutton',
+                  id: 'newProjBtn',
                   bsSize: 'large',
                   bsStyle: 'success',
                   onClick: this.toggleNameProject.bind(this)
@@ -32571,7 +32576,7 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
                   { controlId: 'formHorizontalName' },
                   _react2.default.createElement(
                     _reactBootstrap.ControlLabel,
-                    null,
+                    { className: 'myprojecttext' },
                     'Name Your Project'
                   ),
                   _react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleProjectNameChange.bind(this), ref: function ref(name) {
@@ -32583,7 +32588,7 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
                   { to: '/newproject' },
                   _react2.default.createElement(
                     _reactBootstrap.Button,
-                    { id: 'successbutton', bsStyle: 'primary', type: 'submit', disabled: !this.props.validName },
+                    { id: 'newProjBtn', bsStyle: 'primary', type: 'submit', disabled: !this.props.validName },
                     'Get Started'
                   )
                 )
@@ -32598,7 +32603,7 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
               { xs: 6 },
               _react2.default.createElement(
                 'h3',
-                { className: 'text-center' },
+                { className: 'text-center myprojecttext' },
                 'My Projects'
               )
             ),
@@ -32607,7 +32612,7 @@ var MyProjects = (_dec = (0, _reactRedux.connect)(function (store) {
               { xs: 6 },
               _react2.default.createElement(
                 'h3',
-                { className: 'text-center' },
+                { className: 'text-center myprojecttext' },
                 'Shared Projects'
               )
             )
