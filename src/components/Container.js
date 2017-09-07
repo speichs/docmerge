@@ -32,6 +32,7 @@ import FileDnd from './FileDnd'
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
 import * as showHideActions from '../actions/showhideactions'
+import * as userActions from '../actions/userActions'
 
 @connect((store)=>{
   return {
@@ -62,7 +63,6 @@ class Container extends Component {
     let id = parseInt(this.props.match.params.id)
     let shared = this.props.location.search;
 
-    console.log('location.search: ', shared)
 
     if(!shared){
       this.props.dispatch(fileActions.clearCurrentProject(this.props.currentProject.name))
@@ -71,7 +71,6 @@ class Container extends Component {
       this.props.ownedFiles.map(e=>{
         if(e.id === id){
           let copy = Object.assign({},e)
-          console.log(copy);
           this.props.dispatch(fileActions.setCurrentProject(copy))
         }
       })
@@ -79,7 +78,6 @@ class Container extends Component {
       this.props.sharedFiles.map(e=>{
         if(e.id === id){
           let copy = Object.assign({},e)
-
           this.props.dispatch(fileActions.setCurrentProject(copy))
         }
       })
@@ -184,6 +182,10 @@ class Container extends Component {
     }, 4000);
   }
 
+  handleLogout(){
+    this.props.dispatch(userActions.removeHeader())
+  }
+
   render()
   {
     const {
@@ -234,7 +236,8 @@ class Container extends Component {
               </ButtonToolbar>
             </Col>
             {
-              this.props.toggleShare?<Col className='text-center' xs={4}>
+              this.props.toggleShare?<Col
+                className='text-center' xs={4}>
                 <Form inline onSubmit={this.shareFile.bind(this)}>
                   <FormGroup>
                     <ControlLabel id='shareFormLabel'>
@@ -257,6 +260,29 @@ class Container extends Component {
                   </Button>
                 </Form>
               </Col>: <span></span>
+            }
+            {
+              this.props.toggleShare?
+              <Col xs={1} xsPush={4}>
+                <Button
+                  id='logoutBtn'
+                  bsSize='large'
+                  type='button'
+                  onClick={this.handleLogout.bind(this)}
+                >
+                    Logout
+                </Button>
+              </Col>:
+              <Col xs={1} xsPush={8}>
+                <Button
+                  id='logoutBtn'
+                  bsSize='large'
+                  type='button'
+                  onClick={this.handleLogout.bind(this)}
+                >
+                    Logout
+                </Button>
+              </Col>  
             }
 
 

@@ -32,8 +32,6 @@ export default class CustomNav extends React.Component{
                 </Col>
               </Row>
             </Col>
-
-
         </Row>
       </Grid>
     )

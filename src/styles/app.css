@@ -17,7 +17,6 @@ h3{
   height:100px;
 }
 
-
 /*for file drag and drop box*/
 .dropzone{
   height:200px;
@@ -131,7 +130,7 @@ a:hover{
   text-shadow: none;
 }
 
-#loginbtn, #newProjBtn{
+#loginbtn, #newProjBtn, #logoutBtn{
   background-image:none;
   background-color: #379683;
   border-color:#379683;
@@ -142,20 +141,22 @@ a:hover{
 #loginbtn:focus,
 #loginbtn.focus,
 #newProjBtn:focus,
-#newProjBtn.focus
+#newProjBtn.focus,
+#logoutBtn:focus,
+#logoutBtn.focus
 {
   background-image:none;
   background-color: #379683;
   border-color:#379683;
   color: white;
 }
-#loginbtn:active, #newProjBtn:active{
+#loginbtn:active, #newProjBtn:active, #logoutBtn:active{
   background-image:none;
   background-color: #379683;
   border-color:#379683;
   color: white;
 }
-#loginbtn:hover, #newProjBtn:hover{
+#loginbtn:hover, #newProjBtn:hover, #logoutBtn:hover{
   background-color: #379683;
   border-color: rgb(8, 37, 67);
 }

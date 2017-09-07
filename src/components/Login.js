@@ -26,7 +26,6 @@ import { fetchUser } from '../actions/userActions'
 export default class Login extends React.Component{
   componentWillMount(){
     let token = localStorage.getItem('Token')
-    console.log(token);
   }
 
 

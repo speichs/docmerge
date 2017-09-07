@@ -56,3 +56,8 @@ export function createUser(userInfo){
     })
   }
 }
+
+export function removeHeader(){
+  return {type:"REMOVE_HEADER"}
+
+}

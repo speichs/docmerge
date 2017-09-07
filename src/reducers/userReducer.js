@@ -84,6 +84,9 @@ export default function reducer(state=initialState, action){
       }
       return newState
     }
+    case "REMOVE_HEADER":{
+      return initialState
+    }
   }
   return state
 }

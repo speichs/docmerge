@@ -22,6 +22,7 @@ import CustomNav from './CustomNav'
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
 import * as showHideActions from '../actions/showhideactions'
+import * as userActions from '../actions/userActions'
 
 @connect((store)=>{
   return {
@@ -38,16 +39,19 @@ import * as showHideActions from '../actions/showhideactions'
     isFetchingShared: store.file.fetchingSharedFiles,
     validName: store.file.validName,
     isCreateNew: store.showhide.isCreateNew
-
   }
 })
 export default class MyProjects extends React.Component{
 
   componentWillMount(){
-    let id = this.props.user.id;
-    this.props.dispatch(fileActions.getOwnedFiles(id))
-    this.props.dispatch(fileActions.getSharedFiles(id))
-    this.props.dispatch(fileActions.clearCurrentProject(null))
+    if(this.props.header){
+      let id = this.props.user.id;
+      this.props.dispatch(fileActions.getOwnedFiles(id))
+      this.props.dispatch(fileActions.getSharedFiles(id))
+      this.props.dispatch(fileActions.clearCurrentProject(null))
+    }else{
+      {this.props.header}
+    }
   }
 
   handleNewProjClick(){
@@ -74,8 +78,11 @@ export default class MyProjects extends React.Component{
     this.props.dispatch(showHideActions.toggleNameProject())
   }
 
-  render(){
+  handleLogout(){
+    this.props.dispatch(userActions.removeHeader())
+  }
 
+  render(){
     const { isCreateNew } = this.props
     const { from } = { from: { pathname:'/'} }
 
@@ -90,6 +97,20 @@ export default class MyProjects extends React.Component{
     }else{
       return (
           <Grid bsClass='container-fluid'>
+
+            <Row className='logoutRow'>
+              <Col xs={1} xsPush={11}>
+                <Button
+                  id='logoutBtn'
+                  bsSize='large'
+                  type='button'
+                  onClick={this.handleLogout.bind(this)}
+                >
+                    Logout
+                </Button>
+              </Col>
+            </Row>
+
             <Row className='createProjectRow'>
               <Col className='text-center' xs={4} xsPush={4}>
                 <Button
@@ -102,7 +123,6 @@ export default class MyProjects extends React.Component{
                       !isCreateNew?
                       <FontAwesome className="fa-plus create"></FontAwesome>:
                       <FontAwesome className="fa-minus create"></FontAwesome>
-
                     }
                     New Project
                   </Button>
