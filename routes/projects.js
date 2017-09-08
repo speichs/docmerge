@@ -26,7 +26,14 @@ router.post('/projects', (req,res,next)=>{
       map: JSON.stringify(data.map),
       isProject: data.isProject
     })
-    .returning('*')
+    .returning([
+      'files.id',
+      'data',
+      'name',
+      'map',
+      'isProject',
+      'owner_id'
+    ])
     .then(lowerResult => {
       res.send(lowerResult[0])
     })

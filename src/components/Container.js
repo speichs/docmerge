@@ -202,7 +202,6 @@ class Container extends Component {
     if(this.props.header){
       return (
         <Grid bsClass='container-fluid'>
-
           <Row>
             <Col xs={3}>
               <ButtonToolbar>
@@ -220,6 +219,7 @@ class Container extends Component {
                     id='successbutton'
                     className='savebutton'
                     bsSize='large'
+                    disabled = {!this.props.wasSaved}
                     onClick={this.handleSend.bind(this)}>
                     <FontAwesome className="fa-envelope create"></FontAwesome>
                     Send Email
@@ -228,6 +228,7 @@ class Container extends Component {
                     id='successbutton'
                     className='savebutton'
                     bsSize='large'
+                    disabled = {!this.props.wasSaved}
                     onClick={this.toggleShare.bind(this)}>
                     <FontAwesome className="fa-share create"></FontAwesome>
                     Share Project
@@ -270,7 +271,7 @@ class Container extends Component {
                   type='button'
                   onClick={this.handleLogout.bind(this)}
                 >
-                    Logout
+                  Logout
                 </Button>
               </Col>:
               <Col xs={1} xsPush={8}>
@@ -282,7 +283,7 @@ class Container extends Component {
                 >
                     Logout
                 </Button>
-              </Col>  
+              </Col>
             }
 
 
@@ -410,7 +411,7 @@ class Container extends Component {
         </Grid>
       );
     }else{
-      const { from } = { from: { pathname:'/'} }
+      const { from } = { from: { pathname:'/login'} }
       return (
         <Redirect to={from}></Redirect>
       )

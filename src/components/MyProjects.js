@@ -84,7 +84,7 @@ export default class MyProjects extends React.Component{
 
   render(){
     const { isCreateNew } = this.props
-    const { from } = { from: { pathname:'/'} }
+    const { from } = { from: { pathname:'/login'} }
 
     if(!this.props.header){
       return (<Redirect to={from}></Redirect>)
@@ -96,115 +96,113 @@ export default class MyProjects extends React.Component{
       )
     }else{
       return (
-          <Grid bsClass='container-fluid'>
+        <Grid bsClass='container-fluid'>
 
-            <Row className='logoutRow'>
-              <Col xs={1} xsPush={11}>
-                <Button
-                  id='logoutBtn'
-                  bsSize='large'
-                  type='button'
-                  onClick={this.handleLogout.bind(this)}
+          <Row className='logoutRow'>
+            <Col xs={1} xsPush={11}>
+              <Button
+                id='logoutBtn'
+                bsSize='large'
+                type='button'
+                onClick={this.handleLogout.bind(this)}
+              >
+                  Logout
+              </Button>
+            </Col>
+          </Row>
+
+          <Row className='createProjectRow'>
+            <Col className='text-center' xs={4} xsPush={4}>
+              <Button
+                id='newProjBtn'
+                bsSize="large"
+                bsStyle="success"
+                onClick={this.toggleNameProject.bind(this)}
                 >
-                    Logout
+                  {
+                    !isCreateNew?
+                    <FontAwesome className="fa-plus create"></FontAwesome>:
+                    <FontAwesome className="fa-minus create"></FontAwesome>
+                  }
+                  New Project
                 </Button>
               </Col>
             </Row>
 
-            <Row className='createProjectRow'>
-              <Col className='text-center' xs={4} xsPush={4}>
-                <Button
-                  id='newProjBtn'
-                  bsSize="large"
-                  bsStyle="success"
-                  onClick={this.toggleNameProject.bind(this)}
-                  >
-                    {
-                      !isCreateNew?
-                      <FontAwesome className="fa-plus create"></FontAwesome>:
-                      <FontAwesome className="fa-minus create"></FontAwesome>
-                    }
-                    New Project
-                  </Button>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col xs={4} xsPush={4}>
-                  {
-                    isCreateNew? <Form onSubmit={this.handleSubmitName.bind(this)}>
-                      <FormGroup controlId='formHorizontalName'>
-                        <ControlLabel className='myprojecttext'>
-                          Name Your Project
-                        </ControlLabel>
-                        <FormControl onChange={this.handleProjectNameChange.bind(this)} ref={name=>{this.name = name}} type='text' placeholder='My_Project'>
-                        </FormControl>
-                      </FormGroup>
-                      <Link to='/newproject'>
-                      <Button id="newProjBtn" bsStyle='primary' type="submit" disabled={!this.props.validName}>
-                        Get Started
-                      </Button>
-                    </Link>
-                  </Form> : <h1></h1>
-                }
-              </Col>
-            </Row>
-
             <Row>
-              <Col xs={6}>
-                <h3 className="text-center myprojecttext">
-                  My Projects
-                </h3>
-              </Col>
-              <Col xs={6}>
-                <h3 className="text-center myprojecttext">
-                  Shared Projects
-                </h3>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col xs={6}>
-                <Row>
-                  {
-                    this.props.hasFetchedOwned?
-                    this.props.ownedFiles.map(e =>{
-                      if(e.isProject){
-                        return(
-                          <Project
-                            key={e.id}
-                            text={e.name}
-                            id={e.id}
-                            shared="false">
-                          </Project>
-                        )
-                      }
-                    }
-                  ):<p>Nothing</p>
-                }
-              </Row>
+              <Col xs={4} xsPush={4}>
+                {
+                  isCreateNew? <Form onSubmit={this.handleSubmitName.bind(this)}>
+                    <FormGroup controlId='formHorizontalName'>
+                      <ControlLabel className='myprojecttext'>
+                        Name Your Project
+                      </ControlLabel>
+                      <FormControl onChange={this.handleProjectNameChange.bind(this)} ref={name=>{this.name = name}} type='text' placeholder='My_Project'>
+                      </FormControl>
+                    </FormGroup>
+                    <Link to='/newproject'>
+                    <Button id="newProjBtn" bsStyle='primary' type="submit" disabled={!this.props.validName}>
+                      Get Started
+                    </Button>
+                  </Link>
+                </Form> : <h1></h1>
+              }
             </Col>
+          </Row>
 
+          <Row>
+            <Col xs={6}>
+              <h3 className="text-center myprojecttext">
+                My Projects
+              </h3>
+            </Col>
+            <Col xs={6}>
+              <h3 className="text-center myprojecttext">
+                Shared Projects
+              </h3>
+            </Col>
+          </Row>
+
+          <Row>
             <Col xs={6}>
               <Row>
                 {
-                  this.props.hasFetchedShared && this.props.sharedFiles.length?
-                  this.props.sharedFiles.map(e=>(
-                    <Project
-                      key={e.id}
-                      text={e.name}
-                      id = {e.id}
-                      shared="true"
-                      >
-                      </Project>)): <h1></h1>
+                  this.props.hasFetchedOwned?
+                  this.props.ownedFiles.map(e =>{
+                    if(e.isProject){
+                      return(
+                        <Project
+                          key={e.id}
+                          text={e.name}
+                          id={e.id}
+                          shared="false">
+                        </Project>
+                      )
                     }
-                  </Row>
-                </Col>
-              </Row>
-            </Grid>
+                  }
+                ):<p>Nothing</p>
+              }
+            </Row>
+          </Col>
+
+          <Col xs={6}>
+            <Row>
+              {
+                this.props.hasFetchedShared && this.props.sharedFiles.length?
+                this.props.sharedFiles.map(e=>(
+                  <Project
+                    key={e.id}
+                    text={e.name}
+                    id = {e.id}
+                    shared="true"
+                    >
+                    </Project>)): <h1></h1>
+                  }
+                </Row>
+              </Col>
+            </Row>
+          </Grid>
       )
     }
-
-
   }
 }

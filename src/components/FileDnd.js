@@ -11,7 +11,6 @@ import {
 import { DropTarget, DragSource } from 'react-dnd'
 import HTML5Backend, { NativeTypes } from 'react-dnd-html5-backend';
 
-
 import store from '../store'
 import * as fileActions from '../actions/fileActions'
 import * as showHideActions from '../actions/showhideactions'

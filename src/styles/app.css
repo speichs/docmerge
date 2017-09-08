@@ -267,3 +267,42 @@ a:hover{
 .myprojecttext{
   color:white;
 }
+
+.svgCol{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.splashcontainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.svgcsvimg{
+  align-items: center;
+  height: 50%;
+  width: 50%;
+}
+.svgboximg{
+  align-items: center;
+  height: 35%;
+  width: 35%;
+}
+
+.svgarrowimg{
+  align-items: center;
+  height: 20%;
+  width: 20%;
+  transform: rotate(90deg)
+}
+
+.mktcopy{
+  margin-top: 2%;
+  color: #05386B;
+  font-weight: bold;
+  width:30%;
+  text-align: center;
+}

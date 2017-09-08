@@ -23,9 +23,6 @@ const dustbinTarget = {
     props.onDrop(monitor.getItem());
   },
 };
-
-
-
 class Dustbin extends Component {
   render() {
     const { accepts, isOver, canDrop, connectDropTarget, lastDroppedItem, associatedFile } = this.props;

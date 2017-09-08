@@ -13,6 +13,7 @@ import {
 } from 'react-bootstrap'
 import ReactDOM from 'react-dom'
 import { Redirect, Link } from 'react-router-dom'
+import Notifications, {notify} from 'react-notify-toast';
 
 import store from '../store'
 import { fetchUser } from '../actions/userActions'
@@ -20,7 +21,8 @@ import { fetchUser } from '../actions/userActions'
 @connect((store)=>{
   return {
     user: store.user.user.firstName,
-    userFetched: store.user.fetched
+    userFetched: store.user.fetched,
+    error: store.user.error,
   }
 })
 export default class Login extends React.Component{
@@ -43,6 +45,8 @@ export default class Login extends React.Component{
   }
 
   render(){
+
+
     const { user, userFetched } = this.props;
     const blank = '   '
     if(!userFetched){
@@ -59,7 +63,10 @@ export default class Login extends React.Component{
                 <br/>
                 </Col>
               </Row>
-
+              <Notifications/>
+              {
+                this.props.error? notify.show('incorrect email or password', 'error', 3000): this.props.error
+              }
               <Row>
                 <Col className='loginCol text-center' xs={12}>
 

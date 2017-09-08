@@ -26,7 +26,8 @@ import * as userActions from '../actions/userActions'
 @connect((store)=>{
   return {
     user: store.user.user,
-    redirect: store.user.createdUser
+    redirect: store.user.createdUser,
+    header: store.user.header,
   }
 })
 
@@ -63,11 +64,11 @@ export default class CreateAccount extends React.Component{
   }
 
   render(){
-    const { user, redirect } = this.props;
+    const { user, redirect, header } = this.props;
     const { firstName, lastName, email }= user;
-    const { from } = { from: { pathname:'/myprojects'} }
+    const { from } = { from: {pathname:'/myprojects'} }
 
-    if(redirect){
+    if(header){
       return (
         <Redirect to={from}/>
       )

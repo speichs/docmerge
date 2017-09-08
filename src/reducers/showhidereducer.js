@@ -21,7 +21,6 @@ export default function reducer(state=initialState, action){
       bool = !bool
       return {...state, toggleShare: bool}
     }
-
   }
   return state
 }

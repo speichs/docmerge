@@ -22,23 +22,15 @@ module.exports = {
 
     app.use(bodyParser.json())
     app.use(cookieParser())
-
     app.use(token)
     app.use('/public', publicPath)
-
     app.get('/', function (_, res) { res.sendFile(indexPath) })
-
     app.use(users)
-
-
-
     app.use((req,res,next)=>{
-      console.log(req.cookies);
       const token = req.cookies.token;
       if(token){
         jwt.verify(token, secret, (err, decoded)=>{
           if(err){
-            console.log('you in error land ');
             res.clearCookie('token');
             return next(err);
           }
@@ -49,7 +41,6 @@ module.exports = {
         next()
       }
     })
-
     app.use(files)
     app.use(email)
     app.use(projects)
@@ -57,8 +48,6 @@ module.exports = {
     app.use('*', (req,res,next)=>{
       res.sendFile(indexPath)
     })
-
-
     return app
   }
 }
