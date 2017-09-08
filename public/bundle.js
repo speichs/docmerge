@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "fb1df57b049f3106145a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7c72e4988091135e968e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -7338,7 +7338,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function fetchUser(user) {
   return function (dispatch) {
     dispatch({ type: 'LOGIN_USER' });
-    _axios2.default.post('token', user).then(function (response) {
+    _axios2.default.post('https://doc-merge.herokuapp.com/token', user).then(function (response) {
       dispatch({ type: "LOGIN_USER_FULFILLED", payload: { data: response.data, headers: response }
       });
     }).catch(function (err) {
@@ -7377,7 +7377,7 @@ function setPassword(password) {
 function createUser(userInfo) {
   return function (dispatch) {
     dispatch({ type: "CREATE_USER" });
-    _axios2.default.post("users", userInfo).then(function (response) {
+    _axios2.default.post("https://doc-merge.herokuapp.com/users", userInfo).then(function (response) {
       dispatch({
         type: "CREATE_USER_FULFILLED",
         payload: response.data
@@ -8506,7 +8506,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function createFile(f) {
   return function (dispatch) {
     dispatch({ type: "CREATE_FILE" });
-    _axios2.default.post("http://localhost:8080/files", f).then(function (response) {
+    _axios2.default.post("https://doc-merge.herokuapp.com/files", f).then(function (response) {
       dispatch({ type: "CREATE_FILE_FULFILLED", payload: response.data });
     }).catch(function (err) {
       dispatch({ type: "CREATE_FILE_REJECTED", payload: err });
@@ -8517,7 +8517,7 @@ function createFile(f) {
 function getOwnedFiles(id) {
   return function (dispatch) {
     dispatch({ type: "GET_OWNED_FILES" });
-    _axios2.default.get("/files/" + id).then(function (response) {
+    _axios2.default.get("https://doc-merge.herokuapp.com/files/" + id).then(function (response) {
       dispatch({ type: "GET_OWNED_FILES_FULFILLED", payload: response.data });
     }).catch(function (err) {
       dispatch({ type: "GET_OWNED_FILES_REJECTED", payload: err });
@@ -8537,7 +8537,7 @@ function setCurrentProject(obj) {
 function getSharedFiles(id) {
   return function (dispatch) {
     dispatch({ type: "GET_SHARED_FILES" });
-    _axios2.default.get("http://localhost:8080/share/" + id).then(function (response) {
+    _axios2.default.get("https://doc-merge.herokuapp.com/share/" + id).then(function (response) {
       dispatch({ type: "GET_SHARED_FILES_FULFILLED", payload: response.data });
     }).catch(function (err) {
       dispatch({ type: "GET_SHARED_FILES_REJECTED", payload: err });
@@ -8598,7 +8598,7 @@ function makeProjectData(user) {
 function createProjectFile(f) {
   return function (dispatch) {
     dispatch({ type: "CREATE_PROJECT_FILE" });
-    _axios2.default.post("projects", f).then(function (response) {
+    _axios2.default.post("https://doc-merge.herokuapp.com/projects", f).then(function (response) {
       dispatch({ type: "CREATE_PROJECT_FILE_FULFILLED", payload: response.data });
     }).catch(function (err) {
       dispatch({ type: "CREATE_PROJECT_FILE_REJECTED", payload: err });
@@ -8609,7 +8609,7 @@ function createProjectFile(f) {
 function sendEmail(obj) {
   return function (dispatch) {
     dispatch({ type: "SEND_EMAIL" });
-    _axios2.default.post("/email", obj).then(function (response) {
+    _axios2.default.post("https://doc-merge.herokuapp.com/email", obj).then(function (response) {
       dispatch({ type: "SEND_EMAIL_FULFILLED", payload: response.data });
     }).catch(function (err) {
       dispatch({ type: "SEND_EMAIL_REJECTED", payload: err });
@@ -8627,7 +8627,7 @@ function updateProjectFile(obj) {
   return function (dispatch) {
     dispatch({ type: "UPDATE_PROJECT_FILE" });
     var id = obj.data.id;
-    _axios2.default.patch("http://localhost:8080/projects/" + id, obj).then(function (response) {
+    _axios2.default.patch("https://doc-merge.herokuapp.com/projects/" + id, obj).then(function (response) {
       dispatch({ type: "UPDATE_PROJECT_FILE_FULFILLED", payload: response.data });
     }).catch(function (err) {
       dispatch({ type: "UPDATE_PROJECT_FILE_REJECTED", payload: err });
@@ -8644,7 +8644,7 @@ function clearCurrentProject(name) {
 function shareProject(obj) {
   return function (dispatch) {
     dispatch({ type: "SHARE_PROJECT" });
-    _axios2.default.post("http://localhost:8080/share", obj).then(function (response) {
+    _axios2.default.post("https://doc-merge.herokuapp.com/share", obj).then(function (response) {
       dispatch({ type: "SHARE_PROJECT_FULFILLED", payload: response.data });
     }).catch(function (err) {
       dispatch({ type: "SHARE_PROJECT_REJECTED", payload: err });
