@@ -3,7 +3,7 @@ import axios from 'axios'
 export function createFile(f){
   return function(dispatch){
     dispatch({type:"CREATE_FILE"})
-    axios.post("http://localhost:8080/files", f)
+    axios.post("https://doc-merge.herokuapp.com/files", f)
     .then((response)=>{
       dispatch({type:"CREATE_FILE_FULFILLED", payload: response.data})
     })
@@ -38,7 +38,7 @@ export function setCurrentProject(obj){
 export function getSharedFiles(id){
   return function(dispatch){
     dispatch({type:"GET_SHARED_FILES"})
-    axios.get(`http://localhost:8080/share/${id}`)
+    axios.get(`https://doc-merge.herokuapp.com/share/${id}`)
     .then((response)=>{
       dispatch({type:"GET_SHARED_FILES_FULFILLED", payload: response.data})
     })
@@ -134,7 +134,7 @@ export function updateProjectFile(obj){
   return function(dispatch){
     dispatch({type:"UPDATE_PROJECT_FILE"})
     let id = obj.data.id
-    axios.patch(`http://localhost:8080/projects/${id}`, obj)
+    axios.patch(`https://doc-merge.herokuapp.com/projects/${id}`, obj)
     .then((response)=>{
       dispatch({type:"UPDATE_PROJECT_FILE_FULFILLED", payload: response.data})
     })
@@ -153,7 +153,7 @@ export function clearCurrentProject(name){
 export function shareProject(obj){
   return function(dispatch){
     dispatch({type: "SHARE_PROJECT"})
-    axios.post("http://localhost:8080/share", obj)
+    axios.post("https://doc-merge.herokuapp.com/share", obj)
     .then((response)=>{
       dispatch({type:"SHARE_PROJECT_FULFILLED", payload: response.data})
     })
