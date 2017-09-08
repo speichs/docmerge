@@ -147,10 +147,7 @@ export default function reducer(state=initialState, action){
     }
     case "GOT_CURRENT_PROJECT":{
       let id = action.payload.id;
-      console.log('hello from the got current project');
-      console.log('id of got', id);
       let isShared = action.payload.shared;
-      console.log('shared of got', isShared);
       let copyCurrentProject = {}
       if(isShared=== "?true"){
         let data = action.payload.sharedFiles
@@ -180,7 +177,6 @@ export default function reducer(state=initialState, action){
             copyCurrentProject.data = data[i].data;
             copyCurrentProject.map = data[i].map;
             copyCurrentProject.isProject = data[i].isProject
-            console.log(currentProject);
             return {
               ...state,
               currentProject: copyCurrentProject,
@@ -265,7 +261,9 @@ export default function reducer(state=initialState, action){
         ...state,
         currentProject : clearedProject,
         currentProjectSchema : [],
-        droppedBoxNames : []
+        droppedBoxNames : [],
+        associativeFiles: [],
+        wasSaved: false,
       }
     }
     case "UPDATE_PROJECT_FILE_FULFILLED":{
@@ -285,8 +283,12 @@ export default function reducer(state=initialState, action){
       let newFile = action.payload;
       let copyFetchedFileArray = [...state.fetchedFiles]
       copyFetchedFileArray.push(newFile);
+      let copyCurrentProject = {...state.currentProject}
+      copyCurrentProject.id = action.payload.id
+
       return {
         ...state,
+        currentProject: copyCurrentProject,
         fetchedFiles: copyFetchedFileArray,
         creatingFile:false,
         createdFile:true,
@@ -297,7 +299,8 @@ export default function reducer(state=initialState, action){
       return {
         ...state,
         currentProject: action.payload,
-        currentProjectSchema: action.payload.map
+        currentProjectSchema: action.payload.map,
+        wasSaved: true
       }
     }
     case "SEND_EMAIL":{

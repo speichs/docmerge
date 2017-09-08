@@ -5,11 +5,10 @@ export function fetchUser(user){
     dispatch({type:'LOGIN_USER'})
     axios.post('token', user).then((response) => {
       dispatch({type: "LOGIN_USER_FULFILLED", payload: {data: response.data, headers: response}
-
-    })
+      })
     })
     .catch((err) => {
-      dispatch({type: "LOGIN_USE_REJECTED",
+      dispatch({type: "LOGIN_USER_REJECTED",
       payload: err})
     })
   }
@@ -55,4 +54,9 @@ export function createUser(userInfo){
       dispatch({type:"CREATE_USER_REJECTED", payload: err})
     })
   }
+}
+
+export function removeHeader(){
+  return {type:"REMOVE_HEADER"}
+
 }

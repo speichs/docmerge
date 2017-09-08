@@ -18,10 +18,10 @@ const initialState = {
 export default function reducer(state=initialState, action){
   switch (action.type){
     case "LOGIN_USER": {
-      return {...state, fetching: true}
+      return {...state, fetching: true, error:null}
     }
     case "LOGIN_USER_REJECTED": {
-        return {...state, fetching: false, error: action.payload}
+        return {...state, fetching: false, error: 'incorrect email or password'}
     }
     case "LOGIN_USER_FULFILLED": {
       let newUserObj = {...state.user}
@@ -83,6 +83,9 @@ export default function reducer(state=initialState, action){
         header: document.cookie
       }
       return newState
+    }
+    case "REMOVE_HEADER":{
+      return initialState
     }
   }
   return state

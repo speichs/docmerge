@@ -8,11 +8,7 @@ const saltRounds = 10;
 const secret = process.env.SECRET;
 
 router.post('/files', (req,res,next)=>{
-
-
   const body = req.body;
-  console.log('hello from the body', body);
-
   knex('users')
   .select('id')
   .where('email', body.email)
@@ -20,7 +16,7 @@ router.post('/files', (req,res,next)=>{
     knex('files')
     .insert({name: body.name, data: JSON.stringify(body.data), owner_id: upperResult[0]["id"]})
     .returning([
-      'id',
+      'files.id',
       'data',
       'name',
       'map',
@@ -39,7 +35,5 @@ router.get('/files/:id', (req,res,next)=>{
   .then(result => {res.send(result)})
   .catch(err => res.sendStatus(404))
 })
-
-
 
 module.exports = router;

@@ -15,7 +15,7 @@ const style = {
   fontSize: '1rem',
   lineHeight: 'normal',
   float: 'left',
-  border: '1px dashed black'
+  border: '1px dashed #05386B'
 };
 
 const dustbinTarget = {
@@ -23,21 +23,18 @@ const dustbinTarget = {
     props.onDrop(monitor.getItem());
   },
 };
-
-
-
 class Dustbin extends Component {
   render() {
     const { accepts, isOver, canDrop, connectDropTarget, lastDroppedItem, associatedFile } = this.props;
     const isActive = isOver && canDrop;
-    let backgroundColor = '#ffffff';
+    let backgroundColor = '#EDF5E1';
     let color = 'black';
     if (isActive) {
       backgroundColor = '#00BF9A';
-      color = 'white';
+      color = '#05386B';
     } else if (canDrop) {
       backgroundColor = '#008975';
-      color = 'white';
+      color = '#05386B';
     }
 
     return connectDropTarget(

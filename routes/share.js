@@ -21,11 +21,11 @@ router.post('/share', (req,res,next)=>{
 })
 
 router.get('/share/:id', (req,res,next)=>{
-  console.log('share getter');
-  const id = req.params.id
-  knex.select('*')
-  .from('files')
-  .innerJoin('client_files', 'files.id', 'client_files.file_id').then(result=>{
+  const userid = req.params.id
+  knex.select('files.id', 'name', 'data', 'map', 'isProject', 'owner_id')
+  .from('client_files')
+  .where('client_id', userid)
+  .innerJoin('files', 'files.id', 'client_files.file_id').then(result=>{
     res.send(result)
   }
   )

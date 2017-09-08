@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-//import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd'
 import { connect } from 'react-redux'
 import store from '../store'
@@ -7,13 +6,14 @@ import * as fileActions from '../actions/dndActions'
 
 
 const style = {
-  border: '2px solid rgba(8, 37, 67, .8)',
-  backgroundColor: 'white',
+  border: '2px solid #05386B',
+  backgroundColor: '#EDF5E1',
   padding: '0.5rem 1rem',
   marginRight: '1.5rem',
   marginBottom: '1.5rem',
   cursor: 'move',
   float: 'left',
+  color: '#05386B',
 };
 
 const boxSource = {
@@ -34,7 +34,7 @@ class Box extends Component {
     return connectDragSource(
       <div style={{ ...style, opacity }}>
         {isDropped ?
-          <s>{name}, snooop</s> :
+          <s>{name}</s> :
           name
         }
       </div>,

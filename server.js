@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
-const secret = process.env.jwt_secret;
+const secret = process.env.SECRET;
 
 module.exports = {
   app: function () {
@@ -22,18 +22,10 @@ module.exports = {
 
     app.use(bodyParser.json())
     app.use(cookieParser())
-
     app.use(token)
     app.use('/public', publicPath)
-    app.use(files)
-    app.use(email)
-    app.use(projects)
     app.get('/', function (_, res) { res.sendFile(indexPath) })
-
     app.use(users)
-    app.use(share)
-
-
     app.use((req,res,next)=>{
       const token = req.cookies.token;
       if(token){
@@ -49,12 +41,13 @@ module.exports = {
         next()
       }
     })
-
+    app.use(files)
+    app.use(email)
+    app.use(projects)
+    app.use(share)
     app.use('*', (req,res,next)=>{
       res.sendFile(indexPath)
     })
-
-
     return app
   }
 }

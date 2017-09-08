@@ -7,32 +7,37 @@ import {
   withRouter,
 } from 'react-router-dom'
 
+import history from 'history'
+
 import Login from './Login'
 import MyProjects from './MyProjects'
 import CreateAccount from './CreateAccount'
-import DisplayProject from './DisplayProject'
 import Container from './Container'
 import FileDnd from './FileDnd'
 import CustomNav from './CustomNav'
+import Splash from './Splash'
+import Home from './Home'
+
 
 const App = () => (
-  <Router>
+  <Router history = {history}>
     <div>
       <div>
         <CustomNav></CustomNav>
       </div>
 
-      <Route exact path="/" component={Login}/>
+      <Route exact path="/" component={Splash}></Route>
 
-      <Route path="/myprojects" component={MyProjects}/>
+      <Route exact path="/login" component={Login}/>
 
       <Route path="/createaccount" component={CreateAccount}/>
+
+      <Route path="/myprojects" component={MyProjects}/>
 
       <Route path="/project/:id" component={Container}></Route>
 
       <Route path="/newproject" component={Container}></Route>
 
-      <Route path="/dnd" component={FileDnd}></Route>
     </div>
   </Router>
 )

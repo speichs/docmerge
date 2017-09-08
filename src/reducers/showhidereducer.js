@@ -1,6 +1,7 @@
 const initialState = {
   isCreateNew:false,
   wasDropped:false,
+  toggleShare:false,
 }
 
 export default function reducer(state=initialState, action){
@@ -15,7 +16,11 @@ export default function reducer(state=initialState, action){
       bool = !bool
       return {...state, wasDropped: bool}
     }
-
+    case "TOGGLE_SHARE":{
+      let bool = state.toggleShare
+      bool = !bool
+      return {...state, toggleShare: bool}
+    }
   }
   return state
 }

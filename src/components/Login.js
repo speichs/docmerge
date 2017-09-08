@@ -12,7 +12,8 @@ import {
   Button,
 } from 'react-bootstrap'
 import ReactDOM from 'react-dom'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
+import Notifications, {notify} from 'react-notify-toast';
 
 import store from '../store'
 import { fetchUser } from '../actions/userActions'
@@ -20,12 +21,13 @@ import { fetchUser } from '../actions/userActions'
 @connect((store)=>{
   return {
     user: store.user.user.firstName,
-    userFetched: store.user.fetched
+    userFetched: store.user.fetched,
+    error: store.user.error,
   }
 })
 export default class Login extends React.Component{
   componentWillMount(){
-    
+    let token = localStorage.getItem('Token')
   }
 
 
@@ -43,6 +45,8 @@ export default class Login extends React.Component{
   }
 
   render(){
+
+
     const { user, userFetched } = this.props;
     const blank = '   '
     if(!userFetched){
@@ -59,7 +63,10 @@ export default class Login extends React.Component{
                 <br/>
                 </Col>
               </Row>
-
+              <Notifications/>
+              {
+                this.props.error? notify.show('incorrect email or password', 'error', 3000): this.props.error
+              }
               <Row>
                 <Col className='loginCol text-center' xs={12}>
 
@@ -84,9 +91,23 @@ export default class Login extends React.Component{
 
                     <FormGroup>
                       <Col  xs={12} >
-                        <Button id='successbutton' block bsSize='large' bsStyle='success' type="submit">
+                        <Button id='loginbtn' block bsSize='large' bsStyle='success' type="submit">
                           Sign in
                         </Button>
+                      </Col>
+                    </FormGroup>
+                    <FormGroup>
+                      <Col  xs={12} >
+                        <Link to='/createaccount'>
+                          <Button
+                            id='loginbtn'
+                            block
+                            bsSize='large'
+                            bsStyle='success'
+                            type="button">
+                            CreateAccount
+                          </Button>
+                        </Link>
                       </Col>
                     </FormGroup>
                   </Form>

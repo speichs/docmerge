@@ -12,7 +12,6 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 router.post('/email', (req,res,next)=>{
-  console.log('hello from email');
   const { email, data } = req.body;
   let unparsed = papaparse.unparse(data.data)
   fs.writeFileSync('./download.csv', unparsed, 'utf8')
@@ -21,7 +20,7 @@ router.post('/email', (req,res,next)=>{
       throw err
     }else{
       const msg = {
-        to: 'sean.eich@gmail.com',
+        to: 'speichdev@gmail.com',
         from: 'test@example.com',
         subject: 'Your Data',
         text: 'Please find your CSV file attached!',

@@ -35,8 +35,6 @@ export function setCurrentProject(obj){
   }
 }
 
-//insert a shareFile function
-
 export function getSharedFiles(id){
   return function(dispatch){
     dispatch({type:"GET_SHARED_FILES"})
