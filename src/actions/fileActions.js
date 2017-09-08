@@ -16,7 +16,7 @@ export function createFile(f){
 export function getOwnedFiles(id){
   return function(dispatch){
     dispatch({type:"GET_OWNED_FILES"})
-    axios.get(`/files/${id}`)
+    axios.get(`https://doc-merge.herokuapp.com/files/${id}`)
     .then((response)=>{
       dispatch({type:"GET_OWNED_FILES_FULFILLED", payload: response.data})
     })
@@ -101,7 +101,7 @@ export function makeProjectData(user){
 export function createProjectFile(f){
   return function(dispatch){
     dispatch({type:"CREATE_PROJECT_FILE"})
-    axios.post("projects", f)
+    axios.post("https://doc-merge.herokuapp.com/projects", f)
     .then((response)=>{
       dispatch({type:"CREATE_PROJECT_FILE_FULFILLED", payload: response.data})
     })
@@ -114,7 +114,7 @@ export function createProjectFile(f){
 export function sendEmail(obj){
   return function(dispatch){
     dispatch({type:"SEND_EMAIL"})
-    axios.post("/email", obj)
+    axios.post("https://doc-merge.herokuapp.com/email", obj)
     .then((response)=>{
       dispatch({type:"SEND_EMAIL_FULFILLED", payload: response.data})
     })

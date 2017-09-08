@@ -3,7 +3,7 @@ import axios from "axios";
 export function fetchUser(user){
   return function(dispatch){
     dispatch({type:'LOGIN_USER'})
-    axios.post('token', user).then((response) => {
+    axios.post('https://doc-merge.herokuapp.com/token', user).then((response) => {
       dispatch({type: "LOGIN_USER_FULFILLED", payload: {data: response.data, headers: response}
       })
     })
@@ -43,7 +43,7 @@ export function setPassword(password){
 export function createUser(userInfo){
   return function(dispatch){
     dispatch({type: "CREATE_USER"})
-    axios.post("users",userInfo)
+    axios.post("https://doc-merge.herokuapp.com/users",userInfo)
     .then((response)=>{
       dispatch({
         type: "CREATE_USER_FULFILLED",
