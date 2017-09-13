@@ -14,6 +14,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 router.post('/email', (req,res,next)=>{
   const { email, data } = req.body;
   console.log('email before', email);
+  email += '';
   email = email.replace(/\s/g, '');
   console.log('after:', email);
   let unparsed = papaparse.unparse(data.data)
