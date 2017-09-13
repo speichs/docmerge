@@ -13,6 +13,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 router.post('/email', (req,res,next)=>{
   const { email, data } = req.body;
+  email = email.replace(/\s/g, '');
   let unparsed = papaparse.unparse(data.data)
   fs.writeFileSync('./download.csv', unparsed, 'utf8')
   fs.readFile('./download.csv', 'base64', (err,dat)=>{
@@ -20,7 +21,7 @@ router.post('/email', (req,res,next)=>{
       throw err
     }else{
       const msg = {
-        to: 'speichdev@gmail.com',
+        to: email,
         from: 'test@example.com',
         subject: 'Your Data',
         text: 'Please find your CSV file attached!',
