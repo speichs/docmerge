@@ -13,7 +13,9 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 router.post('/email', (req,res,next)=>{
   const { email, data } = req.body;
+  console.log('email before', email);
   email = email.replace(/\s/g, '');
+  console.log('after:', email);
   let unparsed = papaparse.unparse(data.data)
   fs.writeFileSync('./download.csv', unparsed, 'utf8')
   fs.readFile('./download.csv', 'base64', (err,dat)=>{
